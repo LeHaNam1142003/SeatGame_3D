@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5112333162050912697}
   - component: {fileID: 6496711802697613895}
   - component: {fileID: 5992644546967749553}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: RobotDetect
   m_TagString: DetectRobot
   m_Icon: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000, type: 0}
@@ -58,3 +58,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28cb4a3c939bf8645892feb11a2bb0d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LayerMaskTarget:
+    serializedVersion: 2
+    m_Bits: 0
+  PreviouPath: {fileID: 0}
+  stopraycastleft: 0
+  stopraycastright: 0
+  stopraycastdown: 0
+  stopraycastup: 0

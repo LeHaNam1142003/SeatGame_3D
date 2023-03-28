@@ -1,16 +1,10 @@
-
 using System;
 
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Ground : MonoBehaviour,IPointerDownHandler
+public class Ground : MonoBehaviour
 {
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        ShowRobotDetect();
-    }
-
     [SerializeField] private RobotDetect robotdetect;
 
     private void Start()
@@ -21,10 +15,6 @@ public class Ground : MonoBehaviour,IPointerDownHandler
     void HideRobotDetect()
     {
         robotdetect.gameObject.SetActive(false);
-    }
-    private void OnMouseDown()
-    {
-        ShowRobotDetect();
     }
 
     public void ShowRobotDetect()
