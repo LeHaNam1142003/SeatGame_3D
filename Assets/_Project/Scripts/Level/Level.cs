@@ -10,8 +10,10 @@ public class Level : MonoBehaviour
     public static Level Instance;
     public List<Transform> paths = new List<Transform>();
     public List<Passenger> passengers = new List<Passenger>();
+    public List<SetUpSeat> setupSeats = new List<SetUpSeat>();
     public bool isCanTouchGround;
     public Passenger theChoosenOne;
+    private int count;
     [ReadOnly] public int bonusMoney;
 
     private bool _isFingerDown;
@@ -36,20 +38,43 @@ public class Level : MonoBehaviour
     {
         if (theChoosenOne == null)
         {
-            foreach (var checkpassenger in passengers)
+            foreach (var checkPassenger in passengers)
             {
-                if (checkpassenger == passenger)
+                if (checkPassenger == passenger)
                 {
-                    checkpassenger.isSelected = true;
+                    checkPassenger.isSelected = true;
                     isCanTouchGround = true;
                 }
                 else
                 {
-                    checkpassenger.isSelected = false;
+                    checkPassenger.isSelected = false;
                 }
             }
         }
     }
+    public void ManageSeat(Seat getSeat, bool isCorrectPassenger)
+    {
+        count = 0;
+        foreach (var setupSeat in setupSeats)
+        {
+            if (setupSeat.seat == getSeat)
+            {
+                setupSeat.isCorrect = isCorrectPassenger;
+            }
+        }
+        for (int i = 0; i < setupSeats.Count; i++)
+        {
+            if (setupSeats[i].isCorrect==false)
+            {
+                count++;
+            }
+        }
+        if (count == 0)
+        {
+            Debug.Log("win");
+        }
+    }
+
 
     void OnEnable()
     {
@@ -126,4 +151,10 @@ public class Level : MonoBehaviour
     public void OnLose(Level level)
     {
     }
+}
+[Serializable]
+public class SetUpSeat
+{
+    public Seat seat;
+    public bool isCorrect;
 }

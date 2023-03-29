@@ -11,6 +11,8 @@ public class Passenger : MonoBehaviour
     [SerializeField] private Transform currentdestination;
     [SerializeField] private Transform nextdestination;
     [SerializeField, Range(0, 100)] private float passengerSpeed;
+    public int rowDestination;
+    public EColumn columnDestination;
     private RaycastHit _raycastHit;
     private int _pathindex = 0;
     public bool isSelected;
@@ -90,8 +92,8 @@ public class Passenger : MonoBehaviour
     {
         if (currentdestination != newdestination)
         {
-            currentdestination.gameObject.GetComponent<Ground>().SetGroundBox(true);
-            newdestination.gameObject.GetComponent<Ground>().SetGroundBox(false);
+            currentdestination.gameObject.GetComponent<Ground>().SetDestination(true);
+            newdestination.gameObject.GetComponent<Ground>().SetDestination(false);
             currentdestination = newdestination;
         }
     }

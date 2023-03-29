@@ -41,11 +41,11 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 650578776030697362}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
+  m_IsTrigger: 1
+  m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 1, z: 0.746281}
+  m_Center: {x: 0, y: 0, z: -0.12685947}
 --- !u!114 &5992644546967749553
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60,7 +60,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   layerMaskTarget:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 264
   previousRobotDetect: {fileID: 0}
   isStopRaycastLeft: 0
   isStopRaycastRight: 0

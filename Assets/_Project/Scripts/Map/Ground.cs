@@ -6,10 +6,32 @@ public class Ground : MonoBehaviour
 {
     public RobotDetect robotDetect;
     public BoxCollider groundBox;
+    public GameObject seat;
+    public Seat seatSurface;
+    public bool isHaveSeat;
 
     private void Start()
     {
+        SetSeat();
         HideRobotDetect();
+    }
+    void SetSeat()
+    {
+        if (isHaveSeat)
+        {
+            seat.gameObject.SetActive(true);
+        }
+        else
+        {
+            seat.gameObject.SetActive(false);
+        }
+    }
+    void SeatCheck(bool isEnable)
+    {
+        if (isHaveSeat)
+        {
+            seatSurface.seatBox.enabled = isEnable;
+        }
     }
 
     void HideRobotDetect()
@@ -29,5 +51,19 @@ public class Ground : MonoBehaviour
     public void SetGroundBox(bool isEnable)
     {
         groundBox.enabled = isEnable;
+    }
+    public void SetDestination(bool isEnable)
+    {
+        switch (isEnable)
+        {
+            case true:
+                SetGroundBox(true);
+                SeatCheck(false);
+                break;
+            case false:
+                SetGroundBox(false);
+                SeatCheck(true);
+                break;
+        }
     }
 }
