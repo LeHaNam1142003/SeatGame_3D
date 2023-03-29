@@ -1,14 +1,13 @@
+using System;
 using System.Collections.Generic;
-
 using Pancake;
-
 using UnityEditor;
-
 using UnityEngine;
 
 public class Level : MonoBehaviour
 {
-    public static List<Transform> Paths;
+    public static Level Instance;
+    public List<Transform> paths = new List<Transform>();
     [ReadOnly] public int bonusMoney;
 
     private bool _isFingerDown;
@@ -21,10 +20,14 @@ public class Level : MonoBehaviour
     private void StartLevel()
     {
         Data.CurrentLevel = Utility.GetNumberInAString(gameObject.name);
-        
+
         EditorApplication.isPlaying = true;
     }
 #endif
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     void OnEnable()
     {
@@ -55,7 +58,7 @@ public class Level : MonoBehaviour
                 //ADDED LAYER SELECTION
                 if (hit.collider.gameObject.CompareTag(NameTag.GroundCheck))
                 {
-                    hit.collider.gameObject.GetComponent<Ground>().ShowRobotDetect();
+                    hit.collider.gameObject.GetComponent<Ground>().ShowRobotDetect(hit.collider.transform);
                 }
 
                 else if (hit.collider.gameObject.CompareTag(NameTag.Passenger))

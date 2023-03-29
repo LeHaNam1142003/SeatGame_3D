@@ -1,13 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-
 using UnityEngine;
 
 public class RobotDetect : MonoBehaviour
 {
     [SerializeField] private LayerMask layerMaskTarget;
-    [SerializeField] private RobotDetect previousRobotDetect;
+    public RobotDetect previousRobotDetect;
     private RaycastHit hitRight;
     private RaycastHit hitLeft;
     private RaycastHit hitDown;
@@ -79,39 +78,34 @@ public class RobotDetect : MonoBehaviour
         }
     }
 
-    void Doraycast(Vector3 direction, Color color, Action action, RaycastHit gethit, EDirect estopdirect)
+    void Doraycast(Vector3 direction, Color color, Action action, RaycastHit gethit, EDirect eStopdirect)
     {
         Debug.DrawRay(transform.position, direction * 10, color);
         if (Physics.Raycast(transform.position, direction, out gethit, 10, layerMaskTarget))
         {
             action?.Invoke();
-            // if (gethit.collider.gameObject.CompareTag("Check"))
-            // {
-            //     var set = gethit.transform.gameObject.GetComponent<Ground>();
-            //     set.ShowRobotDetect();
-            //     if (!set.MarkController.Marks.Contains(gethit.transform))
-            //     {
-            //         set.MarkController.Marks.Add(gethit.transform);
-            //     }
-            //
-            //     set.RobotDetect.PreviouPath = this;
-            //
-            //     switch (estopdirect)
-            //     {
-            //         case EDirect.Left:
-            //             set.RobotDetect.stopraycastleft = true;
-            //             break;
-            //         case EDirect.Right:
-            //             set.RobotDetect.stopraycastright = true;
-            //             break;
-            //         case EDirect.Up:
-            //             set.RobotDetect.stopraycastup = true;
-            //             break;
-            //         case EDirect.Down:
-            //             set.RobotDetect.stopraycastdown = true;
-            //             break;
-            //     }
-            // }
+            if (gethit.collider.gameObject.CompareTag(NameTag.GroundCheck))
+            {
+                var set = gethit.transform.gameObject.GetComponent<Ground>();
+                set.ShowRobotDetect(set.transform);
+                set.robotDetect.previousRobotDetect = this;
+
+                switch (eStopdirect)
+                {
+                    case EDirect.Left:
+                        set.robotDetect.isStopRaycastLeft = true;
+                        break;
+                    case EDirect.Right:
+                        set.robotDetect.isStopRaycastRight = true;
+                        break;
+                    case EDirect.Up:
+                        set.robotDetect.isStopRaycastUp = true;
+                        break;
+                    case EDirect.Down:
+                        set.robotDetect.isStopRaycastDown = true;
+                        break;
+                }
+            }
         }
     }
 }

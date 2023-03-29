@@ -58,11 +58,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28cb4a3c939bf8645892feb11a2bb0d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LayerMaskTarget:
+  layerMaskTarget:
     serializedVersion: 2
-    m_Bits: 0
-  PreviouPath: {fileID: 0}
-  stopraycastleft: 0
-  stopraycastright: 0
-  stopraycastdown: 0
-  stopraycastup: 0
+    m_Bits: 8
+  previousRobotDetect: {fileID: 0}
+  isStopRaycastLeft: 0
+  isStopRaycastRight: 0
+  isStopRaycastDown: 0
+  isStopRaycastUp: 0

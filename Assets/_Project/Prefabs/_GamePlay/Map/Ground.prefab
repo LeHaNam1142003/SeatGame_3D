@@ -157,7 +157,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75b561379edd72b4186c4e6ff27410bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  robotdetect: {fileID: 6723069972114642280}
+  robotDetect: {fileID: 6723069972114642280}
 --- !u!1001 &1037801485604017881
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -224,6 +224,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5992644546967749553, guid: 51f6d117a2194594bae0bc59c65f94ae,
+        type: 3}
+      propertyPath: layerMaskTarget.m_Bits
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 51f6d117a2194594bae0bc59c65f94ae, type: 3}
