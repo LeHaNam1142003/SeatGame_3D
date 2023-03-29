@@ -140,7 +140,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9040355798558860214}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -158,6 +158,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   robotDetect: {fileID: 6723069972114642280}
+  groundBox: {fileID: 335065774464587363}
 --- !u!1001 &1037801485604017881
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -229,6 +230,16 @@ PrefabInstance:
         type: 3}
       propertyPath: layerMaskTarget.m_Bits
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6496711802697613895, guid: 51f6d117a2194594bae0bc59c65f94ae,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6496711802697613895, guid: 51f6d117a2194594bae0bc59c65f94ae,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 51f6d117a2194594bae0bc59c65f94ae, type: 3}

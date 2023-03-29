@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Security.Permissions;
 using Pancake;
 using UnityEditor;
 using UnityEngine;
@@ -8,6 +9,9 @@ public class Level : MonoBehaviour
 {
     public static Level Instance;
     public List<Transform> paths = new List<Transform>();
+    public List<Passenger> passengers = new List<Passenger>();
+    public bool isCanTouchGround;
+    public Passenger theChoosenOne;
     [ReadOnly] public int bonusMoney;
 
     private bool _isFingerDown;
@@ -27,6 +31,24 @@ public class Level : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+    }
+    public void SetTheSelectedPassenger(Passenger passenger)
+    {
+        if (theChoosenOne == null)
+        {
+            foreach (var checkpassenger in passengers)
+            {
+                if (checkpassenger == passenger)
+                {
+                    checkpassenger.isSelected = true;
+                    isCanTouchGround = true;
+                }
+                else
+                {
+                    checkpassenger.isSelected = false;
+                }
+            }
+        }
     }
 
     void OnEnable()
@@ -58,12 +80,15 @@ public class Level : MonoBehaviour
                 //ADDED LAYER SELECTION
                 if (hit.collider.gameObject.CompareTag(NameTag.GroundCheck))
                 {
-                    hit.collider.gameObject.GetComponent<Ground>().ShowRobotDetect(hit.collider.transform);
+                    if (isCanTouchGround)
+                    {
+                        hit.collider.gameObject.GetComponent<Ground>().ShowRobotDetect(hit.collider.transform);
+                        isCanTouchGround = false;
+                    }
                 }
-
                 else if (hit.collider.gameObject.CompareTag(NameTag.Passenger))
                 {
-                    hit.collider.gameObject.GetComponent<Passenger>();
+                    hit.collider.gameObject.GetComponent<Passenger>().SetSelected();
                 }
             }
         }

@@ -1,11 +1,11 @@
 using System;
-
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class Ground : MonoBehaviour
 {
     public RobotDetect robotDetect;
+    public BoxCollider groundBox;
 
     private void Start()
     {
@@ -23,6 +23,11 @@ public class Ground : MonoBehaviour
         {
             Level.Instance.paths.Add(getGround.transform);
         }
+        SetGroundBox(false);
         robotDetect.gameObject.SetActive(true);
+    }
+    public void SetGroundBox(bool isEnable)
+    {
+        groundBox.enabled = isEnable;
     }
 }

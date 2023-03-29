@@ -33,14 +33,14 @@ public class RobotDetect : MonoBehaviour
         previousRobotDetect = null;
     }
 
-    // public void TakePreviousPath(Player player)
-    // {
-    //     if (PreviouPath != null)
-    //     {
-    //         player.AddPathToDestination(PreviouPath.transform);
-    //         PreviouPath.TakePreviousPath(player);
-    //     }
-    // }
+    public void TakePreviousPath(Passenger passenger)
+    {
+        if (previousRobotDetect != null)
+        {
+            passenger.AddPathToDestination(previousRobotDetect.transform);
+            previousRobotDetect.TakePreviousPath(passenger);
+        }
+    }
     private void OnDisable()
     {
         Reset();

@@ -382,6 +382,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2106836421633981824}
   - component: {fileID: 3397587794335317598}
+  - component: {fileID: 558594839253692501}
+  - component: {fileID: 8503977726323939530}
   m_Layer: 8
   m_Name: Passenger
   m_TagString: Passenger
@@ -417,6 +419,47 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd9f4f754c99b8f49a5155365f208d63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  passengerLayerMask:
+    serializedVersion: 2
+    m_Bits: 128
+  isMove: 0
+  road: {fileID: 0}
+  currentdestination: {fileID: 0}
+  nextdestination: {fileID: 0}
+  passengerSpeed: 15
+  isSelected: 0
+  path: {fileID: 0}
+  pathsToDestination: []
+--- !u!136 &558594839253692501
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2106836421633981825}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.17334785
+  m_Height: 1.1131082
+  m_Direction: 1
+  m_Center: {x: -0.00932835, y: 0.5321578, z: 0}
+--- !u!54 &8503977726323939530
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2106836421633981825}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
 --- !u!1 &2106836421662955707
 GameObject:
   m_ObjectHideFlags: 0

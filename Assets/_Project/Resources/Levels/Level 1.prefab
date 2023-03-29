@@ -94,6 +94,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e45dd11d646118348b4f2e994976c4ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  paths: []
+  passengers:
+  - {fileID: 1043908833602422983}
+  isCanTouchGround: 0
+  theChoosenOne: {fileID: 0}
   bonusMoney: 0
 --- !u!1 &6503520254417728374
 GameObject:
@@ -152,7 +157,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 80
+  field of view: 104
   orthographic: 0
   orthographic size: 12
   m_Depth: 0
@@ -420,12 +425,12 @@ PrefabInstance:
     - target: {fileID: 2106836421633981824, guid: 88dbe82d81fab1d40b624e4acdade8eb,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.5
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 2106836421633981824, guid: 88dbe82d81fab1d40b624e4acdade8eb,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2106836421633981824, guid: 88dbe82d81fab1d40b624e4acdade8eb,
         type: 3}
@@ -467,8 +472,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: Passenger
       objectReference: {fileID: 0}
+    - target: {fileID: 3397587794335317598, guid: 88dbe82d81fab1d40b624e4acdade8eb,
+        type: 3}
+      propertyPath: passengerSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8503977726323939530, guid: 88dbe82d81fab1d40b624e4acdade8eb,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 116
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 88dbe82d81fab1d40b624e4acdade8eb, type: 3}
+--- !u!114 &1043908833602422983 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3397587794335317598, guid: 88dbe82d81fab1d40b624e4acdade8eb,
+    type: 3}
+  m_PrefabInstance: {fileID: 2403265875370899097}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd9f4f754c99b8f49a5155365f208d63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &4352413500368603929 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2106836421633981824, guid: 88dbe82d81fab1d40b624e4acdade8eb,
