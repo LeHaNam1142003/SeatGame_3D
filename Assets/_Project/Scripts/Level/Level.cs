@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 using Pancake;
 
 using UnityEditor;
@@ -6,6 +8,7 @@ using UnityEngine;
 
 public class Level : MonoBehaviour
 {
+    public static List<Transform> Paths;
     [ReadOnly] public int bonusMoney;
 
     private bool _isFingerDown;

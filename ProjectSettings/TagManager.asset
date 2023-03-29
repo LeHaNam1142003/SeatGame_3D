@@ -7,6 +7,7 @@ TagManager:
   - BonusArea
   - DetectRobot
   - GroundCheck
+  - Passenger
   layers:
   - Default
   - TransparentFX
@@ -16,7 +17,7 @@ TagManager:
   - UI
   - Wall
   - RobotDetect
-  - 
+  - Passenger
   - 
   - 
   - 

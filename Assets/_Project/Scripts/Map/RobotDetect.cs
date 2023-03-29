@@ -6,16 +6,16 @@ using UnityEngine;
 
 public class RobotDetect : MonoBehaviour
 {
-    [SerializeField] public LayerMask LayerMaskTarget;
-    [SerializeField] public RobotDetect PreviouPath;
-    private RaycastHit hitright;
-    private RaycastHit hitleft;
-    private RaycastHit hitdown;
-    private RaycastHit hitup;
-    public bool stopraycastleft;
-    public bool stopraycastright;
-    public bool stopraycastdown;
-    public bool stopraycastup;
+    [SerializeField] private LayerMask layerMaskTarget;
+    [SerializeField] private RobotDetect previousRobotDetect;
+    private RaycastHit hitRight;
+    private RaycastHit hitLeft;
+    private RaycastHit hitDown;
+    private RaycastHit hitUp;
+    public bool isStopRaycastLeft;
+    public bool isStopRaycastRight;
+    public bool isStopRaycastDown;
+    public bool isStopRaycastUp;
 
     private void Update()
     {
@@ -27,11 +27,11 @@ public class RobotDetect : MonoBehaviour
 
     public void Reset()
     {
-        stopraycastdown = false;
-        stopraycastleft = false;
-        stopraycastright = false;
-        stopraycastup = false;
-        PreviouPath = null;
+        isStopRaycastDown = false;
+        isStopRaycastLeft = false;
+        isStopRaycastRight = false;
+        isStopRaycastUp = false;
+        previousRobotDetect = null;
     }
 
     // public void TakePreviousPath(Player player)
@@ -49,40 +49,40 @@ public class RobotDetect : MonoBehaviour
 
     void ShootRaycastRight()
     {
-        if (stopraycastright != true)
+        if (isStopRaycastRight != true)
         {
-            Doraycast(Vector3.right, Color.blue, (() => { stopraycastright = true; }), hitright, EDirect.Left);
+            Doraycast(Vector3.right, Color.blue, (() => { isStopRaycastRight = true; }), hitRight, EDirect.Left);
         }
     }
 
     void ShootRaycastLeft()
     {
-        if (stopraycastleft != true)
+        if (isStopRaycastLeft != true)
         {
-            Doraycast(Vector3.left, Color.red, (() => { stopraycastleft = true; }), hitleft, EDirect.Right);
+            Doraycast(Vector3.left, Color.red, (() => { isStopRaycastLeft = true; }), hitLeft, EDirect.Right);
         }
     }
 
     void ShootRaycastDown()
     {
-        if (stopraycastdown != true)
+        if (isStopRaycastDown != true)
         {
-            Doraycast(Vector3.back, Color.green, (() => { stopraycastdown = true; }), hitdown, EDirect.Up);
+            Doraycast(Vector3.back, Color.green, (() => { isStopRaycastDown = true; }), hitDown, EDirect.Up);
         }
     }
 
     void ShootRaycastUp()
     {
-        if (stopraycastup != true)
+        if (isStopRaycastUp != true)
         {
-            Doraycast(Vector3.forward, Color.gray, (() => { stopraycastup = true; }), hitup, EDirect.Down);
+            Doraycast(Vector3.forward, Color.gray, (() => { isStopRaycastUp = true; }), hitUp, EDirect.Down);
         }
     }
 
     void Doraycast(Vector3 direction, Color color, Action action, RaycastHit gethit, EDirect estopdirect)
     {
         Debug.DrawRay(transform.position, direction * 10, color);
-        if (Physics.Raycast(transform.position, direction, out gethit, 10, LayerMaskTarget))
+        if (Physics.Raycast(transform.position, direction, out gethit, 10, layerMaskTarget))
         {
             action?.Invoke();
             // if (gethit.collider.gameObject.CompareTag("Check"))

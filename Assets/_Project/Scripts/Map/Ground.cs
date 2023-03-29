@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 public class Ground : MonoBehaviour
 {
-    [SerializeField] private RobotDetect robotdetect;
+    [SerializeField] private RobotDetect robotDetect;
 
     private void Start()
     {
@@ -14,11 +14,11 @@ public class Ground : MonoBehaviour
 
     void HideRobotDetect()
     {
-        robotdetect.gameObject.SetActive(false);
+        robotDetect.gameObject.SetActive(false);
     }
 
     public void ShowRobotDetect()
     {
-        robotdetect.gameObject.SetActive(true);
+        robotDetect.gameObject.SetActive(true);
     }
 }
