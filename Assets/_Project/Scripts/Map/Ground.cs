@@ -5,10 +5,10 @@ using UnityEngine.EventSystems;
 public class Ground : MonoBehaviour
 {
     public RobotDetect robotDetect;
-    public BoxCollider groundBox;
-    public GameObject seat;
-    public Seat seatSurface;
-    public bool isHaveSeat;
+    [SerializeField] private BoxCollider groundBox;
+    [SerializeField] private GameObject seat;
+    [SerializeField] private Seat seatSurface;
+    [SerializeField] private bool isHaveSeat;
 
     private void Start()
     {
@@ -37,6 +37,7 @@ public class Ground : MonoBehaviour
     void HideRobotDetect()
     {
         robotDetect.gameObject.SetActive(false);
+        SetGroundBox(true);
     }
 
     public void ShowRobotDetect(Transform getGround)
@@ -47,6 +48,7 @@ public class Ground : MonoBehaviour
         }
         SetGroundBox(false);
         robotDetect.gameObject.SetActive(true);
+        Observer.ClickonGround?.Invoke();
     }
     public void SetGroundBox(bool isEnable)
     {

@@ -119,7 +119,6 @@ public class PopupInGame : Popup
    {
       foreach (UIEffect item in UIEffects)
       {
-         Debug.Log("MOve");
          item.PlayAnim();
       }
    }

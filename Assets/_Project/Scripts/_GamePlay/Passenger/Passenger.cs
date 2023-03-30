@@ -1,46 +1,76 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Pancake;
 using TMPro;
 using UnityEngine;
 
 public class Passenger : MonoBehaviour
 {
     [SerializeField] private LayerMask passengerLayerMask;
-    [SerializeField] private bool isMove;
-    [SerializeField] private Transform road;
-    [SerializeField] private Transform currentdestination;
-    [SerializeField] private Transform nextdestination;
+    private bool _isMove;
+    [ReadOnly] [SerializeField] private Transform road;
+    [ReadOnly] [SerializeField] private Transform currentdestination;
+    [ReadOnly] [SerializeField] private Transform nextdestination;
     [SerializeField] private GameObject hint;
+    [SerializeField] private GameObject passengerModel;
     [SerializeField] private TextMeshProUGUI hintText;
     [SerializeField, Range(0, 100)] private float passengerSpeed;
     public int rowDestination;
     public EColumn columnDestination;
     private RaycastHit _raycastHit;
     private int _pathindex = 0;
-    public bool isSelected;
-    public Transform path;
-    [SerializeField] private List<Transform> pathsToDestination = new List<Transform>();
+    public bool isclear;
+    public bool isAdd;
+    private float _currentx;
+    private float _currentz;
+    [ReadOnly] public bool isSelected;
+    [ReadOnly] public Transform path;
+    [ReadOnly] [SerializeField] private List<Transform> pathsToDestination = new List<Transform>();
+    private void Awake()
+    {
+        Level.Instance.passengers.Add(this);
+    }
+    private void OnEnable()
+    {
+        Observer.ClickonGround += ClickonGround;
+    }
+    private void OnDisable()
+    {
+        Observer.ClickonGround -= ClickonGround;
+    }
     private void Start()
     {
         hint.SetActive(false);
     }
+    void SetCurrentPosi()
+    {
+        _currentx = transform.position.x;
+        _currentz = transform.position.z;
+    }
     public void SetSelected()
     {
         Level.Instance.SetTheSelectedPassenger(this);
-        isMove = true;
+        isAdd = true;
+    }
+    void ClickonGround()
+    {
+        hint.SetActive(false);
     }
     public void GetSelected(bool isGetSelected)
     {
-        isSelected = isGetSelected;
-        if (isGetSelected)
+        if (_isMove == false)
         {
-            hint.SetActive(true);
-            hintText.text = columnDestination + ":" + rowDestination;
-        }
-        else
-        {
-            hint.SetActive(false);
+            isSelected = isGetSelected;
+            if (isGetSelected)
+            {
+                hint.SetActive(true);
+                hintText.text = columnDestination + ":" + rowDestination;
+            }
+            else
+            {
+                hint.SetActive(false);
+            }
         }
     }
     private void Update()
@@ -56,11 +86,13 @@ public class Passenger : MonoBehaviour
             }
             else
             {
-                AddPathToDestination(path);
-                path.GetComponent<RobotDetect>().TakePreviousPath(this);
-                nextdestination = pathsToDestination[pathsToDestination.Count - 1].parent;
-                SetNewDestination(nextdestination);
-                if (isMove)
+                if (isAdd)
+                {
+                    AddPathToDestination(path);
+                    path.GetComponent<RobotDetect>().TakePreviousPath(this);
+                    isAdd = false;
+                }
+                else if (_isMove)
                 {
                     Level.Instance.theChoosenOne = this;
                     if (pathsToDestination.Count != 0)
@@ -69,6 +101,8 @@ public class Passenger : MonoBehaviour
                         road = pathsToDestination[_pathindex];
                         var dir = road.position - transform.position;
                         transform.Translate(dir.normalized * passengerSpeed * Time.deltaTime);
+                        Quaternion lookRotaion = Quaternion.LookRotation(dir, Vector3.up);
+                        passengerModel.transform.rotation = Quaternion.Euler(0, lookRotaion.eulerAngles.y, 0);
                         if (Vector3.Distance(transform.position, road.position) <= 0.1f)
                         {
                             SetNextPath();
@@ -78,11 +112,25 @@ public class Passenger : MonoBehaviour
             }
         }
     }
+    // void Move(Vector3 getDir)
+    // {
+    //     transform.Translate(getDir.normalized * passengerSpeed * Time.deltaTime);
+    // }
     public void AddPathToDestination(Transform path)
     {
-        if (!pathsToDestination.Contains(path))
+        if (path.parent != Level.Instance.paths[0])
+        {
+            if (!pathsToDestination.Contains(path))
+            {
+                pathsToDestination.Add(path);
+            }
+        }
+        else
         {
             pathsToDestination.Add(path);
+            nextdestination = pathsToDestination[pathsToDestination.Count - 1].parent;
+            SetNewDestination(nextdestination);
+            _isMove = true;
         }
     }
     void SetNextPath()
@@ -91,32 +139,26 @@ public class Passenger : MonoBehaviour
         _pathindex++;
         if (_pathindex >= pathsToDestination.Count)
         {
-            isMove = false;
+            _isMove = false;
             Level.Instance.theChoosenOne = null;
             pathsToDestination.Clear();
-            foreach (var clearRobot in Level.Instance.paths)
-            {
-                var ground = clearRobot.gameObject.GetComponent<Ground>();
-                if (clearRobot != nextdestination)
-                {
-                    ground.SetGroundBox(true);
-                }
-                ground.robotDetect.gameObject.SetActive(false);
-            }
-            Level.Instance.paths.Clear();
+            currentdestination = nextdestination;
+            nextdestination = null;
             _pathindex = 0;
             path = null;
             isSelected = false;
+            passengerModel.transform.rotation = Quaternion.Euler(0, 180, 0);
         }
     }
     void SetNewDestination(Transform newdestination)
     {
-        if (currentdestination != newdestination)
+        if (Level.Instance.groundSelecteds.Contains(currentdestination))
         {
-            currentdestination.gameObject.GetComponent<Ground>().SetDestination(true);
-            newdestination.gameObject.GetComponent<Ground>().SetDestination(false);
-            currentdestination = newdestination;
+            Level.Instance.groundSelecteds.Remove(currentdestination);
         }
+        Level.Instance.groundSelecteds.Add(newdestination);
+        currentdestination.gameObject.GetComponent<Ground>().SetDestination(true);
+        newdestination.gameObject.GetComponent<Ground>().SetDestination(false);
     }
     void ShootRaycastCheck(Vector3 direction, Color color)
     {

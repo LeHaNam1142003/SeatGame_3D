@@ -89,7 +89,6 @@ public class RobotDetect : MonoBehaviour
                 var set = gethit.transform.gameObject.GetComponent<Ground>();
                 set.ShowRobotDetect(set.transform);
                 set.robotDetect.previousRobotDetect = this;
-
                 switch (eStopdirect)
                 {
                     case EDirect.Left:

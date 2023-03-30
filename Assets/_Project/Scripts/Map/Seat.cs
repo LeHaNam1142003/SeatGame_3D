@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Policy;
+using Lean.Touch;
+using Pancake;
 using UnityEngine;
 
 public class Seat : MonoBehaviour
@@ -10,8 +12,15 @@ public class Seat : MonoBehaviour
     [SerializeField] private EColumn setIndexColumn;
     private SeatInfor _seatInfor;
     public BoxCollider seatBox;
+    [ReadOnly] public SetUpSeat _setUpSeat;
     private void Start()
     {
+        if (isActiveAndEnabled)
+        {
+            _setUpSeat.seat = this;
+            _setUpSeat.isCorrect = false;
+            Level.Instance.setupSeats.Add(_setUpSeat);
+        }
         _seatInfor = new SeatInfor(setIndexRow, setIndexColumn);
         seatBox.enabled = false;
     }

@@ -8,11 +8,12 @@ using UnityEngine;
 public class Level : MonoBehaviour
 {
     public static Level Instance;
-    public List<Transform> paths = new List<Transform>();
-    public List<Passenger> passengers = new List<Passenger>();
-    public List<SetUpSeat> setupSeats = new List<SetUpSeat>();
-    public bool isCanTouchGround;
-    public Passenger theChoosenOne;
+    [ReadOnly] public List<Transform> paths = new List<Transform>();
+    [ReadOnly] public List<Transform> groundSelecteds = new List<Transform>();
+    [ReadOnly] public List<Passenger> passengers = new List<Passenger>();
+    [ReadOnly] public List<SetUpSeat> setupSeats = new List<SetUpSeat>();
+    private bool _isCanTouchGround;
+    [ReadOnly] public Passenger theChoosenOne;
     private int count;
     [ReadOnly] public int bonusMoney;
 
@@ -36,19 +37,16 @@ public class Level : MonoBehaviour
     }
     public void SetTheSelectedPassenger(Passenger passenger)
     {
-        if (theChoosenOne == null)
+        foreach (var checkPassenger in passengers)
         {
-            foreach (var checkPassenger in passengers)
+            if (checkPassenger == passenger)
             {
-                if (checkPassenger == passenger)
-                {
-                    checkPassenger.GetSelected(true);
-                    isCanTouchGround = true;
-                }
-                else
-                {
-                    checkPassenger.GetSelected(false);
-                }
+                checkPassenger.GetSelected(true);
+                _isCanTouchGround = true;
+            }
+            else
+            {
+                checkPassenger.GetSelected(false);
             }
         }
     }
@@ -71,7 +69,7 @@ public class Level : MonoBehaviour
         }
         if (count == 0)
         {
-           GameManager.Instance.OnWinGame();
+            GameManager.Instance.OnWinGame();
         }
     }
 
@@ -107,19 +105,41 @@ public class Level : MonoBehaviour
                     //ADDED LAYER SELECTION
                     if (hit.collider.gameObject.CompareTag(NameTag.GroundCheck))
                     {
-                        if (isCanTouchGround)
+                        if (_isCanTouchGround)
                         {
                             hit.collider.gameObject.GetComponent<Ground>().ShowRobotDetect(hit.collider.transform);
-                            isCanTouchGround = false;
+                            _isCanTouchGround = false;
                         }
                     }
                     else if (hit.collider.gameObject.CompareTag(NameTag.Passenger))
                     {
                         hit.collider.gameObject.GetComponent<Passenger>().SetSelected();
+                        ClearPath();
                     }
                 }
             }
         }
+    }
+    void ClearPath()
+    {
+        for (int i = 0; i < paths.Count; i++)
+        {
+            var getGround = paths[i].GetComponent<Ground>();
+            for (int j = 0; j < groundSelecteds.Count; j++)
+            {
+                if (paths[i] != groundSelecteds[j])
+                {
+                    getGround.SetGroundBox(true);
+                }
+                else
+                {
+                    getGround.SetGroundBox(false);
+                    break;
+                }
+            }
+            getGround.robotDetect.gameObject.SetActive(false);
+        }
+        paths.Clear();
     }
 
     void HandleFingerUp(Lean.Touch.LeanFinger finger)
@@ -146,7 +166,7 @@ public class Level : MonoBehaviour
     //     Observer.WinLevel -= OnWin;
     //     Observer.LoseLevel -= OnLose;
     // }
-    
+
     // public void OnWin(Level level)
     // {
     //     GameManager.Instance.OnWinGame();
