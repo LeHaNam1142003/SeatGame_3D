@@ -15,9 +15,9 @@ public class UIEffect : MonoBehaviour
     [Header("Shake Effect")]
     [SerializeField] private float strength = 3f;
     [Header("Move Effect")] 
-    [ShowIf("animType", AnimType.Move)] private MoveType _moveType;
+    [ShowIf("animType", AnimType.Move)] public MoveType _moveType;
     [ShowIf("IsShowAttributeFromPosition")] [SerializeField] private Vector3 fromPosition;
-    [ShowIf("IsShowAttributesMoveDirection")] [SerializeField] private DirectionType directionType;
+    [ShowIf("IsShowAttributesMoveDirection")] [SerializeField] public DirectionType directionType;
     [ShowIf("IsShowAttributesMoveDirection")] [SerializeField] private float offset;
     [ShowIf("UIAnimType", AnimType.Move)] [ReadOnly] private Vector3 _saveAnchorPosition;
 

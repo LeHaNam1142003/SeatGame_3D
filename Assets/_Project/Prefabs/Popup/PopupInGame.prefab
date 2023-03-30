@@ -154,16 +154,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe270764967ed7b4abbfde5c9a04e74a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animType: 0
-  playOnAwake: 1
+  animType: 2
+  playOnAwake: 0
   animTime: 0.5
   delayAnimTime: 0
   fromScale: {x: 0, y: 0, z: 0}
   saveLocalScale: {x: 0, y: 0, z: 0}
   strength: 3
+  _moveType: 1
   fromPosition: {x: 0, y: 0, z: 0}
-  directionType: 0
-  offset: 0
+  directionType: 1
+  offset: 200
 --- !u!114 &6645780417153125706
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -527,16 +528,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe270764967ed7b4abbfde5c9a04e74a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animType: 0
-  playOnAwake: 1
+  animType: 2
+  playOnAwake: 0
   animTime: 0.5
   delayAnimTime: 0
   fromScale: {x: 0, y: 0, z: 0}
   saveLocalScale: {x: 0, y: 0, z: 0}
   strength: 3
+  _moveType: 1
   fromPosition: {x: 0, y: 0, z: 0}
-  directionType: 0
-  offset: 0
+  directionType: 2
+  offset: 200
 --- !u!114 &7376978022758260584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -754,16 +756,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe270764967ed7b4abbfde5c9a04e74a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animType: 0
-  playOnAwake: 1
+  animType: 2
+  playOnAwake: 0
   animTime: 0.5
   delayAnimTime: 0
   fromScale: {x: 0, y: 0, z: 0}
   saveLocalScale: {x: 0, y: 0, z: 0}
   strength: 3
+  _moveType: 1
   fromPosition: {x: 0, y: 0, z: 0}
-  directionType: 0
-  offset: 0
+  directionType: 1
+  offset: 200
 --- !u!114 &8319261800468831320
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1265,16 +1268,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe270764967ed7b4abbfde5c9a04e74a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animType: 0
-  playOnAwake: 1
+  animType: 2
+  playOnAwake: 0
   animTime: 0.5
   delayAnimTime: 0
   fromScale: {x: 0, y: 0, z: 0}
   saveLocalScale: {x: 0, y: 0, z: 0}
   strength: 3
+  _moveType: 1
   fromPosition: {x: 0, y: 0, z: 0}
-  directionType: 0
-  offset: 0
+  directionType: 1
+  offset: 200
 --- !u!114 &2143295536133822422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1504,16 +1508,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe270764967ed7b4abbfde5c9a04e74a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animType: 0
-  playOnAwake: 1
+  animType: 2
+  playOnAwake: 0
   animTime: 0.5
   delayAnimTime: 0
   fromScale: {x: 0, y: 0, z: 0}
   saveLocalScale: {x: 0, y: 0, z: 0}
   strength: 3
+  _moveType: 1
   fromPosition: {x: 0, y: 0, z: 0}
-  directionType: 0
-  offset: 0
+  directionType: 1
+  offset: 200
 --- !u!114 &8580436411738377938
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1802,16 +1807,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe270764967ed7b4abbfde5c9a04e74a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animType: 0
-  playOnAwake: 1
+  animType: 2
+  playOnAwake: 0
   animTime: 0.5
   delayAnimTime: 0
   fromScale: {x: 0, y: 0, z: 0}
   saveLocalScale: {x: 0, y: 0, z: 0}
   strength: 3
+  _moveType: 1
   fromPosition: {x: 0, y: 0, z: 0}
   directionType: 0
-  offset: 0
+  offset: 200
 --- !u!114 &8834913937742084582
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1948,16 +1954,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe270764967ed7b4abbfde5c9a04e74a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animType: 0
-  playOnAwake: 1
+  animType: 2
+  playOnAwake: 0
   animTime: 0.5
   delayAnimTime: 0
   fromScale: {x: 0, y: 0, z: 0}
   saveLocalScale: {x: 0, y: 0, z: 0}
   strength: 3
+  _moveType: 1
   fromPosition: {x: 0, y: 0, z: 0}
-  directionType: 0
-  offset: 0
+  directionType: 1
+  offset: 200
 --- !u!114 &4712148890218638804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2593,16 +2600,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe270764967ed7b4abbfde5c9a04e74a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animType: 0
-  playOnAwake: 1
+  animType: 2
+  playOnAwake: 0
   animTime: 0.5
   delayAnimTime: 0
   fromScale: {x: 0, y: 0, z: 0}
   saveLocalScale: {x: 0, y: 0, z: 0}
   strength: 3
+  _moveType: 1
   fromPosition: {x: 0, y: 0, z: 0}
   directionType: 0
-  offset: 0
+  offset: 200
 --- !u!114 &7098871591999568343
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2976,16 +2984,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe270764967ed7b4abbfde5c9a04e74a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animType: 0
-  playOnAwake: 1
+  animType: 2
+  playOnAwake: 0
   animTime: 0.5
   delayAnimTime: 0
   fromScale: {x: 0, y: 0, z: 0}
   saveLocalScale: {x: 0, y: 0, z: 0}
   strength: 3
+  _moveType: 1
   fromPosition: {x: 0, y: 0, z: 0}
-  directionType: 0
-  offset: 0
+  directionType: 3
+  offset: 200
 --- !u!114 &8826423797174123682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3203,16 +3212,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe270764967ed7b4abbfde5c9a04e74a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animType: 0
-  playOnAwake: 1
+  animType: 2
+  playOnAwake: 0
   animTime: 0.5
   delayAnimTime: 0
   fromScale: {x: 0, y: 0, z: 0}
   saveLocalScale: {x: 0, y: 0, z: 0}
   strength: 3
+  _moveType: 1
   fromPosition: {x: 0, y: 0, z: 0}
-  directionType: 0
-  offset: 0
+  directionType: 1
+  offset: 200
 --- !u!114 &4560236152226466752
 MonoBehaviour:
   m_ObjectHideFlags: 0

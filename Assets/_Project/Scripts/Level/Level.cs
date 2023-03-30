@@ -71,7 +71,7 @@ public class Level : MonoBehaviour
         }
         if (count == 0)
         {
-            GameManager.Instance.OnWinGame();
+           GameManager.Instance.OnWinGame();
         }
     }
 
@@ -146,9 +146,10 @@ public class Level : MonoBehaviour
     //     Observer.WinLevel -= OnWin;
     //     Observer.LoseLevel -= OnLose;
     // }
-    //
+    
     // public void OnWin(Level level)
     // {
+    //     GameManager.Instance.OnWinGame();
     // }
     //
     // public void OnLose(Level level)
