@@ -27,10 +27,21 @@ public class Passenger : MonoBehaviour
     }
     public void SetSelected()
     {
-        hint.SetActive(true);
-        hintText.text = columnDestination + ":" + rowDestination;
         Level.Instance.SetTheSelectedPassenger(this);
         isMove = true;
+    }
+    public void GetSelected(bool isGetSelected)
+    {
+        isSelected = isGetSelected;
+        if (isGetSelected)
+        {
+            hint.SetActive(true);
+            hintText.text = columnDestination + ":" + rowDestination;
+        }
+        else
+        {
+            hint.SetActive(false);
+        }
     }
     private void Update()
     {

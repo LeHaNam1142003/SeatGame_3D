@@ -42,12 +42,12 @@ public class Level : MonoBehaviour
             {
                 if (checkPassenger == passenger)
                 {
-                    checkPassenger.isSelected = true;
+                    checkPassenger.GetSelected(true);
                     isCanTouchGround = true;
                 }
                 else
                 {
-                    checkPassenger.isSelected = false;
+                    checkPassenger.GetSelected(false);
                 }
             }
         }
@@ -64,14 +64,14 @@ public class Level : MonoBehaviour
         }
         for (int i = 0; i < setupSeats.Count; i++)
         {
-            if (setupSeats[i].isCorrect==false)
+            if (setupSeats[i].isCorrect == false)
             {
                 count++;
             }
         }
         if (count == 0)
         {
-            Debug.Log("win");
+            GameManager.Instance.OnWinGame();
         }
     }
 
@@ -92,28 +92,31 @@ public class Level : MonoBehaviour
 
     void HandleFingerDown(Lean.Touch.LeanFinger finger)
     {
-        if (!finger.IsOverGui)
+        if (GameManager.Instance.gameState != GameState.WinGame)
         {
-            _isFingerDown = true;
-
-            //Get Object raycast hit
-            var ray = finger.GetRay(Camera);
-            var hit = default(RaycastHit);
-
-            if (Physics.Raycast(ray, out hit, float.PositiveInfinity))
+            if (!finger.IsOverGui)
             {
-                //ADDED LAYER SELECTION
-                if (hit.collider.gameObject.CompareTag(NameTag.GroundCheck))
+                _isFingerDown = true;
+
+                //Get Object raycast hit
+                var ray = finger.GetRay(Camera);
+                var hit = default(RaycastHit);
+
+                if (Physics.Raycast(ray, out hit, float.PositiveInfinity))
                 {
-                    if (isCanTouchGround)
+                    //ADDED LAYER SELECTION
+                    if (hit.collider.gameObject.CompareTag(NameTag.GroundCheck))
                     {
-                        hit.collider.gameObject.GetComponent<Ground>().ShowRobotDetect(hit.collider.transform);
-                        isCanTouchGround = false;
+                        if (isCanTouchGround)
+                        {
+                            hit.collider.gameObject.GetComponent<Ground>().ShowRobotDetect(hit.collider.transform);
+                            isCanTouchGround = false;
+                        }
                     }
-                }
-                else if (hit.collider.gameObject.CompareTag(NameTag.Passenger))
-                {
-                    hit.collider.gameObject.GetComponent<Passenger>().SetSelected();
+                    else if (hit.collider.gameObject.CompareTag(NameTag.Passenger))
+                    {
+                        hit.collider.gameObject.GetComponent<Passenger>().SetSelected();
+                    }
                 }
             }
         }
@@ -132,25 +135,25 @@ public class Level : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        Observer.WinLevel += OnWin;
-        Observer.LoseLevel += OnLose;
-    }
-
-    private void OnDestroy()
-    {
-        Observer.WinLevel -= OnWin;
-        Observer.LoseLevel -= OnLose;
-    }
-
-    public void OnWin(Level level)
-    {
-    }
-
-    public void OnLose(Level level)
-    {
-    }
+    // private void Start()
+    // {
+    //     Observer.WinLevel += OnWin;
+    //     Observer.LoseLevel += OnLose;
+    // }
+    //
+    // private void OnDestroy()
+    // {
+    //     Observer.WinLevel -= OnWin;
+    //     Observer.LoseLevel -= OnLose;
+    // }
+    //
+    // public void OnWin(Level level)
+    // {
+    // }
+    //
+    // public void OnLose(Level level)
+    // {
+    // }
 }
 [Serializable]
 public class SetUpSeat
