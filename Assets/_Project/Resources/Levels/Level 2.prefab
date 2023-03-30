@@ -142,6 +142,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   paths: []
+  groundSelecteds: []
   passengers:
   - {fileID: 1043908833602422983}
   - {fileID: 1881266004643726989}
@@ -208,7 +209,7 @@ Camera:
   far clip plane: 1000
   field of view: 104
   orthographic: 1
-  orthographic size: 6
+  orthographic size: 7
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
