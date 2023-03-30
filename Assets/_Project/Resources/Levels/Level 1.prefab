@@ -131,14 +131,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6503520254417728374}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 1.5, y: 4, z: 1}
+  m_LocalRotation: {x: 0.5735764, y: 0, z: 0, w: 0.8191521}
+  m_LocalPosition: {x: 1.5, y: 4.32, z: 0.54}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3816432991369057859}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 70, y: 0, z: 0}
 --- !u!20 &6735877051926695820
 Camera:
   m_ObjectHideFlags: 0
@@ -165,8 +165,8 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 104
-  orthographic: 0
-  orthographic size: 12
+  orthographic: 1
+  orthographic size: 4
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -968,6 +968,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4244596819345672106}
     m_Modifications:
+    - target: {fileID: 2834834696535499941, guid: b2a80651e202c11449af88bb9f5973dd,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c92b686f25b6f934794ff6bf10e55b72, type: 2}
     - target: {fileID: 6236187164750146139, guid: b2a80651e202c11449af88bb9f5973dd,
         type: 3}
       propertyPath: m_RootOrder

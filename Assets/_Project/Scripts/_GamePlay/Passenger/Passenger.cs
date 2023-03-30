@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Passenger : MonoBehaviour
@@ -10,6 +11,8 @@ public class Passenger : MonoBehaviour
     [SerializeField] private Transform road;
     [SerializeField] private Transform currentdestination;
     [SerializeField] private Transform nextdestination;
+    [SerializeField] private GameObject hint;
+    [SerializeField] private TextMeshProUGUI hintText;
     [SerializeField, Range(0, 100)] private float passengerSpeed;
     public int rowDestination;
     public EColumn columnDestination;
@@ -18,8 +21,14 @@ public class Passenger : MonoBehaviour
     public bool isSelected;
     public Transform path;
     [SerializeField] private List<Transform> pathsToDestination = new List<Transform>();
+    private void Start()
+    {
+        hint.SetActive(false);
+    }
     public void SetSelected()
     {
+        hint.SetActive(true);
+        hintText.text = columnDestination + ":" + rowDestination;
         Level.Instance.SetTheSelectedPassenger(this);
         isMove = true;
     }
@@ -45,6 +54,7 @@ public class Passenger : MonoBehaviour
                     Level.Instance.theChoosenOne = this;
                     if (pathsToDestination.Count != 0)
                     {
+                        hint.SetActive(false);
                         road = pathsToDestination[_pathindex];
                         var dir = road.position - transform.position;
                         transform.Translate(dir.normalized * passengerSpeed * Time.deltaTime);
