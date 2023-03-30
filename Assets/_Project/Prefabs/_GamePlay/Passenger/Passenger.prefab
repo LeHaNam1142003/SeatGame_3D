@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 592468061093078604}
   - component: {fileID: 3842110734227441500}
   - component: {fileID: 8310568720400371672}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1598,7 +1598,7 @@ GameObject:
   - component: {fileID: 371930796460370409}
   - component: {fileID: 1922900424219438719}
   - component: {fileID: 4251974215493646765}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: Hinttext
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1735,7 +1735,7 @@ GameObject:
   - component: {fileID: 5401681107202337896}
   - component: {fileID: 6752991303901110134}
   - component: {fileID: 2258660000670885986}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
