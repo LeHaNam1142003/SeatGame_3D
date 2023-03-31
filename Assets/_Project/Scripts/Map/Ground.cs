@@ -31,6 +31,10 @@ public class Ground : MonoBehaviour
         if (isHaveSeat)
         {
             seatSurface.seatBox.enabled = isEnable;
+            if (isEnable==false)
+            {
+                Level.Instance.ManageSeat(seatSurface, false);
+            }
         }
     }
 
