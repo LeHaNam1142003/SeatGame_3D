@@ -162,8 +162,8 @@ public class Passenger : MonoBehaviour
     }
     void ShootRaycastCheck(Vector3 direction, Color color)
     {
-        Debug.DrawRay(transform.position, direction * 10, color);
-        if (Physics.Raycast(transform.position, direction, out _raycastHit, 10, passengerLayerMask))
+        Debug.DrawRay(transform.position, direction * 1, color);
+        if (Physics.Raycast(transform.position, direction, out _raycastHit, 1, passengerLayerMask))
         {
             if (_raycastHit.collider != null && _raycastHit.collider.gameObject.CompareTag(NameTag.RobotDetect))
             {
@@ -199,6 +199,13 @@ public class Passenger : MonoBehaviour
                 other.gameObject.GetComponent<Ground>().SetGroundBox(false);
                 currentdestination = other.transform;
             }
+        }
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag(NameTag.Passenger))
+        {
+            Physics.IgnoreCollision(collision.collider, GetComponent<CapsuleCollider>());
         }
     }
 }

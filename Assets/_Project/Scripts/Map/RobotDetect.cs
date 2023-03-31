@@ -80,8 +80,8 @@ public class RobotDetect : MonoBehaviour
 
     void Doraycast(Vector3 direction, Color color, Action action, RaycastHit gethit, EDirect eStopdirect)
     {
-        Debug.DrawRay(transform.position, direction * 10, color);
-        if (Physics.Raycast(transform.position, direction, out gethit, 10, layerMaskTarget))
+        Debug.DrawRay(transform.position, direction * 1, color);
+        if (Physics.Raycast(transform.position, direction, out gethit, 1, layerMaskTarget))
         {
             action?.Invoke();
             if (gethit.collider.gameObject.CompareTag(NameTag.GroundCheck))
