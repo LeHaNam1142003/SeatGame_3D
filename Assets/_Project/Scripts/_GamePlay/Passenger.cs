@@ -1,12 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Animancer;
 using Pancake;
 using TMPro;
 using UnityEngine;
 
 public class Passenger : MonoBehaviour
 {
+    [SerializeField] private AnimancerComponent animancerComponent;
     [SerializeField] private LayerMask passengerLayerMask;
     private bool _isMove;
     [ReadOnly] [SerializeField] private Transform road;
@@ -16,14 +18,16 @@ public class Passenger : MonoBehaviour
     [SerializeField] private GameObject passengerModel;
     [SerializeField] private TextMeshProUGUI hintText;
     [SerializeField, Range(0, 100)] private float passengerSpeed;
+    [SerializeField] private AnimationClip idleAnim;
+    [SerializeField] private AnimationClip walkAnim;
+    [SerializeField] private AnimationClip winAnim;
+    [ReadOnly] [SerializeField] private EStateAnim currentStateAnim;
+    private EStateAnim _previousStateAnim;
     public int rowDestination;
     public EColumn columnDestination;
     private RaycastHit _raycastHit;
-    private int _pathindex = 0;
-    public bool isclear;
-    public bool isAdd;
-    private float _currentx;
-    private float _currentz;
+    private int _pathindex;
+    private bool _isAdd = true;
     [ReadOnly] public bool isSelected;
     [ReadOnly] public Transform path;
     [ReadOnly] [SerializeField] private List<Transform> pathsToDestination = new List<Transform>();
@@ -34,29 +38,45 @@ public class Passenger : MonoBehaviour
     private void OnEnable()
     {
         Observer.ClickonGround += ClickonGround;
+        Observer.IntroWinGame += Win;
     }
     private void OnDisable()
     {
         Observer.ClickonGround -= ClickonGround;
+        Observer.IntroWinGame -= Win;
     }
     private void Start()
     {
         hint.SetActive(false);
-    }
-    void SetCurrentPosi()
-    {
-        _currentx = transform.position.x;
-        _currentz = transform.position.z;
+        _previousStateAnim = EStateAnim.Non;
+        SetIdleAnim();
     }
     public void SetSelected()
     {
         Level.Instance.SetTheSelectedPassenger(this);
-        isAdd = true;
     }
+    void Win()
+    {
+        Debug.Log("win");
+        SetWinAnim();
+    }
+    void SetIdleAnim() => SetStateAnim(EStateAnim.Idle, idleAnim);
+    void SetRunAnim() => SetStateAnim(EStateAnim.Run, walkAnim);
+    void SetWinAnim() => SetStateAnim(EStateAnim.Win, winAnim);
     void ClickonGround()
     {
         hint.SetActive(false);
     }
+    void SetStateAnim(EStateAnim getEStateAnim, AnimationClip getAnimationclip)
+    {
+        currentStateAnim = getEStateAnim;
+        if (currentStateAnim != _previousStateAnim)
+        {
+            animancerComponent.Play(getAnimationclip);
+            _previousStateAnim = currentStateAnim;
+        }
+    }
+
     public void GetSelected(bool isGetSelected)
     {
         if (_isMove == false)
@@ -86,13 +106,9 @@ public class Passenger : MonoBehaviour
             }
             else
             {
-                if (isAdd)
-                {
-                    AddPathToDestination(path);
-                    path.GetComponent<RobotDetect>().TakePreviousPath(this);
-                    isAdd = false;
-                }
-                else if (_isMove)
+                AddPathToDestination(path);
+                path.GetComponent<RobotDetect>().TakePreviousPath(this);
+                if (_isMove)
                 {
                     Level.Instance.theChoosenOne = this;
                     if (pathsToDestination.Count != 0)
@@ -101,6 +117,7 @@ public class Passenger : MonoBehaviour
                         road = pathsToDestination[_pathindex];
                         var dir = road.position - transform.position;
                         transform.Translate(dir.normalized * passengerSpeed * Time.deltaTime);
+                        SetRunAnim();
                         Quaternion lookRotaion = Quaternion.LookRotation(dir, Vector3.up);
                         passengerModel.transform.rotation = Quaternion.Euler(0, lookRotaion.eulerAngles.y, 0);
                         if (Vector3.Distance(transform.position, road.position) <= 0.1f)
@@ -112,25 +129,25 @@ public class Passenger : MonoBehaviour
             }
         }
     }
-    // void Move(Vector3 getDir)
-    // {
-    //     transform.Translate(getDir.normalized * passengerSpeed * Time.deltaTime);
-    // }
     public void AddPathToDestination(Transform path)
     {
-        if (path.parent != Level.Instance.paths[0])
+        if (_isAdd)
         {
-            if (!pathsToDestination.Contains(path))
+            if (path.parent != Level.Instance.paths[0])
+            {
+                if (!pathsToDestination.Contains(path))
+                {
+                    pathsToDestination.Add(path);
+                }
+            }
+            else
             {
                 pathsToDestination.Add(path);
+                nextdestination = pathsToDestination[pathsToDestination.Count - 1].parent;
+                SetNewDestination(nextdestination);
+                _isMove = true;
+                _isAdd = false;
             }
-        }
-        else
-        {
-            pathsToDestination.Add(path);
-            nextdestination = pathsToDestination[pathsToDestination.Count - 1].parent;
-            SetNewDestination(nextdestination);
-            _isMove = true;
         }
     }
     void SetNextPath()
@@ -139,6 +156,7 @@ public class Passenger : MonoBehaviour
         _pathindex++;
         if (_pathindex >= pathsToDestination.Count)
         {
+            SetIdleAnim();
             _isMove = false;
             Level.Instance.theChoosenOne = null;
             pathsToDestination.Clear();
@@ -147,6 +165,7 @@ public class Passenger : MonoBehaviour
             _pathindex = 0;
             path = null;
             isSelected = false;
+            _isAdd = true;
             passengerModel.transform.rotation = Quaternion.Euler(0, 180, 0);
         }
     }
@@ -208,4 +227,11 @@ public class Passenger : MonoBehaviour
             Physics.IgnoreCollision(collision.collider, GetComponent<CapsuleCollider>());
         }
     }
+}
+public enum EStateAnim
+{
+    Non,
+    Idle,
+    Run,
+    Win,
 }

@@ -69,7 +69,7 @@ public class Level : MonoBehaviour
         }
         if (count == 0)
         {
-            GameManager.Instance.OnWinGame();
+            Observer.IntroWinGame?.Invoke();
         }
     }
 
@@ -125,17 +125,24 @@ public class Level : MonoBehaviour
         for (int i = 0; i < paths.Count; i++)
         {
             var getGround = paths[i].GetComponent<Ground>();
-            for (int j = 0; j < groundSelecteds.Count; j++)
+            if (groundSelecteds.Count != 0)
             {
-                if (paths[i] != groundSelecteds[j])
+                for (int j = 0; j < groundSelecteds.Count; j++)
                 {
-                    getGround.SetGroundBox(true);
+                    if (paths[i] != groundSelecteds[j])
+                    {
+                        getGround.SetGroundBox(true);
+                    }
+                    else
+                    {
+                        getGround.SetGroundBox(false);
+                        break;
+                    }
                 }
-                else
-                {
-                    getGround.SetGroundBox(false);
-                    break;
-                }
+            }
+            else
+            {
+                getGround.SetGroundBox(true);
             }
             getGround.robotDetect.gameObject.SetActive(false);
         }

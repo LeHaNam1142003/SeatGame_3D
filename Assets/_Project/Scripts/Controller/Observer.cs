@@ -28,7 +28,7 @@ public static class Observer
     public static Action PurchaseFail;
     public static Action PurchaseSucceed;
     public static Action ClaimReward;
-    public static Action DetectRobot;
+    public static Action IntroWinGame;
     public static Action ClickonGround;
     
     #endregion

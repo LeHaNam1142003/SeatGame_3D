@@ -23,7 +23,6 @@ public class RobotDetect : MonoBehaviour
         ShootRaycastRight();
         ShootRaycastUp();
     }
-
     public void Reset()
     {
         isStopRaycastDown = false;
