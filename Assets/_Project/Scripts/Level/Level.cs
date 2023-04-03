@@ -2,18 +2,22 @@ using System;
 using System.Collections.Generic;
 using System.Security.Permissions;
 using Pancake;
+using TMPro;
 using UnityEditor;
 using UnityEngine;
 
 public class Level : MonoBehaviour
 {
+    [SerializeField] private int maxTurn;
+    [ReadOnly] [SerializeField] private int currentTurn;
+    [SerializeField] private TextMeshProUGUI turnText;
     public static Level Instance;
     [ReadOnly] public List<Transform> paths = new List<Transform>();
     [ReadOnly] public List<Transform> groundSelecteds = new List<Transform>();
     [ReadOnly] public List<Passenger> passengers = new List<Passenger>();
     [ReadOnly] public List<SetUpSeat> setupSeats = new List<SetUpSeat>();
     private bool _isCanTouchGround;
-    [ReadOnly] public Passenger theChoosenOne;
+    private bool isDecreaseTurn;
     private int count;
     [ReadOnly] public int bonusMoney;
 
@@ -34,6 +38,8 @@ public class Level : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        currentTurn = maxTurn;
+        CheckTurn();
     }
     public void SetTheSelectedPassenger(Passenger passenger)
     {
@@ -48,6 +54,24 @@ public class Level : MonoBehaviour
             {
                 checkPassenger.GetSelected(false);
             }
+        }
+    }
+    public void SetTurn()
+    {
+        currentTurn--;
+        CheckTurn();
+    }
+    void CheckTurn()
+    {
+        if (currentTurn <= 0)
+        {
+            currentTurn = 0;
+            turnText.text = "Turn: " + currentTurn + "/" + maxTurn;
+            OnLose();
+        }
+        else
+        {
+            turnText.text = "Turn: " + currentTurn + "/" + maxTurn;
         }
     }
     public void ManageSeat(Seat getSeat, bool isCorrectPassenger)
@@ -174,14 +198,15 @@ public class Level : MonoBehaviour
     //     Observer.LoseLevel -= OnLose;
     // }
 
-    // public void OnWin(Level level)
-    // {
-    //     GameManager.Instance.OnWinGame();
-    // }
-    //
-    // public void OnLose(Level level)
-    // {
-    // }
+    public void OnWin()
+    {
+        GameManager.Instance.OnWinGame();
+    }
+
+    public void OnLose()
+    {
+        GameManager.Instance.OnLoseGame();
+    }
 }
 [Serializable]
 public class SetUpSeat

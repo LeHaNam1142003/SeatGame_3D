@@ -110,7 +110,6 @@ public class Passenger : MonoBehaviour
                 path.GetComponent<RobotDetect>().TakePreviousPath(this);
                 if (_isMove)
                 {
-                    Level.Instance.theChoosenOne = this;
                     if (pathsToDestination.Count != 0)
                     {
                         hint.SetActive(false);
@@ -147,6 +146,7 @@ public class Passenger : MonoBehaviour
                 SetNewDestination(nextdestination);
                 _isMove = true;
                 _isAdd = false;
+                Level.Instance.SetTurn();
             }
         }
     }
@@ -158,7 +158,6 @@ public class Passenger : MonoBehaviour
         {
             SetIdleAnim();
             _isMove = false;
-            Level.Instance.theChoosenOne = null;
             pathsToDestination.Clear();
             currentdestination = nextdestination;
             nextdestination = null;
