@@ -18,7 +18,7 @@ public class CameraWin : MonoBehaviour
     }
     private void Start()
     {
-        _camera=GetComponent<Camera>();
+        _camera = GetComponent<Camera>();
         _moveCamera = new Vector3(transform.position.x - 9, transform.position.y, transform.position.x);
     }
     void IntroWinGame()
@@ -26,7 +26,7 @@ public class CameraWin : MonoBehaviour
         _camera.orthographic = false;
         transform.DORotate(_rotateCamera, 2).OnUpdate((() =>
         {
-            transform.DOLocalMove(_moveCamera, 2);
-        })).OnComplete((() => Observer.DoneLevel?.Invoke()));
+            transform.DOLocalMove(_moveCamera, 2).OnComplete((() => Observer.DoneLevel?.Invoke()));
+        }));
     }
 }

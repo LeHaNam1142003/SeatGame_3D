@@ -38,12 +38,12 @@ public class Passenger : MonoBehaviour
     private void OnEnable()
     {
         Observer.ClickonGround += ClickonGround;
-        Observer.IntroWinGame += Win;
+        Observer.DoneLevel += Win;
     }
     private void OnDisable()
     {
         Observer.ClickonGround -= ClickonGround;
-        Observer.IntroWinGame -= Win;
+        Observer.DoneLevel -= Win;
     }
     private void Start()
     {
@@ -57,8 +57,14 @@ public class Passenger : MonoBehaviour
     }
     void Win()
     {
-        Debug.Log("win");
+        passengerModel.transform.rotation = Quaternion.Euler(0, -90, 0);
         SetWinAnim();
+        StartCoroutine(WaitForWin());
+    }
+    IEnumerator WaitForWin()
+    {
+        yield return new WaitForSeconds(1f);
+        Observer.ShipMove?.Invoke();
     }
     void SetIdleAnim() => SetStateAnim(EStateAnim.Idle, idleAnim);
     void SetRunAnim() => SetStateAnim(EStateAnim.Run, walkAnim);
@@ -153,8 +159,7 @@ public class Passenger : MonoBehaviour
     void SetNextPath()
     {
         transform.position = road.transform.position;
-        _pathindex++;
-        if (_pathindex >= pathsToDestination.Count)
+        if (_pathindex >= pathsToDestination.Count - 1)
         {
             SetIdleAnim();
             _isMove = false;
@@ -167,6 +172,10 @@ public class Passenger : MonoBehaviour
             _isAdd = true;
             passengerModel.transform.rotation = Quaternion.Euler(0, 180, 0);
             Level.Instance.CheckTurn();
+        }
+        else
+        {
+            _pathindex++;
         }
     }
     void SetNewDestination(Transform newdestination)

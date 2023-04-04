@@ -9,11 +9,11 @@ public class Ship : MonoBehaviour
     private Vector3 _destination;
     private void OnEnable()
     {
-        Observer.DoneLevel += Move;
+        Observer.ShipMove += Move;
     }
     private void OnDisable()
     {
-        Observer.DoneLevel -= Move;
+        Observer.ShipMove -= Move;
     }
     private void Start()
     {
@@ -21,6 +21,6 @@ public class Ship : MonoBehaviour
     }
     void Move()
     {
-        transform.DOMove(_destination, 1).OnComplete((() => Level.Instance.OnWin()));
+        transform.DOMove(_destination, 2).OnComplete((() => Level.Instance.OnWin()));
     }
 }

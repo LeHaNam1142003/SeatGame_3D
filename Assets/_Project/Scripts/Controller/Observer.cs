@@ -31,6 +31,7 @@ public static class Observer
     public static Action IntroWinGame;
     public static Action ClickonGround;
     public static Action DoneLevel;
+    public static Action ShipMove;
     
     #endregion
 
