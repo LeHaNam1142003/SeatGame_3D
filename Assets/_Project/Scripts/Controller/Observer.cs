@@ -30,6 +30,7 @@ public static class Observer
     public static Action ClaimReward;
     public static Action IntroWinGame;
     public static Action ClickonGround;
+    public static Action DoneLevel;
     
     #endregion
 

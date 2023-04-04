@@ -39,7 +39,7 @@ public class Level : MonoBehaviour
     {
         Instance = this;
         currentTurn = maxTurn;
-        CheckTurn();
+        UpdateTurn();
     }
     public void SetTheSelectedPassenger(Passenger passenger)
     {
@@ -59,19 +59,23 @@ public class Level : MonoBehaviour
     public void SetTurn()
     {
         currentTurn--;
-        CheckTurn();
+        UpdateTurn();
     }
-    void CheckTurn()
+    void UpdateTurn()
     {
-        if (currentTurn <= 0)
+        turnText.text = "Turn: " + currentTurn + "/" + maxTurn;
+    }
+    public void CheckTurn()
+    {
+        if (currentTurn == 0)
         {
-            currentTurn = 0;
-            turnText.text = "Turn: " + currentTurn + "/" + maxTurn;
-            OnLose();
-        }
-        else
-        {
-            turnText.text = "Turn: " + currentTurn + "/" + maxTurn;
+            foreach (var checkSeat in setupSeats)
+            {
+                if (checkSeat.isCorrect == false)
+                {
+                    OnLose();
+                }
+            }
         }
     }
     public void ManageSeat(Seat getSeat, bool isCorrectPassenger)
@@ -114,7 +118,7 @@ public class Level : MonoBehaviour
 
     void HandleFingerDown(Lean.Touch.LeanFinger finger)
     {
-        if (GameManager.Instance.gameState != GameState.WinGame)
+        if (GameManager.Instance.gameState != GameState.WinGame && currentTurn != 0)
         {
             if (!finger.IsOverGui)
             {

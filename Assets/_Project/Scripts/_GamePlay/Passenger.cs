@@ -166,6 +166,7 @@ public class Passenger : MonoBehaviour
             isSelected = false;
             _isAdd = true;
             passengerModel.transform.rotation = Quaternion.Euler(0, 180, 0);
+            Level.Instance.CheckTurn();
         }
     }
     void SetNewDestination(Transform newdestination)
