@@ -14,7 +14,7 @@ public class Level : MonoBehaviour
     public static Level Instance;
     [ReadOnly] public List<Transform> paths = new List<Transform>();
     [ReadOnly] public List<Transform> groundSelecteds = new List<Transform>();
-    [ReadOnly] public List<Passenger> passengers = new List<Passenger>();
+    public List<Passenger> passengers = new List<Passenger>();
     [ReadOnly] public List<SetUpSeat> setupSeats = new List<SetUpSeat>();
     private bool _isCanTouchGround;
     private bool isDecreaseTurn;
