@@ -15,7 +15,7 @@ public class LevelController : SingletonDontDestroy<LevelController>
     {
         if (currentLevel != null)
         {
-            Destroy(currentLevel.gameObject);
+            DestroyImmediate(currentLevel.gameObject);
         }
 
         if (indexLevel > ConfigController.Game.maxLevel)

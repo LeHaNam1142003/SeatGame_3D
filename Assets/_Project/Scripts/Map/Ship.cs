@@ -17,7 +17,7 @@ public class Ship : MonoBehaviour
     }
     private void Start()
     {
-        _destination = new Vector3(transform.position.x, transform.position.y, transform.position.z - 10);
+        _destination = new Vector3(transform.position.x, transform.position.y, transform.position.z - 20);
     }
     void Move()
     {

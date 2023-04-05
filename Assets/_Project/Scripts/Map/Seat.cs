@@ -13,13 +13,16 @@ public class Seat : MonoBehaviour
     private SeatInfor _seatInfor;
     public BoxCollider seatBox;
     [ReadOnly] public SetUpSeat _setUpSeat;
-    private void Start()
+    private void OnEnable()
     {
         if (isActiveAndEnabled)
         {
             _setUpSeat.seat = this;
             _setUpSeat.isCorrect = false;
-            Level.Instance.setupSeats.Add(_setUpSeat);
+            if (!Level.Instance.setupSeats.Contains(_setUpSeat))
+            {
+                Level.Instance.setupSeats.Add(_setUpSeat);
+            }
         }
         _seatInfor = new SeatInfor(setIndexRow, setIndexColumn);
         seatBox.enabled = false;

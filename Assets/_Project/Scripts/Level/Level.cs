@@ -19,6 +19,7 @@ public class Level : MonoBehaviour
     private bool _isCanTouchGround;
     private bool isDecreaseTurn;
     private int count;
+    [ReadOnly] public bool IsWin;
     [ReadOnly] public int bonusMoney;
 
     private bool _isFingerDown;
@@ -118,7 +119,7 @@ public class Level : MonoBehaviour
 
     void HandleFingerDown(Lean.Touch.LeanFinger finger)
     {
-        if (GameManager.Instance.gameState != GameState.WinGame && currentTurn != 0)
+        if (IsWin != true && currentTurn != 0)
         {
             if (!finger.IsOverGui)
             {

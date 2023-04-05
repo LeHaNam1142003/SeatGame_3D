@@ -24,6 +24,7 @@ public class CameraWin : MonoBehaviour
     void IntroWinGame()
     {
         _camera.orthographic = false;
+        Level.Instance.IsWin = true;
         transform.DORotate(_rotateCamera, 2).OnUpdate((() =>
         {
             transform.DOLocalMove(_moveCamera, 2).OnComplete((() => Observer.DoneLevel?.Invoke()));

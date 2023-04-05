@@ -10,7 +10,7 @@ public class Ground : MonoBehaviour
     [SerializeField] private Seat seatSurface;
     [SerializeField] private bool isHaveSeat;
 
-    private void Start()
+    private void Awake()
     {
         SetSeat();
         HideRobotDetect();

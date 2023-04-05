@@ -69,7 +69,7 @@ public class GameManager : SingletonDontDestroy<GameManager>
 
     public void NextLevel()
     {
-        // Observer.SkipLevel?.Invoke(levelController.currentLevel);
+        Observer.SkipLevel?.Invoke(levelController.currentLevel);
         Data.CurrentLevel++;
 
         PrepareLevel();

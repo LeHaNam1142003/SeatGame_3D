@@ -224,7 +224,7 @@ public class Passenger : MonoBehaviour
         {
             if (currentdestination == null)
             {
-                other.gameObject.GetComponent<Ground>().SetGroundBox(false);
+                other.gameObject.GetComponent<Ground>().SetDestination(false);
                 currentdestination = other.transform;
             }
         }
