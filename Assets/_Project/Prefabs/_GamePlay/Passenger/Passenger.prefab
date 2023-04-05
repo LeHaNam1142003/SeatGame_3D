@@ -561,9 +561,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.013700277
-  m_Height: 1.4043874
+  m_Height: 1.0578119
   m_Direction: 1
-  m_Center: {x: -0.010492712, y: 0.339495, z: 0}
+  m_Center: {x: -0.010492712, y: 0.51278275, z: 0}
 --- !u!114 &3293883333302468133
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1768,7 +1768,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -0.5036284, y: 0, z: -0.49374926, w: 0}
+  m_margin: {x: -0.5369642, y: 0, z: -0.5366906, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
