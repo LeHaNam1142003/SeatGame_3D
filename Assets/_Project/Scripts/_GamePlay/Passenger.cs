@@ -8,12 +8,18 @@ using UnityEngine;
 
 public class Passenger : MonoBehaviour
 {
-    [SerializeField] private AnimancerComponent animancerComponent;
-    [SerializeField] private LayerMask passengerLayerMask;
     private bool _isMove;
+    [Header("ReadOnlyAttribute")]
     [ReadOnly] [SerializeField] private Transform road;
     [ReadOnly] [SerializeField] private Transform currentdestination;
     [ReadOnly] [SerializeField] private Transform nextdestination;
+    [ReadOnly] public bool isSelected;
+    [ReadOnly] public Transform path;
+    [ReadOnly] [SerializeField] private List<Transform> pathsToDestination = new List<Transform>();
+    [ReadOnly] [SerializeField] private EStateAnim currentStateAnim;
+    [Header("Attributes")]
+    [SerializeField] private AnimancerComponent animancerComponent;
+    [SerializeField] private LayerMask passengerLayerMask;
     [SerializeField] private GameObject hint;
     [SerializeField] private GameObject passengerModel;
     [SerializeField] private TextMeshProUGUI hintText;
@@ -21,16 +27,13 @@ public class Passenger : MonoBehaviour
     [SerializeField] private AnimationClip idleAnim;
     [SerializeField] private AnimationClip walkAnim;
     [SerializeField] private AnimationClip winAnim;
-    [ReadOnly] [SerializeField] private EStateAnim currentStateAnim;
-    private EStateAnim _previousStateAnim;
     public int rowDestination;
     public EColumn columnDestination;
+    private EStateAnim _previousStateAnim;
     private RaycastHit _raycastHit;
     private int _pathindex;
     private bool _isAdd = true;
-    [ReadOnly] public bool isSelected;
-    [ReadOnly] public Transform path;
-    [ReadOnly] [SerializeField] private List<Transform> pathsToDestination = new List<Transform>();
+    private int indexturn;
     private void Awake()
     {
         Level.Instance.passengers.Add(this);
@@ -154,6 +157,7 @@ public class Passenger : MonoBehaviour
                 _isMove = true;
                 _isAdd = false;
                 Level.Instance.SetTurn();
+                indexturn = Level.Instance.currentTurn;
             }
         }
     }
@@ -172,7 +176,7 @@ public class Passenger : MonoBehaviour
             isSelected = false;
             _isAdd = true;
             passengerModel.transform.rotation = Quaternion.Euler(0, 180, 0);
-            Level.Instance.CheckTurn();
+            Level.Instance.CheckTurn(indexturn);
         }
         else
         {

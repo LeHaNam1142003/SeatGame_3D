@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections;
 using UnityEngine;
 
 public class RobotDetect : MonoBehaviour
@@ -11,10 +12,10 @@ public class RobotDetect : MonoBehaviour
     private RaycastHit hitLeft;
     private RaycastHit hitDown;
     private RaycastHit hitUp;
-    public bool isStopRaycastLeft;
-    public bool isStopRaycastRight;
-    public bool isStopRaycastDown;
-    public bool isStopRaycastUp;
+    [ReadOnly] public bool isStopRaycastLeft;
+    [ReadOnly] public bool isStopRaycastRight;
+    [ReadOnly] public bool isStopRaycastDown;
+    [ReadOnly] public bool isStopRaycastUp;
 
     private void Update()
     {

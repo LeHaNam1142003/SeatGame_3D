@@ -8,19 +8,19 @@ using UnityEngine;
 
 public class Level : MonoBehaviour
 {
-    [SerializeField] private int maxTurn;
-    [ReadOnly] [SerializeField] private int currentTurn;
-    [SerializeField] private TextMeshProUGUI turnText;
     public static Level Instance;
     [ReadOnly] public List<Transform> paths = new List<Transform>();
     [ReadOnly] public List<Transform> groundSelecteds = new List<Transform>();
-    public List<Passenger> passengers = new List<Passenger>();
+    [ReadOnly] [SerializeField] public int currentTurn;
     [ReadOnly] public List<SetUpSeat> setupSeats = new List<SetUpSeat>();
+    [ReadOnly] public bool IsWin;
+    [ReadOnly] public int bonusMoney;
+    [ReadOnly] public List<Passenger> passengers = new List<Passenger>();
+    [SerializeField] private int maxTurn;
+    [SerializeField] private TextMeshProUGUI turnText;
     private bool _isCanTouchGround;
     private bool isDecreaseTurn;
     private int count;
-    [ReadOnly] public bool IsWin;
-    [ReadOnly] public int bonusMoney;
 
     private bool _isFingerDown;
     private bool _isFingerDrag;
@@ -44,6 +44,7 @@ public class Level : MonoBehaviour
     }
     public void SetTheSelectedPassenger(Passenger passenger)
     {
+        // Set the Selected Passenger is only one and the others are unselectable
         foreach (var checkPassenger in passengers)
         {
             if (checkPassenger == passenger)
@@ -66,9 +67,9 @@ public class Level : MonoBehaviour
     {
         turnText.text = "Turn: " + currentTurn + "/" + maxTurn;
     }
-    public void CheckTurn()
+    public void CheckTurn(int getindex)
     {
-        if (currentTurn == 0)
+        if (getindex == 0)
         {
             foreach (var checkSeat in setupSeats)
             {
@@ -81,6 +82,7 @@ public class Level : MonoBehaviour
     }
     public void ManageSeat(Seat getSeat, bool isCorrectPassenger)
     {
+        // Check all of Seats are correct or not
         count = 0;
         foreach (var setupSeat in setupSeats)
         {
