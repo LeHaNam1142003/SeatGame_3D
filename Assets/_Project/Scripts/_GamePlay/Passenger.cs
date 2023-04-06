@@ -57,6 +57,7 @@ public class Passenger : MonoBehaviour
     }
     void Win()
     {
+        hint.SetActive(false);
         passengerModel.transform.rotation = Quaternion.Euler(0, -90, 0);
         SetWinAnim();
         StartCoroutine(WaitForWin());
