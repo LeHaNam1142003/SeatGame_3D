@@ -530,13 +530,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd9f4f754c99b8f49a5155365f208d63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  road: {fileID: 0}
+  currentdestination: {fileID: 0}
+  nextdestination: {fileID: 0}
+  isSelected: 0
+  path: {fileID: 0}
+  pathsToDestination: []
+  currentStateAnim: 0
   animancerComponent: {fileID: 3293883333302468133}
   passengerLayerMask:
     serializedVersion: 2
     m_Bits: 896
-  road: {fileID: 0}
-  currentdestination: {fileID: 0}
-  nextdestination: {fileID: 0}
   hint: {fileID: 1281580949475763043}
   passengerModel: {fileID: 2106836423089920897}
   hintText: {fileID: 4251974215493646765}
@@ -544,12 +548,8 @@ MonoBehaviour:
   idleAnim: {fileID: 7400000, guid: 1dbc38f7903fa924d9e394fae2041afb, type: 2}
   walkAnim: {fileID: 7400000, guid: 6c77b6c27922db948a55dd9990cd7d10, type: 2}
   winAnim: {fileID: 7400000, guid: e875796ad0edfd8469980b04dfd7a8e2, type: 2}
-  currentStateAnim: 0
   rowDestination: 0
   columnDestination: 0
-  isSelected: 0
-  path: {fileID: 0}
-  pathsToDestination: []
 --- !u!136 &326496850702081793
 CapsuleCollider:
   m_ObjectHideFlags: 0
