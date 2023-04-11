@@ -9,11 +9,16 @@ public class Ground : MonoBehaviour
     [SerializeField] private GameObject seat;
     [SerializeField] private Seat seatSurface;
     [SerializeField] private bool isHaveSeat;
+    [SerializeField] private MeshRenderer groundModel;
 
     private void Awake()
     {
         SetSeat();
         HideRobotDetect();
+    }
+    public void SetMatGround(Material getMat)
+    {
+        groundModel.material = getMat;
     }
     void SetSeat()
     {
@@ -31,7 +36,7 @@ public class Ground : MonoBehaviour
         if (isHaveSeat)
         {
             seatSurface.seatBox.enabled = isEnable;
-            if (isEnable==false)
+            if (isEnable == false)
             {
                 Level.Instance.ManageSeat(seatSurface, false);
             }

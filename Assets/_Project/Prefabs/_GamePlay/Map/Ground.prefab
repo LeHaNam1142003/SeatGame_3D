@@ -164,6 +164,7 @@ MonoBehaviour:
   seat: {fileID: 5380172717542185309}
   seatSurface: {fileID: 5985224197179432770}
   isHaveSeat: 0
+  groundModel: {fileID: 2834834696535499941}
 --- !u!54 &7015559598624341615
 Rigidbody:
   m_ObjectHideFlags: 0
