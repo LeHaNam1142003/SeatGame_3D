@@ -18,6 +18,7 @@ public class Level : MonoBehaviour
     [ReadOnly] public List<Passenger> passengers = new List<Passenger>();
     [SerializeField] private int maxTurn;
     [SerializeField] private TextMeshProUGUI turnText;
+    [SerializeField] private TextMeshProUGUI arrangeText;
     private bool _isCanTouchGround;
     private bool isDecreaseTurn;
     private int count;
@@ -67,6 +68,10 @@ public class Level : MonoBehaviour
     {
         turnText.text = "Turn: " + currentTurn + "/" + maxTurn;
     }
+    void UpdateArrrangement(int wrongSeat, int maxSeat)
+    {
+        arrangeText.text = "WrongSeat :" + wrongSeat + "/" + maxSeat;
+    }
     public void CheckTurn(int getindex)
     {
         if (getindex == 0)
@@ -98,6 +103,7 @@ public class Level : MonoBehaviour
                 count++;
             }
         }
+        UpdateArrrangement(count, setupSeats.Count);
         if (count == 0)
         {
             Observer.IntroWinGame?.Invoke();

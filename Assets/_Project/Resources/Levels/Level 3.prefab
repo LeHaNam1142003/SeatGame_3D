@@ -200,7 +200,8 @@ MonoBehaviour:
   bonusMoney: 0
   passengers: []
   maxTurn: 10
-  turnText: {fileID: 0}
+  turnText: {fileID: 749935333645724232}
+  arrangeText: {fileID: 8527826331489493460}
 --- !u!1 &4081765448806724721
 GameObject:
   m_ObjectHideFlags: 0
@@ -503,12 +504,36 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 35719c08271cb624c952396ea60b3ebb, type: 3}
+--- !u!114 &749935333645724232 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 661084648460673310, guid: 35719c08271cb624c952396ea60b3ebb,
+    type: 3}
+  m_PrefabInstance: {fileID: 235571235369634646}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &5327898937072157772 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5383091352930078490, guid: 35719c08271cb624c952396ea60b3ebb,
     type: 3}
   m_PrefabInstance: {fileID: 235571235369634646}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8527826331489493460 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8438626501416888962, guid: 35719c08271cb624c952396ea60b3ebb,
+    type: 3}
+  m_PrefabInstance: {fileID: 235571235369634646}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &531898719686070820
 PrefabInstance:
   m_ObjectHideFlags: 0
