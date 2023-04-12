@@ -161,7 +161,7 @@ SkinnedMeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 20e17aac92cea844aaa708706067eb14, type: 2}
-  - {fileID: 2100000, guid: c9893909aae4a0644a72da08dc9b62ed, type: 2}
+  - {fileID: 2100000, guid: 1ac3b075659c2ee42bbd43977a86dc99, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -538,6 +538,10 @@ MonoBehaviour:
   pathsToDestination: []
   currentStateAnim: 0
   animancerComponent: {fileID: 3293883333302468133}
+  skinnedMeshRenderer: {fileID: 2106836421164264978}
+  angry: {fileID: 2100000, guid: 6d53e7ad33bcf2c40945841d45e37cc3, type: 2}
+  pleasure: {fileID: 2100000, guid: 4dd52ad16cc49d146b4d2fcefc0b4398, type: 2}
+  normal: {fileID: 2100000, guid: 1ac3b075659c2ee42bbd43977a86dc99, type: 2}
   passengerLayerMask:
     serializedVersion: 2
     m_Bits: 896
@@ -1080,9 +1084,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2106836422674439911}
-  m_LocalRotation: {x: -0.5, y: 0.5, z: 0.49999937, w: 0.50000066}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 0.9999999, z: 0.9999999}
+  m_LocalRotation: {x: -0.7071068, y: 0.00000044703484, z: 0.7071068, w: 0.0000013709068}
+  m_LocalPosition: {x: 0, y: 0.00037424266, z: 0.02799286}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2106836421603815475}

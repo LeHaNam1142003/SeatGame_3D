@@ -19,6 +19,10 @@ public class Passenger : MonoBehaviour
     [ReadOnly] [SerializeField] private EStateAnim currentStateAnim;
     [Header("Attributes")]
     [SerializeField] private AnimancerComponent animancerComponent;
+    [SerializeField] private SkinnedMeshRenderer skinnedMeshRenderer;
+    public Material angry;
+    public Material pleasure;
+    public Material normal;
     [SerializeField] private LayerMask passengerLayerMask;
     [SerializeField] private GameObject hint;
     [SerializeField] private GameObject passengerModel;
@@ -52,11 +56,18 @@ public class Passenger : MonoBehaviour
     {
         hint.SetActive(false);
         _previousStateAnim = EStateAnim.Non;
+        SetEmotion(normal);
         SetIdleAnim();
     }
     public void SetSelected()
     {
         Level.Instance.SetTheSelectedPassenger(this);
+    }
+    public void SetEmotion(Material getMaterial)
+    {
+        Material[] mats = skinnedMeshRenderer.materials;
+        mats[1] = getMaterial;
+        skinnedMeshRenderer.materials = mats;
     }
     void Win()
     {
@@ -153,6 +164,7 @@ public class Passenger : MonoBehaviour
             {
                 pathsToDestination.Add(path);
                 nextdestination = pathsToDestination[pathsToDestination.Count - 1].parent;
+                SetEmotion(normal);
                 SetNewDestination(nextdestination);
                 _isMove = true;
                 _isAdd = false;
