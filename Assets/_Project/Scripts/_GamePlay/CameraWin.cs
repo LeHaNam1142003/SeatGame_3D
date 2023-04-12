@@ -6,7 +6,7 @@ using UnityEngine;
 public class CameraWin : MonoBehaviour
 {
     private Camera _camera;
-    private Vector3 _rotateCamera = new Vector3(0, 90, 0);
+    private Vector3 _rotateCamera = new Vector3(0, 70, 0);
     private Vector3 _moveCamera;
     private void OnEnable()
     {
@@ -19,7 +19,7 @@ public class CameraWin : MonoBehaviour
     private void Start()
     {
         _camera = GetComponent<Camera>();
-        _moveCamera = new Vector3(transform.position.x - 9, transform.position.y, transform.position.x);
+        _moveCamera = new Vector3(-9, 8, -1);
     }
     void IntroWinGame()
     {
