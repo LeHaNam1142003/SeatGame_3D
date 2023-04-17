@@ -202,6 +202,8 @@ MonoBehaviour:
   maxTurn: 10
   turnText: {fileID: 7837985126801631682}
   arrangeText: {fileID: 1222374466481201758}
+  isHaveTools: 0
+  toolButtons: []
 --- !u!1 &4081765448806724721
 GameObject:
   m_ObjectHideFlags: 0
@@ -3750,7 +3752,7 @@ PrefabInstance:
     - target: {fileID: 1101734765844541691, guid: 35719c08271cb624c952396ea60b3ebb,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 2538864798602755889, guid: 35719c08271cb624c952396ea60b3ebb,
         type: 3}

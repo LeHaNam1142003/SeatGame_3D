@@ -56,6 +56,8 @@ MonoBehaviour:
   maxTurn: 6
   turnText: {fileID: 6110526619751308879}
   arrangeText: {fileID: 2953325057860474323}
+  isHaveTools: 0
+  toolButtons: []
 --- !u!1001 &83501614326569734
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3363,12 +3365,17 @@ PrefabInstance:
     - target: {fileID: 43614415113023709, guid: 35719c08271cb624c952396ea60b3ebb,
         type: 3}
       propertyPath: orthographic size
-      value: 8
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 1101734765844541691, guid: 35719c08271cb624c952396ea60b3ebb,
         type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1101734765844541691, guid: 35719c08271cb624c952396ea60b3ebb,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 2538864798602755889, guid: 35719c08271cb624c952396ea60b3ebb,
         type: 3}
