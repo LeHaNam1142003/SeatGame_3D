@@ -5,6 +5,7 @@ using Pancake;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Level : MonoBehaviour
 {
@@ -16,15 +17,20 @@ public class Level : MonoBehaviour
     [ReadOnly] public bool IsWin;
     [ReadOnly] public int bonusMoney;
     [ReadOnly] public List<Passenger> passengers = new List<Passenger>();
+    [ReadOnly] public ETool eTool;
     [SerializeField] private int maxTurn;
+    [SerializeField] private bool isHaveTools;
+    [ShowIf("isHaveTools")] [SerializeField] private List<Button> tools;
     [SerializeField] private TextMeshProUGUI turnText;
     [SerializeField] private TextMeshProUGUI arrangeText;
+    private List<Passenger> swaps = new List<Passenger>();
     private bool _isCanTouchGround;
     private bool isDecreaseTurn;
     private int count;
-
+    private bool _isUseTool;
     private bool _isFingerDown;
     private bool _isFingerDrag;
+    private bool _isProcessing;
 
     private Camera Camera => GetComponentInChildren<Camera>(true);
 
@@ -39,6 +45,17 @@ public class Level : MonoBehaviour
 #endif
     private void Awake()
     {
+        Initialization();
+    }
+    void Initialization()
+    {
+        if (isHaveTools)
+        {
+            foreach (var setTool in tools)
+            {
+                setTool.gameObject.SetActive(true);
+            }
+        }
         Instance = this;
         currentTurn = maxTurn;
         UpdateTurn();
@@ -50,8 +67,27 @@ public class Level : MonoBehaviour
         {
             if (checkPassenger == passenger)
             {
-                checkPassenger.GetSelected(true);
-                _isCanTouchGround = true;
+                if (!_isUseTool)
+                {
+                    checkPassenger.GetSelected(true);
+                    _isCanTouchGround = true;
+                }
+                else
+                {
+                    if (!passenger.isMove)
+                    {
+                        switch (eTool)
+                        {
+                            case ETool.Swap:
+                                DoSwap(passenger);
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        EndDoSwap();
+                    }
+                }
             }
             else
             {
@@ -85,6 +121,8 @@ public class Level : MonoBehaviour
             }
         }
     }
+    public void OnProcessing() => _isProcessing = true;
+    public void EndProcessing() => _isProcessing = false;
     public void ManageSeat(Seat getSeat, bool isCorrectPassenger)
     {
         // Check all of Seats are correct or not
@@ -116,6 +154,7 @@ public class Level : MonoBehaviour
         Lean.Touch.LeanTouch.OnFingerDown += HandleFingerDown;
         Lean.Touch.LeanTouch.OnFingerUp += HandleFingerUp;
         Lean.Touch.LeanTouch.OnFingerUpdate += HandleFingerUpdate;
+        Observer.SwapTool += SwapTool;
     }
 
     void OnDisable()
@@ -123,11 +162,42 @@ public class Level : MonoBehaviour
         Lean.Touch.LeanTouch.OnFingerDown -= HandleFingerDown;
         Lean.Touch.LeanTouch.OnFingerUp -= HandleFingerUp;
         Lean.Touch.LeanTouch.OnFingerUpdate -= HandleFingerUpdate;
+        Observer.SwapTool -= SwapTool;
+    }
+    public void SwapTool()
+    {
+        foreach (var setpassengers in passengers)
+        {
+            setpassengers.hint.SetActive(true);
+        }
+        _isCanTouchGround = false;
+        _isUseTool = true;
+        eTool = ETool.Swap;
+    }
+    void DoSwap(Passenger passenger)
+    {
+        swaps.Add(passenger);
+        if (swaps.Count == 2)
+        {
+            swaps[0].DoSwapPosi(swaps[1].transform.position, swaps[1].currentDestination);
+            swaps[1].DoSwapPosi(swaps[0].transform.position, swaps[0].currentDestination);
+            swaps.Clear();
+        }
+    }
+    public void EndDoSwap()
+    {
+        eTool = ETool.Non;
+        _isUseTool = false;
+        foreach (var setpassengers in passengers)
+        {
+            setpassengers.hint.SetActive(false);
+        }
+        swaps.Clear();
     }
 
     void HandleFingerDown(Lean.Touch.LeanFinger finger)
     {
-        if (IsWin != true && currentTurn != 0)
+        if (IsWin != true && currentTurn != 0 && !_isProcessing)
         {
             if (!finger.IsOverGui)
             {
@@ -150,7 +220,8 @@ public class Level : MonoBehaviour
                     }
                     else if (hit.collider.gameObject.CompareTag(NameTag.Passenger))
                     {
-                        hit.collider.gameObject.GetComponent<Passenger>().SetSelected();
+                        var getPass = hit.collider.gameObject.GetComponent<Passenger>();
+                        getPass.SetSelected();
                         ClearPath();
                     }
                 }
@@ -226,4 +297,10 @@ public class SetUpSeat
 {
     public Seat seat;
     public bool isCorrect;
+}
+public enum ETool
+{
+    Non,
+    Swap,
+    Tele,
 }

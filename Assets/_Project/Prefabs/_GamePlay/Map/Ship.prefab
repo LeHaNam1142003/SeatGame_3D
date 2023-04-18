@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5206117529534542518}
-  - component: {fileID: 2341441918865158302}
   - component: {fileID: 1222089870377999086}
+  - component: {fileID: 168328091201895600}
   m_Layer: 0
   m_Name: Ship
   m_TagString: Untagged
@@ -33,18 +33,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2341441918865158302
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8793049509957891724}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4c06aae07e4f2942a7330432c4cc332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1222089870377999086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63,3 +51,17 @@ MonoBehaviour:
   rowUI: {fileID: 8559064526396690074, guid: 88286c41dcefbcf4bbea7792891f0220, type: 3}
   columnUI: {fileID: 2833815527741719505, guid: fd940cb2b65042148912ec14ba56c463,
     type: 3}
+  oddMat: {fileID: 0}
+  evenMat: {fileID: 0}
+--- !u!114 &168328091201895600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8793049509957891724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4c06aae07e4f2942a7330432c4cc332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

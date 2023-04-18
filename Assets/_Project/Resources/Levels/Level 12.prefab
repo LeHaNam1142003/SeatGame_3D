@@ -53,11 +53,12 @@ MonoBehaviour:
   IsWin: 0
   bonusMoney: 0
   passengers: []
+  eTool: 0
   maxTurn: 6
+  isHaveTools: 0
+  tools: []
   turnText: {fileID: 6110526619751308879}
   arrangeText: {fileID: 2953325057860474323}
-  isHaveTools: 0
-  toolButtons: []
 --- !u!1001 &83501614326569734
 PrefabInstance:
   m_ObjectHideFlags: 0

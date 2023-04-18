@@ -2,17 +2,18 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Animancer;
+using DG.Tweening;
 using Pancake;
 using TMPro;
 using UnityEngine;
 
 public class Passenger : MonoBehaviour
 {
-    private bool _isMove;
     [Header("ReadOnlyAttribute")]
+    [ReadOnly] public bool isMove;
     [ReadOnly] [SerializeField] private Transform road;
-    [ReadOnly] [SerializeField] private Transform currentdestination;
-    [ReadOnly] [SerializeField] private Transform nextdestination;
+    [ReadOnly] public Transform currentDestination;
+    [ReadOnly] [SerializeField] private Transform nextDestination;
     [ReadOnly] public bool isSelected;
     [ReadOnly] public Transform path;
     [ReadOnly] [SerializeField] private List<Transform> pathsToDestination = new List<Transform>();
@@ -24,7 +25,7 @@ public class Passenger : MonoBehaviour
     public Material pleasure;
     public Material normal;
     [SerializeField] private LayerMask passengerLayerMask;
-    [SerializeField] private GameObject hint;
+    public GameObject hint;
     [SerializeField] private GameObject passengerModel;
     [SerializeField] private TextMeshProUGUI hintText;
     [SerializeField, Range(0, 100)] private float passengerSpeed;
@@ -40,7 +41,7 @@ public class Passenger : MonoBehaviour
     private int indexturn;
     private void Awake()
     {
-        Level.Instance.passengers.Add(this);
+        Initialation();
     }
     private void OnEnable()
     {
@@ -58,6 +59,11 @@ public class Passenger : MonoBehaviour
         _previousStateAnim = EStateAnim.Non;
         SetEmotion(normal);
         SetIdleAnim();
+    }
+    void Initialation()
+    {
+        Level.Instance.passengers.Add(this);
+        hintText.text = columnDestination + ":" + rowDestination;
     }
     public void SetSelected()
     {
@@ -100,13 +106,12 @@ public class Passenger : MonoBehaviour
 
     public void GetSelected(bool isGetSelected)
     {
-        if (_isMove == false)
+        if (isMove == false)
         {
             isSelected = isGetSelected;
             if (isGetSelected)
             {
                 hint.SetActive(true);
-                hintText.text = columnDestination + ":" + rowDestination;
             }
             else
             {
@@ -129,7 +134,7 @@ public class Passenger : MonoBehaviour
             {
                 AddPathToDestination(path);
                 path.GetComponent<RobotDetect>().TakePreviousPath(this);
-                if (_isMove)
+                if (isMove)
                 {
                     if (pathsToDestination.Count != 0)
                     {
@@ -163,10 +168,10 @@ public class Passenger : MonoBehaviour
             else
             {
                 pathsToDestination.Add(path);
-                nextdestination = pathsToDestination[pathsToDestination.Count - 1].parent;
+                nextDestination = pathsToDestination[pathsToDestination.Count - 1].parent;
                 SetEmotion(normal);
-                SetNewDestination(nextdestination);
-                _isMove = true;
+                SetNewDestination(nextDestination);
+                isMove = true;
                 _isAdd = false;
                 Level.Instance.SetTurn();
                 indexturn = Level.Instance.currentTurn;
@@ -179,10 +184,9 @@ public class Passenger : MonoBehaviour
         if (_pathindex >= pathsToDestination.Count - 1)
         {
             SetIdleAnim();
-            _isMove = false;
+            isMove = false;
             pathsToDestination.Clear();
-            currentdestination = nextdestination;
-            nextdestination = null;
+            SetEndDestination(nextDestination);
             _pathindex = 0;
             path = null;
             isSelected = false;
@@ -195,15 +199,37 @@ public class Passenger : MonoBehaviour
             _pathindex++;
         }
     }
+    void SetEndDestination(Transform getNextDestination)
+    {
+        currentDestination = getNextDestination;
+        nextDestination = null;
+    }
     void SetNewDestination(Transform newdestination)
     {
-        if (Level.Instance.groundSelecteds.Contains(currentdestination))
+        if (Level.Instance.groundSelecteds.Contains(currentDestination))
         {
-            Level.Instance.groundSelecteds.Remove(currentdestination);
+            Level.Instance.groundSelecteds.Remove(currentDestination);
         }
         Level.Instance.groundSelecteds.Add(newdestination);
-        currentdestination.gameObject.GetComponent<Ground>().SetDestination(true);
+        currentDestination.gameObject.GetComponent<Ground>().SetDestination(true);
         newdestination.gameObject.GetComponent<Ground>().SetDestination(false);
+    }
+    public void DoSwapPosi(Vector3 nextPosi, Transform nextCurrentPosi)
+    {
+        transform.DOLocalMove(nextPosi, 2).OnUpdate((() =>
+        {
+            isMove = true;
+            Level.Instance.OnProcessing();
+            transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
+            SetNewDestination(nextCurrentPosi);
+            SetEndDestination(nextCurrentPosi);
+        })).OnComplete((() =>
+        {
+            isMove = false;
+            hint.SetActive(false);
+            Level.Instance.EndProcessing();
+            Level.Instance.EndDoSwap();
+        }));
     }
     void ShootRaycastCheck(Vector3 direction, Color color)
     {
@@ -239,10 +265,10 @@ public class Passenger : MonoBehaviour
     {
         if (other.gameObject.CompareTag(NameTag.GroundCheck))
         {
-            if (currentdestination == null)
+            if (currentDestination == null)
             {
                 other.gameObject.GetComponent<Ground>().SetDestination(false);
-                currentdestination = other.transform;
+                currentDestination = other.transform;
             }
         }
     }

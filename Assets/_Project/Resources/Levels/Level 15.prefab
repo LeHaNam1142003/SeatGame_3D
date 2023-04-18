@@ -53,11 +53,13 @@ MonoBehaviour:
   IsWin: 0
   bonusMoney: 0
   passengers: []
+  eTool: 0
   maxTurn: 15
+  isHaveTools: 1
+  tools:
+  - {fileID: 6488246608018633819}
   turnText: {fileID: 6110526619751308879}
   arrangeText: {fileID: 2953325057860474323}
-  isHaveTools: 0
-  toolButtons: []
 --- !u!1001 &16553401483120
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5811,6 +5813,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6488246608018633819 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 570468964413164298, guid: 35719c08271cb624c952396ea60b3ebb,
+    type: 3}
+  m_PrefabInstance: {fileID: 6764502752101810001}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &6792292373622188061
