@@ -58,6 +58,7 @@ MonoBehaviour:
   isHaveTools: 1
   tools:
   - {fileID: 6488246608018633819}
+  toolBar: {fileID: 6891772000039964844}
   turnText: {fileID: 6110526619751308879}
   arrangeText: {fileID: 2953325057860474323}
 --- !u!1001 &17696026210525774
@@ -5245,6 +5246,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &6891772000039964844 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 163301079355994109, guid: 35719c08271cb624c952396ea60b3ebb,
+    type: 3}
+  m_PrefabInstance: {fileID: 6764502752101810001}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6975876136415596090
 PrefabInstance:
   m_ObjectHideFlags: 0

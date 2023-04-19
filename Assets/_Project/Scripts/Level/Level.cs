@@ -21,6 +21,7 @@ public class Level : MonoBehaviour
     [SerializeField] private int maxTurn;
     [SerializeField] private bool isHaveTools;
     [ShowIf("isHaveTools")] [SerializeField] private List<Button> tools;
+    [ShowIf("isHaveTools")] [SerializeField] private GameObject toolBar;
     [SerializeField] private TextMeshProUGUI turnText;
     [SerializeField] private TextMeshProUGUI arrangeText;
     private List<Passenger> swaps = new List<Passenger>();
@@ -55,6 +56,7 @@ public class Level : MonoBehaviour
             {
                 setTool.gameObject.SetActive(true);
             }
+            toolBar.SetActive(true);
         }
         Instance = this;
         currentTurn = maxTurn;
@@ -144,6 +146,7 @@ public class Level : MonoBehaviour
         UpdateArrrangement(count, setupSeats.Count);
         if (count == 0)
         {
+            toolBar.SetActive(false);
             Observer.IntroWinGame?.Invoke();
         }
     }
