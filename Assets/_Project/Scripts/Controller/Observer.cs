@@ -1,4 +1,5 @@
 using System;
+using UnityEngine.UI;
 
 public static class Observer
 {
@@ -32,6 +33,8 @@ public static class Observer
     public static Action ClickonGround;
     public static Action DoneLevel;
     public static Action ShipMove;
+    public static Action OnSwapping;
+    public static Action EndSwapping;
 
     #endregion
 

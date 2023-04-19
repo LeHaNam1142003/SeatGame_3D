@@ -181,6 +181,8 @@ public class Level : MonoBehaviour
         swaps.Add(passenger);
         if (swaps.Count == 2)
         {
+            Observer.OnSwapping?.Invoke();
+            PopupController.Instance.Hide<PopupSwapTool>();
             swaps[0].DoSwapPosi(swaps[1].transform.position, swaps[1].currentDestination);
             swaps[1].DoSwapPosi(swaps[0].transform.position, swaps[0].currentDestination);
             swaps.Clear();
@@ -194,8 +196,8 @@ public class Level : MonoBehaviour
         {
             setpassengers.hint.SetActive(false);
         }
-        PopupController.Instance.Hide<PopupSwapTool>();
         swaps.Clear();
+        Observer.EndSwapping?.Invoke();
     }
 
     void HandleFingerDown(Lean.Touch.LeanFinger finger)

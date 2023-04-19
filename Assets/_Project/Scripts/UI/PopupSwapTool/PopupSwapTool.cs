@@ -10,4 +10,9 @@ public class PopupSwapTool : PopupAnimation
         SetAnimation(moveBoard, null);
         base.AfterShown();
     }
+    public void Cancel()
+    {
+        Level.Instance.EndDoSwap();
+        Hide();
+    }
 }
