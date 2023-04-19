@@ -32,8 +32,7 @@ public static class Observer
     public static Action ClickonGround;
     public static Action DoneLevel;
     public static Action ShipMove;
-    public static Action SwapTool;
-    
+
     #endregion
 
     #region Gameplay
