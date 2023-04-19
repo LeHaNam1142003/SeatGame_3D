@@ -7,6 +7,7 @@ public class SwitchBtn : MonoBehaviour
 {
     public void SwitchPosi()
     {
-        Observer.SwapTool?.Invoke();
+        PopupController.Instance.Show<PopupSwapTool>();
+        Level.Instance.SwapTool();
     }
 }

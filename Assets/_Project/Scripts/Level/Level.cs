@@ -157,7 +157,6 @@ public class Level : MonoBehaviour
         Lean.Touch.LeanTouch.OnFingerDown += HandleFingerDown;
         Lean.Touch.LeanTouch.OnFingerUp += HandleFingerUp;
         Lean.Touch.LeanTouch.OnFingerUpdate += HandleFingerUpdate;
-        Observer.SwapTool += SwapTool;
     }
 
     void OnDisable()
@@ -165,10 +164,10 @@ public class Level : MonoBehaviour
         Lean.Touch.LeanTouch.OnFingerDown -= HandleFingerDown;
         Lean.Touch.LeanTouch.OnFingerUp -= HandleFingerUp;
         Lean.Touch.LeanTouch.OnFingerUpdate -= HandleFingerUpdate;
-        Observer.SwapTool -= SwapTool;
     }
     public void SwapTool()
     {
+        swaps.Clear();
         foreach (var setpassengers in passengers)
         {
             setpassengers.hint.SetActive(true);
@@ -195,6 +194,7 @@ public class Level : MonoBehaviour
         {
             setpassengers.hint.SetActive(false);
         }
+        PopupController.Instance.Hide<PopupSwapTool>();
         swaps.Clear();
     }
 

@@ -351,6 +351,7 @@ GameObject:
   - component: {fileID: 8880112201001865172}
   - component: {fileID: 5281059633274249798}
   - component: {fileID: 3399197419655034316}
+  - component: {fileID: 7829227626812418287}
   m_Layer: 5
   m_Name: PopupSwapTool
   m_TagString: Untagged
@@ -448,6 +449,8 @@ MonoBehaviour:
   showAnimationType: 0
   useHideAnimation: 0
   hideAnimationType: 0
+  animancerComponent: {fileID: 7829227626812418287}
+  moveBoard: {fileID: 7400000, guid: ec1d63185cda9d949936790dcaf0625e, type: 2}
 --- !u!95 &3399197419655034316
 Animator:
   serializedVersion: 4
@@ -468,6 +471,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &7829227626812418287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8218804737345637419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ad50f81b1d25c441943c37a89ba23f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Animator: {fileID: 3399197419655034316}
+  _ActionOnDisable: 0
 --- !u!1 &9028280923711010201
 GameObject:
   m_ObjectHideFlags: 0
