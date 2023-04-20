@@ -1676,7 +1676,12 @@ PrefabInstance:
     - target: {fileID: 43614415113023709, guid: 35719c08271cb624c952396ea60b3ebb,
         type: 3}
       propertyPath: orthographic size
-      value: 6
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 163301079355994109, guid: 35719c08271cb624c952396ea60b3ebb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1101734765844541691, guid: 35719c08271cb624c952396ea60b3ebb,
         type: 3}
@@ -1686,7 +1691,7 @@ PrefabInstance:
     - target: {fileID: 1101734765844541691, guid: 35719c08271cb624c952396ea60b3ebb,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 2538864798602755889, guid: 35719c08271cb624c952396ea60b3ebb,
         type: 3}
@@ -1709,6 +1714,26 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4110732719155754342, guid: 35719c08271cb624c952396ea60b3ebb,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4774719179037001503, guid: 35719c08271cb624c952396ea60b3ebb,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4774719179037001503, guid: 35719c08271cb624c952396ea60b3ebb,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4774719179037001503, guid: 35719c08271cb624c952396ea60b3ebb,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4774719179037001503, guid: 35719c08271cb624c952396ea60b3ebb,
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
@@ -1787,6 +1812,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7297475155127177589, guid: 35719c08271cb624c952396ea60b3ebb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 35719c08271cb624c952396ea60b3ebb, type: 3}
