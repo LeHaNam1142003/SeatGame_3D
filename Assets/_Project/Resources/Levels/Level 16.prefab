@@ -5860,17 +5860,22 @@ PrefabInstance:
     - target: {fileID: 43614415113023709, guid: 35719c08271cb624c952396ea60b3ebb,
         type: 3}
       propertyPath: orthographic size
-      value: 10
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 163301079355994109, guid: 35719c08271cb624c952396ea60b3ebb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1101734765844541691, guid: 35719c08271cb624c952396ea60b3ebb,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.4
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 1101734765844541691, guid: 35719c08271cb624c952396ea60b3ebb,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 4
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 2262745139441624561, guid: 35719c08271cb624c952396ea60b3ebb,
         type: 3}
