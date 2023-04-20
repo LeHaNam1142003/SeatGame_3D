@@ -146,7 +146,11 @@ public class Level : MonoBehaviour
         UpdateArrrangement(count, setupSeats.Count);
         if (count == 0)
         {
-            toolBar.SetActive(false);
+            if (isHaveTools)
+            {
+                toolBar.SetActive(false);
+
+            }
             Observer.IntroWinGame?.Invoke();
         }
     }
