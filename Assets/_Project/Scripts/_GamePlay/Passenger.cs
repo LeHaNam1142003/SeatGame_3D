@@ -220,6 +220,7 @@ public class Passenger : MonoBehaviour
         {
             isMove = true;
             Level.Instance.OnProcessing();
+            SetEmotion(normal);
             transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
             SetNewDestination(nextCurrentPosi);
             SetEndDestination(nextCurrentPosi);
