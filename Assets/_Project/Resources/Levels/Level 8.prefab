@@ -229,9 +229,12 @@ MonoBehaviour:
   IsWin: 0
   bonusMoney: 0
   passengers: []
+  eTool: 0
   maxTurn: 13
-  turnText: {fileID: 7860391705126623383}
-  arrangeText: {fileID: 1235422774536639243}
+  isHaveTools: 0
+  tools: []
+  toolBar: {fileID: 0}
+  turnText: {fileID: 4474734837468857433}
 --- !u!1 &4081765448806724721
 GameObject:
   m_ObjectHideFlags: 0
@@ -6173,27 +6176,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 35719c08271cb624c952396ea60b3ebb, type: 3}
---- !u!114 &1235422774536639243 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8438626501416888962, guid: 35719c08271cb624c952396ea60b3ebb,
-    type: 3}
-  m_PrefabInstance: {fileID: 7221834676754299273}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &3354488414448023187 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5383091352930078490, guid: 35719c08271cb624c952396ea60b3ebb,
     type: 3}
   m_PrefabInstance: {fileID: 7221834676754299273}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7860391705126623383 stripped
+--- !u!114 &4474734837468857433 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 661084648460673310, guid: 35719c08271cb624c952396ea60b3ebb,
+  m_CorrespondingSourceObject: {fileID: 6494313534265769424, guid: 35719c08271cb624c952396ea60b3ebb,
     type: 3}
   m_PrefabInstance: {fileID: 7221834676754299273}
   m_PrefabAsset: {fileID: 0}

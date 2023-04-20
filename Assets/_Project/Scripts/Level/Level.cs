@@ -23,7 +23,6 @@ public class Level : MonoBehaviour
     [ShowIf("isHaveTools")] [SerializeField] private List<Button> tools;
     [ShowIf("isHaveTools")] [SerializeField] private GameObject toolBar;
     [SerializeField] private TextMeshProUGUI turnText;
-    [SerializeField] private TextMeshProUGUI arrangeText;
     private List<Passenger> swaps = new List<Passenger>();
     private bool _isCanTouchGround;
     private bool isDecreaseTurn;
@@ -104,11 +103,7 @@ public class Level : MonoBehaviour
     }
     void UpdateTurn()
     {
-        turnText.text = "Turn: " + currentTurn + "/" + maxTurn;
-    }
-    void UpdateArrrangement(int wrongSeat, int maxSeat)
-    {
-        arrangeText.text = "WrongSeat :" + wrongSeat + "/" + maxSeat;
+        turnText.text = currentTurn.ToString();
     }
     public void CheckTurn(int getindex)
     {
@@ -143,7 +138,6 @@ public class Level : MonoBehaviour
                 count++;
             }
         }
-        UpdateArrrangement(count, setupSeats.Count);
         if (count == 0)
         {
             if (isHaveTools)
