@@ -12,7 +12,7 @@ public class Level : MonoBehaviour
     public static Level Instance;
     [ReadOnly] public List<Transform> paths = new List<Transform>();
     [ReadOnly] public List<Transform> groundSelecteds = new List<Transform>();
-    [ReadOnly] [SerializeField] public int currentTurn;
+    [ReadOnly] public int currentTurn;
     [ReadOnly] public List<SetUpSeat> setupSeats = new List<SetUpSeat>();
     [ReadOnly] public bool IsWin;
     [ReadOnly] public int bonusMoney;
@@ -143,7 +143,6 @@ public class Level : MonoBehaviour
             if (isHaveTools)
             {
                 toolBar.SetActive(false);
-
             }
             Observer.IntroWinGame?.Invoke();
         }

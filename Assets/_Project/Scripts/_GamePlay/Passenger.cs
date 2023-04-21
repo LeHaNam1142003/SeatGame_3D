@@ -145,7 +145,7 @@ public class Passenger : MonoBehaviour
                         SetRunAnim();
                         Quaternion lookRotaion = Quaternion.LookRotation(dir, Vector3.up);
                         passengerModel.transform.rotation = Quaternion.Euler(0, lookRotaion.eulerAngles.y, 0);
-                        if (Vector3.Distance(transform.position, road.position) <= 0.1f)
+                        if (Vector3.Distance(transform.position, road.position) <= 0.05f)
                         {
                             SetNextPath();
                         }
