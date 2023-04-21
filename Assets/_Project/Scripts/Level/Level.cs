@@ -181,8 +181,8 @@ public class Level : MonoBehaviour
         {
             Observer.OnSwapping?.Invoke();
             PopupController.Instance.Hide<PopupSwapTool>();
-            swaps[0].DoSwapPosi(swaps[1].transform.position, swaps[1].currentDestination);
-            swaps[1].DoSwapPosi(swaps[0].transform.position, swaps[0].currentDestination);
+            swaps[0].DoSwapPosi(swaps[1].transform.localPosition, swaps[1].currentDestination);
+            swaps[1].DoSwapPosi(swaps[0].transform.localPosition, swaps[0].currentDestination);
             swaps.Clear();
         }
     }
