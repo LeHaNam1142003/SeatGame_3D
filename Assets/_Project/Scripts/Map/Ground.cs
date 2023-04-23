@@ -22,14 +22,7 @@ public class Ground : MonoBehaviour
     }
     void SetSeat()
     {
-        if (isHaveSeat)
-        {
-            seat.gameObject.SetActive(true);
-        }
-        else
-        {
-            seat.gameObject.SetActive(false);
-        }
+        seat.gameObject.SetActive(isHaveSeat);
     }
     void SeatCheck(bool isEnable)
     {
