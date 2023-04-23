@@ -8,7 +8,7 @@ public class Ground : MonoBehaviour
     [SerializeField] private BoxCollider groundBox;
     [SerializeField] private GameObject seat;
     [SerializeField] private Seat seatSurface;
-    [SerializeField] private bool isHaveSeat;
+    public bool isHaveSeat;
     [SerializeField] private MeshRenderer groundModel;
 
     private void Awake()
@@ -51,9 +51,9 @@ public class Ground : MonoBehaviour
 
     public void ShowRobotDetect(Transform getGround)
     {
-        if (!Level.Instance.paths.Contains(getGround.transform))
+        if (!Level.Instance.paths.Contains(getGround))
         {
-            Level.Instance.paths.Add(getGround.transform);
+            Level.Instance.paths.Add(getGround);
         }
         SetGroundBox(false);
         robotDetect.gameObject.SetActive(true);

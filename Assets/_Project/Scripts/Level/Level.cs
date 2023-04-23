@@ -107,13 +107,25 @@ public class Level : MonoBehaviour
     }
     public void CheckTurn(int getindex)
     {
-        if (getindex == 0)
+        if (getindex == 0 || getindex != 0 && currentTurn == 0)
         {
             foreach (var checkSeat in setupSeats)
             {
                 if (checkSeat.isCorrect == false)
                 {
-                    OnLose();
+                    int count = 0;
+                    foreach (var passenger in passengers)
+                    {
+                        if (passenger.isMove)
+                        {
+                            count++;
+                        }
+                    }
+                    if (count == 0)
+                    {
+                        OnLose();
+                    }
+                    break;
                 }
             }
         }

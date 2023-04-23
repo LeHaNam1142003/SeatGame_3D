@@ -11,6 +11,7 @@ public class Passenger : MonoBehaviour
 {
     [Header("ReadOnlyAttribute")]
     [ReadOnly] public bool isMove;
+    [ReadOnly] public int indexTurn=11042003;
     [ReadOnly] [SerializeField] private Transform road;
     [ReadOnly] public Transform currentDestination;
     [ReadOnly] [SerializeField] private Transform nextDestination;
@@ -34,11 +35,12 @@ public class Passenger : MonoBehaviour
     [SerializeField] private AnimationClip winAnim;
     public int rowDestination;
     public EColumn columnDestination;
+    [SerializeField] private CapsuleCollider normalCapsu;
+    [SerializeField] private CapsuleCollider capsuCheck;
     private EStateAnim _previousStateAnim;
     private RaycastHit _raycastHit;
     private int _pathindex;
     private bool _isAdd = true;
-    private int indexturn;
     private void Awake()
     {
         Initialation();
@@ -60,8 +62,14 @@ public class Passenger : MonoBehaviour
         SetEmotion(normal);
         SetIdleAnim();
     }
+    public void SetCapSuColliderCheck(bool condition)
+    {
+        capsuCheck.enabled = condition;
+        normalCapsu.enabled = !condition;
+    }
     void Initialation()
     {
+        SetCapSuColliderCheck(true);
         Level.Instance.passengers.Add(this);
         hintText.text = columnDestination + ":" + rowDestination;
     }
@@ -139,6 +147,7 @@ public class Passenger : MonoBehaviour
                     if (pathsToDestination.Count != 0)
                     {
                         hint.SetActive(false);
+                        SetCapSuColliderCheck(false);
                         road = pathsToDestination[_pathindex];
                         var dir = road.position - transform.position;
                         transform.Translate(dir.normalized * passengerSpeed * Time.deltaTime);
@@ -174,7 +183,7 @@ public class Passenger : MonoBehaviour
                 isMove = true;
                 _isAdd = false;
                 Level.Instance.SetTurn();
-                indexturn = Level.Instance.currentTurn;
+                indexTurn = Level.Instance.currentTurn;
             }
         }
     }
@@ -191,8 +200,12 @@ public class Passenger : MonoBehaviour
             path = null;
             isSelected = false;
             _isAdd = true;
+            SetCapSuColliderCheck(true);
             passengerModel.transform.rotation = Quaternion.Euler(0, 180, 0);
-            Level.Instance.CheckTurn(indexturn);
+            if (!currentDestination.GetComponent<Ground>().isHaveSeat)
+            {
+                Level.Instance.CheckTurn(indexTurn);
+            }
         }
         else
         {

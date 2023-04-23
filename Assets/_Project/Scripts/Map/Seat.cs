@@ -35,11 +35,13 @@ public class Seat : MonoBehaviour
             if (checkPlayer.rowDestination == _seatInfor.intdexRow && checkPlayer.columnDestination == _seatInfor.indexColumn)
             {
                 Level.Instance.ManageSeat(this, true);
+                Level.Instance.CheckTurn(checkPlayer.indexTurn);
                 checkPlayer.SetEmotion(checkPlayer.pleasure);
             }
             else
             {
                 Level.Instance.ManageSeat(this, false);
+                Level.Instance.CheckTurn(checkPlayer.indexTurn);
                 checkPlayer.SetEmotion(checkPlayer.angry);
             }
         }
