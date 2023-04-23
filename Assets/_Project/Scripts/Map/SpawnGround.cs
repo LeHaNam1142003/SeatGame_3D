@@ -16,22 +16,16 @@ public class SpawnGround : MonoBehaviour
 #if UNITY_EDITOR
     public void Spawn()
     {
-        var getSizeGroundX = ground.transform.localScale.x;
-        var getSizeGroundY = ground.transform.localScale.y;
-        var getSizeGroundZ = ground.transform.localScale.z;
-        var getSizeRowUIX = rowUI.transform.localScale.x;
-        var getSizeRowUIY = rowUI.transform.localScale.y;
-        var getSizeRowUIZ = rowUI.transform.localScale.z;
-        var getSizeColumnUIX = columnUI.transform.localScale.x;
-        var getSizeColumnUIY = columnUI.transform.localScale.y;
-        var getSizeColumnUIZ = columnUI.transform.localScale.z;
+        var getSizeColumnUI = columnUI.transform.localScale;
+        var getSizeRowUI = rowUI.transform.localScale;
+        var getSizeGround = ground.transform.localScale;
         Clear();
         for (int i = 0; i < rows; i++)
         {
             for (int j = 0; j < columns; j++)
             {
                 var spawnGround = SpawnObj(ground).GetComponent<Ground>();
-                spawnGround.transform.position = new Vector3(getSizeGroundX * j, 0, getSizeGroundZ * i);
+                spawnGround.transform.position = new Vector3(getSizeGround.x * j, 0, getSizeGround.z * i);
                 if (i % 2 == 0)
                 {
                     if (j % 2 == 0)
@@ -61,8 +55,8 @@ public class SpawnGround : MonoBehaviour
         {
             var spawnLeftRowUI = SpawnObj(rowUI);
             var spawnRightRowUI = SpawnObj(rowUI);
-            spawnLeftRowUI.transform.position = new Vector3(-(getSizeGroundX / 2 + getSizeRowUIX / 2), getSizeRowUIY / 2, getSizeRowUIZ * i - 1);
-            spawnRightRowUI.transform.position = new Vector3((getSizeGroundX * columns - getSizeGroundX / 2 + getSizeRowUIX / 2), getSizeRowUIY / 2, getSizeRowUIZ * i - 1);
+            spawnLeftRowUI.transform.position = new Vector3(-(getSizeGround.x / 2 + getSizeRowUI.x / 2), getSizeRowUI.y / 2, getSizeRowUI.z * i - 1);
+            spawnRightRowUI.transform.position = new Vector3((getSizeGround.x * columns - getSizeGround.x / 2 + getSizeRowUI.x / 2), getSizeRowUI.y / 2, getSizeRowUI.z * i - 1);
             spawnRightRowUI.transform.eulerAngles = new Vector3(0, 180, 0);
 
         }
@@ -70,8 +64,8 @@ public class SpawnGround : MonoBehaviour
         {
             var spawnLeftColumnUI = SpawnObj(columnUI);
             var spawnRightColumnUI = SpawnObj(columnUI);
-            spawnLeftColumnUI.transform.position = new Vector3(getSizeColumnUIX * i - 1, getSizeColumnUIY / 2, -(getSizeGroundZ / 2 + getSizeColumnUIZ / 2));
-            spawnRightColumnUI.transform.position = new Vector3(getSizeColumnUIX * i - 1, getSizeColumnUIY / 2, (getSizeGroundZ * rows - getSizeGroundZ / 2 + getSizeColumnUIZ / 2));
+            spawnLeftColumnUI.transform.position = new Vector3(getSizeColumnUI.x * i - 1, getSizeColumnUI.y / 2, -(getSizeGround.z / 2 + getSizeColumnUI.z / 2));
+            spawnRightColumnUI.transform.position = new Vector3(getSizeColumnUI.x * i - 1, getSizeColumnUI.y / 2, (getSizeGround.z * rows - getSizeGround.z / 2 + getSizeColumnUI.z / 2));
             spawnRightColumnUI.transform.eulerAngles = new Vector3(0, 180, 0);
         }
     }
