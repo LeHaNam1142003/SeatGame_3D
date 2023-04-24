@@ -87,7 +87,7 @@ public class RobotDetect : MonoBehaviour
             if (gethit.collider.gameObject.CompareTag(NameTag.GroundCheck))
             {
                 var set = gethit.transform.gameObject.GetComponent<Ground>();
-                set.ShowRobotDetect(set.transform);
+                set.ShowRobotDetect(set);
                 set.robotDetect.previousRobotDetect = this;
                 switch (eStopdirect)
                 {

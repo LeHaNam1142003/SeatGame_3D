@@ -10,8 +10,8 @@ using UnityEngine.UI;
 public class Level : MonoBehaviour
 {
     public static Level Instance;
-    [ReadOnly] public List<Transform> paths = new List<Transform>();
-    [ReadOnly] public List<Transform> groundSelecteds = new List<Transform>();
+    [ReadOnly] public List<Ground> paths = new List<Ground>();
+    [ReadOnly] public List<Ground> groundSelecteds = new List<Ground>();
     [ReadOnly] public int currentTurn;
     [ReadOnly] public List<SetUpSeat> setupSeats = new List<SetUpSeat>();
     [ReadOnly] public bool IsWin;
@@ -228,7 +228,8 @@ public class Level : MonoBehaviour
                     {
                         if (_isCanTouchGround)
                         {
-                            hit.collider.gameObject.GetComponent<Ground>().ShowRobotDetect(hit.collider.transform);
+                            var set = hit.collider.gameObject.GetComponent<Ground>();
+                            set.ShowRobotDetect(set);
                             _isCanTouchGround = false;
                         }
                     }
@@ -246,7 +247,7 @@ public class Level : MonoBehaviour
     {
         for (int i = 0; i < paths.Count; i++)
         {
-            var getGround = paths[i].GetComponent<Ground>();
+            var getGround = paths[i];
             if (groundSelecteds.Count != 0)
             {
                 for (int j = 0; j < groundSelecteds.Count; j++)

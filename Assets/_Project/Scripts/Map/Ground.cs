@@ -42,7 +42,7 @@ public class Ground : MonoBehaviour
         SetGroundBox(true);
     }
 
-    public void ShowRobotDetect(Transform getGround)
+    public void ShowRobotDetect(Ground getGround)
     {
         if (!Level.Instance.paths.Contains(getGround))
         {

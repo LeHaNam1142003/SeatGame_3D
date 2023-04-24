@@ -11,10 +11,10 @@ public class Passenger : MonoBehaviour
 {
     [Header("ReadOnlyAttribute")]
     [ReadOnly] public bool isMove;
-    [ReadOnly] public int indexTurn=11042003;
+    [ReadOnly] public int indexTurn = 11042003;
     [ReadOnly] [SerializeField] private Transform road;
-    [ReadOnly] public Transform currentDestination;
-    [ReadOnly] [SerializeField] private Transform nextDestination;
+    [ReadOnly] public Ground currentDestination;
+    [ReadOnly] [SerializeField] private Ground nextDestination;
     [ReadOnly] public bool isSelected;
     [ReadOnly] public Transform path;
     [ReadOnly] [SerializeField] private List<Transform> pathsToDestination = new List<Transform>();
@@ -167,7 +167,7 @@ public class Passenger : MonoBehaviour
     {
         if (_isAdd)
         {
-            if (path.parent != Level.Instance.paths[0])
+            if (path.parent.GetComponent<Ground>() != Level.Instance.paths[0])
             {
                 if (!pathsToDestination.Contains(path))
                 {
@@ -177,7 +177,7 @@ public class Passenger : MonoBehaviour
             else
             {
                 pathsToDestination.Add(path);
-                nextDestination = pathsToDestination[pathsToDestination.Count - 1].parent;
+                nextDestination = pathsToDestination[pathsToDestination.Count - 1].parent.GetComponent<Ground>();
                 SetEmotion(normal);
                 SetNewDestination(nextDestination);
                 isMove = true;
@@ -212,12 +212,12 @@ public class Passenger : MonoBehaviour
             _pathindex++;
         }
     }
-    void SetEndDestination(Transform getNextDestination)
+    void SetEndDestination(Ground getNextDestination)
     {
         currentDestination = getNextDestination;
         nextDestination = null;
     }
-    void SetNewDestination(Transform newdestination)
+    void SetNewDestination(Ground newdestination)
     {
         if (Level.Instance.groundSelecteds.Contains(currentDestination))
         {
@@ -227,7 +227,7 @@ public class Passenger : MonoBehaviour
         currentDestination.gameObject.GetComponent<Ground>().SetDestination(true);
         newdestination.gameObject.GetComponent<Ground>().SetDestination(false);
     }
-    public void DoSwapPosi(Vector3 nextPosi, Transform nextCurrentPosi)
+    public void DoSwapPosi(Vector3 nextPosi, Ground nextCurrentPosi)
     {
         transform.DOLocalMove(nextPosi, 2).OnUpdate((() =>
         {
@@ -281,8 +281,9 @@ public class Passenger : MonoBehaviour
         {
             if (currentDestination == null)
             {
-                other.gameObject.GetComponent<Ground>().SetDestination(false);
-                currentDestination = other.transform;
+                var set = other.gameObject.GetComponent<Ground>();
+                set.SetDestination(false);
+                currentDestination = set;
             }
         }
     }
