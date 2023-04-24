@@ -35,7 +35,8 @@ public static class Observer
     public static Action ShipMove;
     public static Action OnSwapping;
     public static Action EndSwapping;
-
+    public static Action OnWin;
+    public static Action OnLost;
     #endregion
 
     #region Gameplay

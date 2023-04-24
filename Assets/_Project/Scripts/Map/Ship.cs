@@ -21,6 +21,6 @@ public class Ship : MonoBehaviour
     }
     void Move()
     {
-        transform.DOMove(_destination, 3).OnComplete((() => Level.Instance.OnWin()));
+        transform.DOMove(_destination, 3).OnComplete((() => Observer.OnWin?.Invoke()));
     }
 }

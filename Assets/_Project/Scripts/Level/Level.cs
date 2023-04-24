@@ -285,17 +285,17 @@ public class Level : MonoBehaviour
         }
     }
 
-    // private void Start()
-    // {
-    //     Observer.WinLevel += OnWin;
-    //     Observer.LoseLevel += OnLose;
-    // }
-    //
-    // private void OnDestroy()
-    // {
-    //     Observer.WinLevel -= OnWin;
-    //     Observer.LoseLevel -= OnLose;
-    // }
+    private void Start()
+    {
+        Observer.OnWin += OnWin;
+        Observer.OnLost += OnLose;
+    }
+
+    private void OnDestroy()
+    {
+        Observer.OnWin -= OnWin;
+        Observer.OnLost -= OnLose;
+    }
 
     public void OnWin()
     {
