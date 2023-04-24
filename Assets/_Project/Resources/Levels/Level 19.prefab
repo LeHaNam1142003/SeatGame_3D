@@ -57,7 +57,8 @@ MonoBehaviour:
   maxTurn: 16
   isHaveTools: 1
   tools:
-  - {fileID: 6488246608018633819}
+  - {fileID: 8353200959315602986}
+  - {fileID: 5885165430665936516}
   toolBar: {fileID: 6891772000039964844}
   turnText: {fileID: 558508654454768257}
 --- !u!1001 &21855234212265381
@@ -4255,16 +4256,16 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 6764502752101810001}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6488246608018633819 stripped
+--- !u!114 &5885165430665936516 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 570468964413164298, guid: 35719c08271cb624c952396ea60b3ebb,
+  m_CorrespondingSourceObject: {fileID: 886111466068787669, guid: 35719c08271cb624c952396ea60b3ebb,
     type: 3}
   m_PrefabInstance: {fileID: 6764502752101810001}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Script: {fileID: 11500000, guid: d327287640dac41b4aaade109e3242c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &6891772000039964844 stripped
@@ -4273,6 +4274,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 6764502752101810001}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8353200959315602986 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3318272672501813627, guid: 35719c08271cb624c952396ea60b3ebb,
+    type: 3}
+  m_PrefabInstance: {fileID: 6764502752101810001}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d327287640dac41b4aaade109e3242c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6783730736595795662
 PrefabInstance:
   m_ObjectHideFlags: 0
