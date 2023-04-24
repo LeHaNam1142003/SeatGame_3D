@@ -297,12 +297,12 @@ public class Level : MonoBehaviour
         Observer.OnLost -= OnLose;
     }
 
-    public void OnWin()
+    private void OnWin()
     {
         GameManager.Instance.OnWinGame();
     }
 
-    public void OnLose()
+    private void OnLose()
     {
         GameManager.Instance.OnLoseGame();
     }
