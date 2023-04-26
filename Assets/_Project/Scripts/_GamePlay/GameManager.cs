@@ -15,11 +15,11 @@ public class GameManager : SingletonDontDestroy<GameManager>
         base.Awake();
         Application.targetFrameRate = 60;
     }
-    
+
     void Start()
     {
         ReturnHome();
-        
+
         Observer.StartLevel += UpdateScore;
     }
 
@@ -28,7 +28,7 @@ public class GameManager : SingletonDontDestroy<GameManager>
         PrepareLevel();
         StartGame();
     }
-    
+
     public void UpdateScore(Level level)
     {
         if (AuthService.Instance.isLoggedIn && AuthService.Instance.IsCompleteSetupName)
@@ -46,7 +46,7 @@ public class GameManager : SingletonDontDestroy<GameManager>
     public void ReturnHome()
     {
         PrepareLevel();
-        
+
         PopupController.Instance.HideAll();
         PopupController.Instance.Show<PopupBackground>();
         PopupController.Instance.Show<PopupHome>();
@@ -62,7 +62,7 @@ public class GameManager : SingletonDontDestroy<GameManager>
     public void BackLevel()
     {
         Data.CurrentLevel--;
-        
+
         PrepareLevel();
         StartGame();
     }
@@ -75,12 +75,12 @@ public class GameManager : SingletonDontDestroy<GameManager>
         PrepareLevel();
         StartGame();
     }
-    
+
     public void StartGame()
     {
         gameState = GameState.PlayingGame;
         Observer.StartLevel?.Invoke(levelController.currentLevel);
-        
+
         PopupController.Instance.HideAll();
         PopupController.Instance.Show<PopupInGame>();
         levelController.currentLevel.gameObject.SetActive(true);
@@ -91,6 +91,11 @@ public class GameManager : SingletonDontDestroy<GameManager>
         if (gameState == GameState.WaitingResult || gameState == GameState.LoseGame || gameState == GameState.WinGame) return;
         gameState = GameState.WinGame;
         Observer.WinLevel?.Invoke(levelController.currentLevel);
+        if (levelController.currentLevel.isHaveTools && !Data.IsTesting)
+        {
+            Data.FlyToolCount += 1;
+            Data.SwapToolCount += 1;
+        }
         Data.CurrentLevel++;
         DOTween.Sequence().AppendInterval(delayPopupShowTime).AppendCallback(() =>
         {
@@ -102,13 +107,13 @@ public class GameManager : SingletonDontDestroy<GameManager>
             }
         });
     }
-    
+
     public void OnLoseGame(float delayPopupShowTime = 2.5f)
     {
         if (gameState == GameState.WaitingResult || gameState == GameState.LoseGame || gameState == GameState.WinGame) return;
         gameState = GameState.LoseGame;
         Observer.LoseLevel?.Invoke(levelController.currentLevel);
-        
+
         DOTween.Sequence().AppendInterval(delayPopupShowTime).AppendCallback(() =>
         {
             PopupController.Instance.Hide<PopupInGame>();
