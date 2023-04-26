@@ -282,7 +282,7 @@ GameObject:
   - component: {fileID: 1941375177647993512}
   - component: {fileID: 2580710029645346681}
   m_Layer: 10
-  m_Name: Text (TMP)
+  m_Name: TextCount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -622,6 +622,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d14d0264c3bbdb543bddb3ffcc82883a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  textCount: {fileID: 71278100630231506}
 --- !u!1 &2260604091542563461
 GameObject:
   m_ObjectHideFlags: 0
@@ -1148,6 +1149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 678fd0ef1db9b784cbf177fca549e669, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  textCount: {fileID: 2580710029645346681}
 --- !u!1 &6263115564525134440
 GameObject:
   m_ObjectHideFlags: 0
@@ -1473,7 +1475,7 @@ GameObject:
   - component: {fileID: 282378177208698318}
   - component: {fileID: 71278100630231506}
   m_Layer: 10
-  m_Name: Text (TMP)
+  m_Name: TextCount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
