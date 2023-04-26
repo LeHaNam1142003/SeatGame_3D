@@ -7,13 +7,12 @@ using UnityEngine;
 public static partial class Data
 {
     #region GAME_DATA
-    
     public static bool IsFirstOpenGame
     {
         get => PlayerPrefs.GetInt(Constant.IsFirstOpenGame, 0) == 1;
         set => PlayerPrefs.SetInt(Constant.IsFirstOpenGame, value ? 1 : 0);
     }
-    
+
     public static bool IsTesting
     {
         get => PlayerPrefs.GetInt(Constant.IsTesting, 0) == 1;
@@ -30,9 +29,19 @@ public static partial class Data
 
         set
         {
-            SetInt(Constant.IndexLevelCurrent, value>=1?value:1);
+            SetInt(Constant.IndexLevelCurrent, value >= 1 ? value : 1);
             Observer.CurrentLevelChanged?.Invoke();
         }
+    }
+    public static int FlyToolCount
+    {
+        get => GetInt(Constant.FlyTool, 3);
+        set => SetInt(Constant.FlyTool, value);
+    }
+    public static int SwapToolCount
+    {
+        get => GetInt(Constant.SwapTool, 3);
+        set => SetInt(Constant.SwapTool, value);
     }
 
     public static int CurrencyTotal
@@ -51,7 +60,7 @@ public static partial class Data
         get => GetInt(Constant.ProgressAmount, 0);
         set => SetInt(Constant.ProgressAmount, value);
     }
-    
+
     public static bool IsItemEquipped(string itemIdentity)
     {
         return GetBool($"{Constant.EquipItem}_{IdItemUnlocked}");
@@ -70,9 +79,8 @@ public static partial class Data
         set => SetBool($"{Constant.UnlockItem}_{IdItemUnlocked}", value);
     }
     #endregion
-    
-    #region SETTING_DATA
 
+    #region SETTING_DATA
     public static bool BgSoundState
     {
         get => GetBool(Constant.BackgroundSoundState, true);
@@ -98,16 +106,14 @@ public static partial class Data
         get => GetBool(Constant.VibrateState, true);
         set => SetBool(Constant.VibrateState, value);
     }
-
     #endregion
-    
-    #region DAILY_REWARD
 
+    #region DAILY_REWARD
     public static bool IsClaimedTodayDailyReward()
     {
-        return (int) (DateTime.Now - DateTime.Parse(LastDailyRewardClaimed)).TotalDays == 0;
+        return (int)(DateTime.Now - DateTime.Parse(LastDailyRewardClaimed)).TotalDays == 0;
     }
-    
+
     public static bool IsStartLoopingDailyReward
     {
         get => PlayerPrefs.GetInt(Constant.IsStartLoopingDailyReward, 0) == 1;
@@ -121,7 +127,7 @@ public static partial class Data
     }
 
     public static int TotalPlayedDays =>
-        (int) (DateTime.Now - DateTime.Parse(DateTimeStart)).TotalDays + 1;
+        (int)(DateTime.Now - DateTime.Parse(DateTimeStart)).TotalDays + 1;
 
     public static int DailyRewardDayIndex
     {
@@ -134,48 +140,45 @@ public static partial class Data
         get => GetString(Constant.LastDailyRewardClaim, DateTime.Now.AddDays(-1).ToString());
         set => SetString(Constant.LastDailyRewardClaim, value);
     }
-    
+
     public static int TotalClaimDailyReward
     {
         get => GetInt(Constant.TotalClaimDailyReward, 0);
         set => SetInt(Constant.TotalClaimDailyReward, value);
     }
-
     #endregion
 
     #region PLAYFAB_DATA
-    
     public static string PlayfabLoginId
     {
         get => GetString(Constant.PlayfabLoginID, null);
         set => SetString(Constant.PlayfabLoginID, value);
     }
-    
+
     public static string PlayerName
     {
         get => GetString(Constant.PlayerName, null);
         set => SetString(Constant.PlayerName, value);
-        
+
     }
 
     public static string PlayerId
     {
         get => GetString(Constant.PlayerID, null);
         set => SetString(Constant.PlayerID, value);
-        
+
     }
-    
+
     public static string PlayerCountryCode
     {
         get => GetString(Constant.PlayerCountryCode, null);
         set => SetString(Constant.PlayerCountryCode, value);
     }
-    
+
     public static PlayerProfileModel PlayerProfile;
     #endregion
 
     #region FIREBASE
-
     // TOGGLE LEVEL AB TESTING? 0:NO, 1:YES
     public static int DEFAULT_USE_LEVEL_AB_TESTING = 0;
     public static int UseLevelABTesting
@@ -192,7 +195,7 @@ public static partial class Data
             DEFAULT_LEVEL_TURN_ON_INTERSTITIAL);
         set => PlayerPrefs.SetInt(Constant.LevelTurnONInterstitial, value);
     }
-    
+
     // SET COUNTER VARIABLE
     public static int DEFAULT_COUNTER_NUMBER_BETWEEN_TWO_INTERSTITIAL = 2;
     public static int CounterNumbBetweenTwoInterstitial
@@ -200,7 +203,7 @@ public static partial class Data
         get => PlayerPrefs.GetInt(Constant.CounterNumberBetweenTwoInterstitial, DEFAULT_COUNTER_NUMBER_BETWEEN_TWO_INTERSTITIAL);
         set => PlayerPrefs.SetInt(Constant.CounterNumberBetweenTwoInterstitial, value);
     }
-    
+
     // SET TIME TO ENABLE BETWEEN 2 INTERSTITIAL (ON WIN,LOSE,REPLAY GAME)
     public static int DEFAULT_SPACE_TIME_WIN_BETWEEN_TWO_INTERSTITIAL = 30;
     public static int TimeWinBetweenTwoInterstitial
@@ -208,7 +211,7 @@ public static partial class Data
         get => PlayerPrefs.GetInt(Constant.SpaceTimeWinBetweenTwoInterstitial, DEFAULT_SPACE_TIME_WIN_BETWEEN_TWO_INTERSTITIAL);
         set => PlayerPrefs.SetInt(Constant.SpaceTimeWinBetweenTwoInterstitial, value);
     }
-    
+
     // TOGGLE SHOW INTERSTITIAL ON LOSE GAME ? 0:NO, 1:YES
     public static int DEFAULT_SHOW_INTERSTITIAL_ON_LOSE_GAME = 0;
     public static int UseShowInterstitialOnLoseGame
@@ -216,7 +219,7 @@ public static partial class Data
         get => PlayerPrefs.GetInt(Constant.ShowInterstitialONLoseGame, DEFAULT_SHOW_INTERSTITIAL_ON_LOSE_GAME);
         set => PlayerPrefs.SetInt(Constant.ShowInterstitialONLoseGame, value);
     }
-    
+
     // SET TIME TO ENABLE BETWEEN 2 INTERSTITIAL (ON LOSE GAME)
     public static int DEFAULT_SPACE_TIME_LOSE_BETWEEN_TWO_INTERSTITIAL = 45;
     public static int TimeLoseBetweenTwoInterstitial
@@ -224,7 +227,6 @@ public static partial class Data
         get => PlayerPrefs.GetInt(Constant.SpaceTimeLoseBetweenTwoInterstitial, DEFAULT_SPACE_TIME_LOSE_BETWEEN_TWO_INTERSTITIAL);
         set => PlayerPrefs.SetInt(Constant.SpaceTimeLoseBetweenTwoInterstitial, value);
     }
-
     #endregion
 }
 
