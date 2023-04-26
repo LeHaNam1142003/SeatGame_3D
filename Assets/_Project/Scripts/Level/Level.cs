@@ -14,7 +14,7 @@ public class Level : MonoBehaviour
     [ReadOnly] public List<Ground> groundSelecteds = new List<Ground>();
     [ReadOnly] public int currentTurn;
     [ReadOnly] public List<SetUpSeat> setupSeats = new List<SetUpSeat>();
-    [ReadOnly] public bool IsWin;
+    [ReadOnly] public bool isWin;
     [ReadOnly] public int bonusMoney;
     [ReadOnly] public List<Passenger> passengers = new List<Passenger>();
     [ReadOnly] public ETool eTool;
@@ -23,7 +23,9 @@ public class Level : MonoBehaviour
     [ShowIf("isHaveTools")] [SerializeField] private List<Button> tools;
     [ShowIf("isHaveTools")] [SerializeField] private GameObject toolBar;
     [SerializeField] private TextMeshProUGUI turnText;
-    private List<Passenger> swaps = new List<Passenger>();
+    private List<Passenger> _swaps = new List<Passenger>();
+    private Passenger _flyPassenger;
+    private bool _isCanTouchPlayer;
     private bool _isCanTouchGround;
     private bool isDecreaseTurn;
     private int count;
@@ -57,6 +59,7 @@ public class Level : MonoBehaviour
             }
             toolBar.SetActive(true);
         }
+        _isCanTouchPlayer = true;
         Instance = this;
         currentTurn = maxTurn;
         UpdateTurn();
@@ -82,11 +85,15 @@ public class Level : MonoBehaviour
                             case ETool.Swap:
                                 DoSwap(passenger);
                                 break;
+                            case ETool.Fly:
+                                SetFlyTool(passenger);
+                                break;
                         }
                     }
                     else
                     {
                         EndDoSwap();
+                        EndDoFly();
                     }
                 }
             }
@@ -176,7 +183,7 @@ public class Level : MonoBehaviour
     }
     public void SwapTool()
     {
-        swaps.Clear();
+        _swaps.Clear();
         foreach (var setpassengers in passengers)
         {
             setpassengers.hint.SetActive(true);
@@ -185,19 +192,45 @@ public class Level : MonoBehaviour
         _isUseTool = true;
         eTool = ETool.Swap;
     }
+    public void FlyTool()
+    {
+        foreach (var setpassengers in passengers)
+        {
+            setpassengers.hint.SetActive(true);
+        }
+        _isCanTouchGround = false;
+        _isUseTool = true;
+        eTool = ETool.Fly;
+    }
+    void SetFlyTool(Passenger passenger)
+    {
+        _flyPassenger = passenger;
+        _isCanTouchPlayer = false;
+        _isCanTouchGround = true;
+    }
+    void DoFlyTool(Vector3 flyPosi, Ground nextCurrentPosi)
+    {
+        Observer.OnSwapping?.Invoke();
+        PopupController.Instance.Hide<PopupSwapTool>();
+        if (_flyPassenger != null)
+        {
+            PopupController.Instance.Hide<PopupFlyTool>();
+            _flyPassenger.DoFly(flyPosi, nextCurrentPosi);
+        }
+    }
     void DoSwap(Passenger passenger)
     {
-        if (!swaps.Contains(passenger))
+        if (!_swaps.Contains(passenger))
         {
-            swaps.Add(passenger);
+            _swaps.Add(passenger);
         }
-        if (swaps.Count == 2)
+        if (_swaps.Count == 2)
         {
             Observer.OnSwapping?.Invoke();
             PopupController.Instance.Hide<PopupSwapTool>();
-            swaps[0].DoSwapPosi(swaps[1].transform.localPosition, swaps[1].currentDestination);
-            swaps[1].DoSwapPosi(swaps[0].transform.localPosition, swaps[0].currentDestination);
-            swaps.Clear();
+            _swaps[0].DoSwapPosi(_swaps[1].transform.localPosition, _swaps[1].currentDestination);
+            _swaps[1].DoSwapPosi(_swaps[0].transform.localPosition, _swaps[0].currentDestination);
+            _swaps.Clear();
         }
     }
     public void EndDoSwap()
@@ -208,13 +241,27 @@ public class Level : MonoBehaviour
         {
             setpassengers.hint.SetActive(false);
         }
-        swaps.Clear();
+        _swaps.Clear();
         Observer.EndSwapping?.Invoke();
+        PopupController.Instance.Hide<PopupSwapTool>();
+    }
+    public void EndDoFly()
+    {
+        eTool = ETool.Non;
+        _isUseTool = false;
+        foreach (var setpassengers in passengers)
+        {
+            setpassengers.hint.SetActive(false);
+        }
+        _flyPassenger = null;
+        _isCanTouchPlayer = true;
+        Observer.EndSwapping?.Invoke();
+        PopupController.Instance.Hide<PopupFlyTool>();
     }
 
     void HandleFingerDown(Lean.Touch.LeanFinger finger)
     {
-        if (IsWin != true && currentTurn != 0 && !_isProcessing)
+        if (isWin != true && currentTurn != 0 && !_isProcessing)
         {
             if (!finger.IsOverGui)
             {
@@ -229,18 +276,28 @@ public class Level : MonoBehaviour
                     //ADDED LAYER SELECTION
                     if (hit.collider.gameObject.CompareTag(NameTag.GroundCheck))
                     {
+                        var set = hit.collider.gameObject.GetComponent<Ground>();
                         if (_isCanTouchGround)
                         {
-                            var set = hit.collider.gameObject.GetComponent<Ground>();
-                            set.ShowRobotDetect(set);
-                            _isCanTouchGround = false;
+                            if (eTool != ETool.Fly)
+                            {
+                                set.ShowRobotDetect(set);
+                                _isCanTouchGround = false;
+                            }
+                            else
+                            {
+                                DoFlyTool(set.transform.position, set);
+                            }
                         }
                     }
                     else if (hit.collider.gameObject.CompareTag(NameTag.Passenger))
                     {
-                        var getPass = hit.collider.gameObject.GetComponent<Passenger>();
-                        getPass.SetSelected();
-                        ClearPath();
+                        if (_isCanTouchPlayer)
+                        {
+                            var getPass = hit.collider.gameObject.GetComponent<Passenger>();
+                            getPass.SetSelected();
+                            ClearPath();
+                        }
                     }
                 }
             }
@@ -320,5 +377,5 @@ public enum ETool
 {
     Non,
     Swap,
-    Tele,
+    Fly,
 }

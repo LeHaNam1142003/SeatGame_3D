@@ -229,6 +229,10 @@ public class Passenger : MonoBehaviour
     }
     public void DoSwapPosi(Vector3 nextPosi, Ground nextCurrentPosi)
     {
+        DoTool(nextPosi, nextCurrentPosi, Level.Instance.EndDoSwap);
+    }
+    void DoTool(Vector3 nextPosi, Ground nextCurrentPosi, Action action)
+    {
         transform.DOLocalMove(nextPosi, 2).OnUpdate((() =>
         {
             isMove = true;
@@ -242,8 +246,12 @@ public class Passenger : MonoBehaviour
             isMove = false;
             hint.SetActive(false);
             Level.Instance.EndProcessing();
-            Level.Instance.EndDoSwap();
+            action?.Invoke();
         }));
+    }
+    public void DoFly(Vector3 flyPosi, Ground nextCurrentPosi)
+    {
+        DoTool(flyPosi, nextCurrentPosi, Level.Instance.EndDoFly);
     }
     void ShootRaycastCheck(Vector3 direction, Color color)
     {
