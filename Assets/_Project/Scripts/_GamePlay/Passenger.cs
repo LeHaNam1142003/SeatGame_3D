@@ -229,7 +229,7 @@ public class Passenger : MonoBehaviour
     }
     public void DoSwapPosi(Vector3 nextPosi, Ground nextCurrentPosi)
     {
-        DoTool(nextPosi, nextCurrentPosi, Level.Instance.EndDoSwap);
+        DoTool(nextPosi, nextCurrentPosi, Level.Instance.EndDoSwapTool);
     }
     void DoTool(Vector3 nextPosi, Ground nextCurrentPosi, Action action)
     {
@@ -251,7 +251,7 @@ public class Passenger : MonoBehaviour
     }
     public void DoFly(Vector3 flyPosi, Ground nextCurrentPosi)
     {
-        DoTool(flyPosi, nextCurrentPosi, Level.Instance.EndDoFly);
+        DoTool(flyPosi, nextCurrentPosi, Level.Instance.EndDoFlyTool);
     }
     void ShootRaycastCheck(Vector3 direction, Color color)
     {

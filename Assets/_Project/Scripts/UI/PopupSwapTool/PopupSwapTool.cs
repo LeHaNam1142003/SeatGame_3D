@@ -12,7 +12,7 @@ public class PopupSwapTool : PopupAnimation
     }
     public void Cancel()
     {
-        Level.Instance.EndDoSwap();
+        Level.Instance.EndDoSwapTool();
         Hide();
     }
 }

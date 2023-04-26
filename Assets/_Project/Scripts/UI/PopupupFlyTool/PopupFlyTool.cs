@@ -12,7 +12,7 @@ public class PopupFlyTool : PopupAnimation
     }
     public void Cancel()
     {
-        Level.Instance.EndDoFly();
+        Level.Instance.EndDoFlyTool();
         Hide();
     }
 }

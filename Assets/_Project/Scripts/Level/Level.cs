@@ -19,7 +19,7 @@ public class Level : MonoBehaviour
     [ReadOnly] public List<Passenger> passengers = new List<Passenger>();
     [ReadOnly] public ETool eTool;
     [SerializeField] private int maxTurn;
-    [SerializeField] private bool isHaveTools;
+    public bool isHaveTools;
     [ShowIf("isHaveTools")] [SerializeField] private List<Button> tools;
     [ShowIf("isHaveTools")] [SerializeField] private GameObject toolBar;
     [SerializeField] private TextMeshProUGUI turnText;
@@ -83,7 +83,7 @@ public class Level : MonoBehaviour
                         switch (eTool)
                         {
                             case ETool.Swap:
-                                DoSwap(passenger);
+                                DoSwapTool(passenger);
                                 break;
                             case ETool.Fly:
                                 SetFlyTool(passenger);
@@ -92,8 +92,8 @@ public class Level : MonoBehaviour
                     }
                     else
                     {
-                        EndDoSwap();
-                        EndDoFly();
+                        EndDoSwapTool();
+                        EndDoFlyTool();
                     }
                 }
             }
@@ -216,9 +216,14 @@ public class Level : MonoBehaviour
         {
             PopupController.Instance.Hide<PopupFlyTool>();
             _flyPassenger.DoFly(flyPosi, nextCurrentPosi);
+            if (!Data.IsTesting)
+            {
+                Data.FlyToolCount -= 1;
+                Observer.CountFly?.Invoke();
+            }
         }
     }
-    void DoSwap(Passenger passenger)
+    void DoSwapTool(Passenger passenger)
     {
         if (!_swaps.Contains(passenger))
         {
@@ -231,9 +236,14 @@ public class Level : MonoBehaviour
             _swaps[0].DoSwapPosi(_swaps[1].transform.localPosition, _swaps[1].currentDestination);
             _swaps[1].DoSwapPosi(_swaps[0].transform.localPosition, _swaps[0].currentDestination);
             _swaps.Clear();
+            if (!Data.IsTesting)
+            {
+                Data.SwapToolCount -= 1;
+                Observer.CountSwap?.Invoke();
+            }
         }
     }
-    public void EndDoSwap()
+    public void EndDoSwapTool()
     {
         eTool = ETool.Non;
         _isUseTool = false;
@@ -245,7 +255,7 @@ public class Level : MonoBehaviour
         Observer.EndSwapping?.Invoke();
         PopupController.Instance.Hide<PopupSwapTool>();
     }
-    public void EndDoFly()
+    public void EndDoFlyTool()
     {
         eTool = ETool.Non;
         _isUseTool = false;
