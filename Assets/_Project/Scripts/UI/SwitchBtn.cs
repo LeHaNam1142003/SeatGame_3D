@@ -20,6 +20,7 @@ public class SwitchBtn : MonoBehaviour
     {
         if (!_isSwapping)
         {
+            Observer.OnSwapping?.Invoke();
             PopupController.Instance.Show<PopupSwapTool>();
             Level.Instance.SwapTool();
         }

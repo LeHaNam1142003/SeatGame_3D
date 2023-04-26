@@ -50,7 +50,7 @@ MonoBehaviour:
   groundSelecteds: []
   currentTurn: 0
   setupSeats: []
-  IsWin: 0
+  isWin: 0
   bonusMoney: 0
   passengers: []
   eTool: 0
@@ -58,7 +58,7 @@ MonoBehaviour:
   isHaveTools: 1
   tools:
   - {fileID: 8353200959315602986}
-  - {fileID: 5885165430665936516}
+  - {fileID: 5751018352687953854}
   toolBar: {fileID: 6891772000039964844}
   turnText: {fileID: 558508654454768257}
 --- !u!1001 &70508174996358675
@@ -5574,9 +5574,9 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 6764502752101810001}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5885165430665936516 stripped
+--- !u!114 &5751018352687953854 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 886111466068787669, guid: 35719c08271cb624c952396ea60b3ebb,
+  m_CorrespondingSourceObject: {fileID: 1310529699622521071, guid: 35719c08271cb624c952396ea60b3ebb,
     type: 3}
   m_PrefabInstance: {fileID: 6764502752101810001}
   m_PrefabAsset: {fileID: 0}

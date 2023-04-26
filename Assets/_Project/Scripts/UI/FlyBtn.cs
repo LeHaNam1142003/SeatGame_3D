@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Pancake;
 using UnityEngine;
 
 public class FlyBtn : MonoBehaviour
@@ -19,6 +20,7 @@ public class FlyBtn : MonoBehaviour
     {
         if (!_isFlying)
         {
+            Observer.OnSwapping?.Invoke();
             PopupController.Instance.Show<PopupFlyTool>();
             Level.Instance.FlyTool();
         }
