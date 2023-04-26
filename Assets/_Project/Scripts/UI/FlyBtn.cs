@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using Pancake;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FlyBtn : MonoBehaviour
 {
     private bool _isFlying;
     [SerializeField] private TextMeshProUGUI textCount;
+    [SerializeField] private Image cantUseImage;
     private void Start()
     {
         Initialize();
@@ -19,6 +21,14 @@ public class FlyBtn : MonoBehaviour
     void UpdateTextCount()
     {
         textCount.text = Data.FlyToolCount.ToString();
+        if (Data.FlyToolCount <= 0)
+        {
+            cantUseImage.enabled = true;
+        }
+        else
+        {
+            cantUseImage.enabled = false;
+        }
     }
     private void OnEnable()
     {
