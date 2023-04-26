@@ -187,7 +187,10 @@ public class Level : MonoBehaviour
     }
     void DoSwap(Passenger passenger)
     {
-        swaps.Add(passenger);
+        if (!swaps.Contains(passenger))
+        {
+            swaps.Add(passenger);
+        }
         if (swaps.Count == 2)
         {
             Observer.OnSwapping?.Invoke();
