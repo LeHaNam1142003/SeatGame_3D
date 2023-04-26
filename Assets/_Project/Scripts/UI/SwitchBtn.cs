@@ -4,11 +4,13 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
+using UnityEngine.UI;
 
 public class SwitchBtn : MonoBehaviour
 {
     private bool _isSwapping;
     [SerializeField] private TextMeshProUGUI textCount;
+    [SerializeField] private Image cantUseImage;
     private void Start()
     {
         Initialize();
@@ -20,6 +22,14 @@ public class SwitchBtn : MonoBehaviour
     void UpdateTextCount()
     {
         textCount.text = Data.SwapToolCount.ToString();
+        if (Data.SwapToolCount <= 0)
+        {
+            cantUseImage.enabled = true;
+        }
+        else
+        {
+            cantUseImage.enabled = false;
+        }
     }
     private void OnEnable()
     {
