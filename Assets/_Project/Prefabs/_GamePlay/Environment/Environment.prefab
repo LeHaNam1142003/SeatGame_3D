@@ -624,6 +624,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textCount: {fileID: 71278100630231506}
+  cantUseImage: {fileID: 6501811880772986771}
 --- !u!1 &2260604091542563461
 GameObject:
   m_ObjectHideFlags: 0
@@ -1228,6 +1229,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textCount: {fileID: 2580710029645346681}
+  cantUseImage: {fileID: 7835439788849254728}
 --- !u!1 &6263115564525134440
 GameObject:
   m_ObjectHideFlags: 0
