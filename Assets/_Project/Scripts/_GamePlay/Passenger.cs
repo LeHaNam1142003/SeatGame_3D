@@ -6,6 +6,7 @@ using DG.Tweening;
 using Pancake;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Passenger : MonoBehaviour
 {
@@ -33,6 +34,8 @@ public class Passenger : MonoBehaviour
     [SerializeField] private AnimationClip idleAnim;
     [SerializeField] private AnimationClip walkAnim;
     [SerializeField] private AnimationClip winAnim;
+    [SerializeField] private Image correctSeatEmotion;
+    [SerializeField] private Image wrongSeatEmotion;
     public int rowDestination;
     public EColumn columnDestination;
     [SerializeField] private CapsuleCollider normalCapsu;
@@ -82,6 +85,21 @@ public class Passenger : MonoBehaviour
         Material[] mats = skinnedMeshRenderer.materials;
         mats[1] = getMaterial;
         skinnedMeshRenderer.materials = mats;
+        if (getMaterial == normal)
+        {
+            return;
+        }
+        else
+        {
+            if (getMaterial == angry)
+            {
+                wrongSeatEmotion.gameObject.SetActive(true);
+            }
+            else if (getMaterial == pleasure)
+            {
+                correctSeatEmotion.gameObject.SetActive(true);
+            }
+        }
     }
     void Win()
     {
