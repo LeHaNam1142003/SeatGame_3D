@@ -296,7 +296,7 @@ public class Level : MonoBehaviour
                             }
                             else
                             {
-                                DoFlyTool(set.transform.position, set);
+                                DoFlyTool(set.transform.localPosition, set);
                             }
                         }
                     }
