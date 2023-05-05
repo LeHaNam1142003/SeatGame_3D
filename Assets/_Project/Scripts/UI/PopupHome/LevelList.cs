@@ -8,49 +8,16 @@ using UnityEngine;
 using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
 
-public class LevelList : MonoBehaviour
+public class LevelList : ScrollBoard
 {
-    [SerializeField] private int levels;
-    [SerializeField] private GridLayoutGroup content;
-    [SerializeField] private CinemaUILevel cinemaUI;
-    [SerializeField] private CinemaUILevel cinemaUILevelTop;
-    private GameObject bottom;
     private int maxGroup = 3;
-    private void Awake()
+    public override void SetIndexText()
     {
-        bottom = new GameObject();
-        for (int i = 1; i <= levels + 2; i++)
-        {
-            if (i <= levels)
-            {
-                if (i == levels)
-                {
-                    InstainCinemaUI(cinemaUILevelTop, i);
-                }
-                else
-                {
-                    InstainCinemaUI(cinemaUI, i);
-                }
-            }
-            else
-            {
-                Debug.Log(i);
-                var emptyObj = Instantiate(bottom, content.transform);
-                emptyObj.AddComponent<RectTransform>();
-                content.rectTransform().sizeDelta += new Vector2(content.cellSize.x, content.cellSize.y + content.spacing.y);
-            }
-        }
-        SetPosi();
-    }
-    void InstainCinemaUI(CinemaUILevel getCinemaUILevel, int index)
-    {
-        var cinema = Instantiate(getCinemaUILevel, content.transform);
-        content.rectTransform().sizeDelta += new Vector2(content.cellSize.x, content.cellSize.y + content.spacing.y);
-        cinema.SetLevelText(index);
+        getObj.GetComponent<CinemaUILevel>().SetLevelText(index);
     }
     private void OnEnable()
     {
-        for (int i = 1; i <= levels; i++)
+        for (int i = 1; i <= elements; i++)
         {
             if (i == Data.CurrentLevel)
             {
@@ -62,7 +29,6 @@ public class LevelList : MonoBehaviour
             }
         }
         SetPosi();
-        // transform.DOLocalMoveY()
     }
     void SetPosi()
     {
