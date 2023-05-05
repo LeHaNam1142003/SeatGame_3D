@@ -1,18 +1,21 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PopupHardMode : Popup
 {
-    // Start is called before the first frame update
-    void Start()
+    private void OnEnable()
     {
-        
+        Observer.PlayHardMode += OnPLayHardMode;
     }
-
-    // Update is called once per frame
-    void Update()
+    private void OnDisable()
     {
-        
+        Observer.PlayHardMode -= OnPLayHardMode;
     }
+    void OnPLayHardMode(int index)
+    {
+        GameManager.Instance.StartHardModeGame(index);
+    }
+    
 }

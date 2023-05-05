@@ -39,6 +39,7 @@ public static class Observer
     public static Action CountFly;
     public static Action OnWin;
     public static Action OnLost;
+    public static Action<int> PlayHardMode;
     #endregion
 
     #region Gameplay

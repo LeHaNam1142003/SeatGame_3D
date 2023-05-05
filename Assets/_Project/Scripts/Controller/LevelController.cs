@@ -6,12 +6,12 @@ public class LevelController : SingletonDontDestroy<LevelController>
 {
     [ReadOnly] public Level currentLevel;
     private GameConfig Game => ConfigController.Game;
-    public void PrepareLevel()
+    public void PrepareLevel(string address, int indexLevel)
     {
-        GenerateLevel(Data.CurrentLevel);
+        GenerateLevel(address, indexLevel);
     }
-    
-    public void GenerateLevel(int indexLevel)
+
+    public void GenerateLevel(string address, int indexLevel)
     {
         if (currentLevel != null)
         {
@@ -20,13 +20,13 @@ public class LevelController : SingletonDontDestroy<LevelController>
 
         if (indexLevel > ConfigController.Game.maxLevel)
         {
-            indexLevel = (indexLevel-Game.startLoopLevel) % (Game.maxLevel - Game.startLoopLevel + 1) + Game.startLoopLevel;
+            indexLevel = (indexLevel - Game.startLoopLevel) % (Game.maxLevel - Game.startLoopLevel + 1) + Game.startLoopLevel;
         }
         else
         {
             if (Game.levelLoopType == LevelLoopType.NormalLoop)
             {
-                indexLevel = (indexLevel-1) % ConfigController.Game.maxLevel + 1;
+                indexLevel = (indexLevel - 1) % ConfigController.Game.maxLevel + 1;
             }
             else if (Game.levelLoopType == LevelLoopType.RandomLoop)
             {
@@ -34,16 +34,15 @@ public class LevelController : SingletonDontDestroy<LevelController>
             }
         }
 
-        Level level = GetLevelByIndex(indexLevel);
+        Level level = GetLevelByIndex(address, indexLevel);
         currentLevel = Instantiate(level);
         currentLevel.gameObject.SetActive(false);
     }
 
-    public Level GetLevelByIndex(int indexLevel)
+    public Level GetLevelByIndex(string address, int indexLevel)
     {
-        var levelGo = Resources.Load($"Levels/Level {indexLevel}") as GameObject;
+        var levelGo = Resources.Load($"Levels/{address} {indexLevel}") as GameObject;
         Debug.Assert(levelGo != null, nameof(levelGo) + " != null");
         return levelGo.GetComponent<Level>();
     }
 }
-
