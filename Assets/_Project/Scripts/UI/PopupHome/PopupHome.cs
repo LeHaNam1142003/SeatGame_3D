@@ -7,7 +7,7 @@ public class PopupHome : Popup
         base.BeforeShow();
         PopupController.Instance.Show<PopupUI>();
     }
-    
+
     protected override void BeforeHide()
     {
         base.BeforeHide();
@@ -18,7 +18,7 @@ public class PopupHome : Popup
     {
         MethodBase function = MethodBase.GetCurrentMethod();
         Observer.TrackClickButton?.Invoke(function.Name);
-        
+
         GameManager.Instance.StartGame();
     }
 
@@ -26,7 +26,7 @@ public class PopupHome : Popup
     {
         MethodBase function = MethodBase.GetCurrentMethod();
         Observer.TrackClickButton?.Invoke(function.Name);
-        
+
         PopupController.Instance.Show<PopupDebug>();
     }
 
@@ -34,7 +34,7 @@ public class PopupHome : Popup
     {
         MethodBase function = MethodBase.GetCurrentMethod();
         Observer.TrackClickButton?.Invoke(function.Name);
-        
+
         PopupController.Instance.Show<PopupSetting>();
     }
 
@@ -42,7 +42,7 @@ public class PopupHome : Popup
     {
         MethodBase function = MethodBase.GetCurrentMethod();
         Observer.TrackClickButton?.Invoke(function.Name);
-        
+
         PopupController.Instance.Show<PopupDailyReward>();
     }
 
@@ -50,15 +50,24 @@ public class PopupHome : Popup
     {
         MethodBase function = MethodBase.GetCurrentMethod();
         Observer.TrackClickButton?.Invoke(function.Name);
-        
+
         PopupController.Instance.Show<PopupShop>();
     }
-    
+
     public void OnClickTest()
     {
         MethodBase function = MethodBase.GetCurrentMethod();
         Observer.TrackClickButton?.Invoke(function.Name);
-        
+
         PopupController.Instance.Show<PopupTest>();
     }
+    public void OnClickHardMode()
+    {
+        MethodBase function = MethodBase.GetCurrentMethod();
+        Observer.TrackClickButton?.Invoke(function.Name);
+
+        PopupController.Instance.Show<PopupHardMode>();
+    }
+
+
 }
