@@ -772,7 +772,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd9f4f754c99b8f49a5155365f208d63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Camera: {fileID: 0}
   isMove: 0
   indexTurn: 11042003
   road: {fileID: 0}
@@ -1688,7 +1687,7 @@ Transform:
   m_GameObject: {fileID: 2106836423089920897}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.7, y: 1, z: 1.7}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2106836422293552639}
