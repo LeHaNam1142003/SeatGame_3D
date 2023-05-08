@@ -12,7 +12,7 @@ public class CinemaUILevel : MonoBehaviour
     [SerializeField] private Image hightlightSelected;
     public void SetLevelText(int indexLevel)
     {
-        levelText.text = indexLevel.ToString();
+        levelText.text = $"Level {indexLevel}";
     }
     public void SetHightLight(bool isActive)
     {
