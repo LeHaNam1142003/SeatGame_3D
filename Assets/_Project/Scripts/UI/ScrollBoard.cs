@@ -12,9 +12,9 @@ public abstract class ScrollBoard : MonoBehaviour
     [SerializeField] private bool isHaveTopContent;
     [ShowIf("isHaveTopContent")] [SerializeField] private GameObject topContentUI;
     private GameObject bottom;
-    [ReadOnly] public GameObject getObj;
+    protected GameObject getObj;
     [ReadOnly] public int index;
-    private void Awake()
+    public void ShowContent()
     {
         bottom = new GameObject();
         for (int i = 1; i <= elements + 2; i++)
@@ -24,11 +24,11 @@ public abstract class ScrollBoard : MonoBehaviour
             {
                 if (i == elements && topContentUI != null)
                 {
-                    InstainUIContent(topContentUI, i);
+                    InstainUIContent(topContentUI);
                 }
                 else
                 {
-                    InstainUIContent(contentUI, i);
+                    InstainUIContent(contentUI);
                 }
             }
             else
@@ -40,11 +40,11 @@ public abstract class ScrollBoard : MonoBehaviour
             }
         }
     }
-    void InstainUIContent(GameObject getUIContent, int index)
+    void InstainUIContent(GameObject getUIContent)
     {
         getObj = Instantiate(getUIContent, content.transform);
         content.rectTransform().sizeDelta += new Vector2(content.cellSize.x, content.cellSize.y + content.spacing.y);
         SetIndexText();
     }
-    public abstract void SetIndexText();
+    protected abstract void SetIndexText();
 }
