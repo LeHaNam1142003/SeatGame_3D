@@ -9,11 +9,11 @@ using UnityEngine.UI;
 public class PopupWinHardMode : Popup
 {
     [SerializeField] private List<Reward> rewards = new List<Reward>();
-    [SerializeField] private GameObject itemClaim;
+    [SerializeField] private HorizontalLayoutGroup itemClaim;
     [ReadOnly] public List<SetUpReward> setupRewards = new List<SetUpReward>();
-    private Image _setIcon;
+    private GameObject _setIcon;
     private GameObject a;
-    private TextMeshProUGUI _numberText;
+    private GameObject _numberText;
     protected override void BeforeShow()
     {
         SetReward();
@@ -21,42 +21,49 @@ public class PopupWinHardMode : Popup
     }
     void SetReward()
     {
-        Debug.Log("2");
-        for (int i = 0; i < rewards.Count; i++)
+        _numberText = new GameObject();
+        _numberText.AddComponent<TextMeshProUGUI>();
+        var setNumbetText = _numberText.GetComponent<TextMeshProUGUI>();
+        _setIcon = new GameObject();
+        _setIcon.AddComponent<Image>();
+        var icon = _setIcon.GetComponent<Image>();
+        foreach (var getReward in rewards)
         {
-            for (int j = 0; j < setupRewards.Count; j++)
+            foreach (var setupReward in setupRewards)
             {
-                if (rewards[i].eTypeReward == setupRewards[i].eTypeReward)
+                if (getReward.eTypeReward == setupReward.eTypeReward)
                 {
-                    a = new GameObject();
-                    Instantiate(a, itemClaim.transform);
+                    icon.sprite = getReward.iconReward;
+                    var showIcon = Instantiate(icon, itemClaim.transform);
+                    itemClaim.childAlignment = TextAnchor.MiddleCenter;
+                    setNumbetText.text = $"X {setupReward.number}";
+                    var showNumber = Instantiate(setNumbetText, showIcon.transform);
+                    showNumber.color = Color.cyan;
+                    showNumber.alignment = TextAlignmentOptions.Center;
+                    showNumber.alignment = TextAlignmentOptions.Midline;
+                    showNumber.rectTransform.anchorMax = new Vector2(0.5f, 0);
+                    showNumber.rectTransform.anchorMin = new Vector2(0.5f, 0);
+                    showNumber.rectTransform.pivot = new Vector2(0.5f, 0.5f);
+                    showNumber.rectTransform.anchoredPosition3D = new Vector3(0, -40, 0);
                 }
             }
         }
-        // foreach (var getReward in rewards)
-        // {
-        //     foreach (var setupReward in setupRewards)
-        //     {
-        //         if (getReward.eTypeReward == setupReward.eTypeReward)
-        //         {
-        //             _setIcon.sprite = getReward.iconReward;
-        //             var showIcon = Instantiate(_setIcon, itemClaim.transform);
-        //             Debug.Log("sinh");
-        //             itemClaim.childAlignment = TextAnchor.MiddleCenter;
-        //             _numberText.text = $"X {setupReward.number}";
-        //             var showNumber = Instantiate(_numberText, showIcon.transform);
-        //             Debug.Log("sinnh");
-        //             showNumber.rectTransform.anchorMax = new Vector2(0.5f, 0);
-        //             showNumber.rectTransform.anchorMin = new Vector2(0.5f, 0);
-        //             showNumber.rectTransform.pivot = new Vector2(0.5f, 0.5f);
-        //             showNumber.rectTransform.anchoredPosition3D = new Vector3(0, -40, 0);
-        //         }
-        //     }
-        // }
     }
     public void Claim()
     {
-
+        foreach (var setClaim in setupRewards)
+        {
+            switch (setClaim.eTypeReward)
+            {
+                case ETypeReward.Tele:
+                    Data.SwapToolCount += setClaim.number;
+                    break;
+                case ETypeReward.Swap:
+                    Data.FlyToolCount += setClaim.number;
+                    break;
+            }
+        }
+        GameManager.Instance.ReturnHome();
     }
 }
 [Serializable]
