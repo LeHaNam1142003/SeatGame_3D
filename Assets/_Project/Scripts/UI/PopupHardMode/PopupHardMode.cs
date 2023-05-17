@@ -1,12 +1,21 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
+using Unity.Collections;
 using UnityEngine;
 
 public class PopupHardMode : Popup
 {
+    [SerializeField] private HardModeList hardModeList;
+    private void Awake()
+    {
+        Initialization();
+    }
+    void Initialization()
+    {
+        hardModeList.ShowContent();
+    }
     private void OnEnable()
     {
+        hardModeList.SetStateMode(Data.HardModeUnlock);
         Observer.PlayHardMode += OnPLayHardMode;
     }
     private void OnDisable()
@@ -17,5 +26,5 @@ public class PopupHardMode : Popup
     {
         GameManager.Instance.StartHardModeGame(index);
     }
-    
+
 }
