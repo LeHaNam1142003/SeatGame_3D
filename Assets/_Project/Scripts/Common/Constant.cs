@@ -40,9 +40,6 @@ public class Constant
     public const string EquipItem = "EQUIP_ITEM";
     public const string FlyTool = "FlyTool";
     public const string SwapTool = "SwapTool";
-
-
-
-
+    public const string HardModeUnlock = "LevelUnlock";
 
 }
