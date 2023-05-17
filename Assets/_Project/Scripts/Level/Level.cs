@@ -19,7 +19,10 @@ public class Level : MonoBehaviour
     [ReadOnly] public List<Passenger> passengers = new List<Passenger>();
     [ReadOnly] public ETool eTool;
     [SerializeField] private int maxTurn;
+    [SerializeField] private bool isHardMode;
+    [ShowIf("isHardMode")] [SerializeField] private StateModeData stateModeData;
     public bool isHaveTools;
+    [ShowIf("isHardMode")] [SerializeField] List<SetUpReward> setupRewards;
     [ShowIf("isHaveTools")] [SerializeField] private List<Button> tools;
     [ShowIf("isHaveTools")] [SerializeField] private GameObject toolBar;
     [SerializeField] private TextMeshProUGUI turnText;
@@ -33,6 +36,7 @@ public class Level : MonoBehaviour
     private bool _isFingerDown;
     private bool _isFingerDrag;
     private bool _isProcessing;
+    private bool _isSetupStateHardMode;
 
     private Camera Camera => GetComponentInChildren<Camera>(true);
 
@@ -59,6 +63,8 @@ public class Level : MonoBehaviour
             }
             toolBar.SetActive(true);
         }
+        _isSetupStateHardMode = true;
+        isWin = false;
         _isCanTouchPlayer = true;
         Instance = this;
         currentTurn = maxTurn;
@@ -142,32 +148,35 @@ public class Level : MonoBehaviour
     public void ManageSeat(Seat getSeat, bool isCorrectPassenger)
     {
         // Check all of Seats are correct or not
-        count = 0;
-        foreach (var setupSeat in setupSeats)
+        if (!isWin)
         {
-            if (setupSeat.seat == getSeat)
+            count = 0;
+            foreach (var setupSeat in setupSeats)
             {
-                setupSeat.isCorrect = isCorrectPassenger;
+                if (setupSeat.seat == getSeat)
+                {
+                    setupSeat.isCorrect = isCorrectPassenger;
+                }
+            }
+            for (int i = 0; i < setupSeats.Count; i++)
+            {
+                if (setupSeats[i].isCorrect == false)
+                {
+                    count++;
+                }
+            }
+            if (count == 0)
+            {
+                if (isHaveTools)
+                {
+                    toolBar.SetActive(false);
+                }
+                isWin = true;
+                Observer.IntroWinGame?.Invoke();
             }
         }
-        for (int i = 0; i < setupSeats.Count; i++)
-        {
-            if (setupSeats[i].isCorrect == false)
-            {
-                count++;
-            }
-        }
-        if (count == 0)
-        {
-            if (isHaveTools)
-            {
-                toolBar.SetActive(false);
-            }
-            Observer.IntroWinGame?.Invoke();
-        }
+
     }
-
-
     void OnEnable()
     {
         Lean.Touch.LeanTouch.OnFingerDown += HandleFingerDown;
@@ -369,12 +378,49 @@ public class Level : MonoBehaviour
 
     private void OnWin()
     {
-        GameManager.Instance.OnWinGame();
+        if (isHardMode)
+        {
+            GameManager.Instance.WinHardMode(setupRewards);
+            SetStateHardMode(EStateMode.Completed);
+        }
+        else
+        {
+            GameManager.Instance.OnWinGame();
+        }
+    }
+    void SetStateHardMode(EStateMode stateMode)
+    {
+        if (_isSetupStateHardMode)
+        {
+            _isSetupStateHardMode = false;
+            SetupStateMode setupStateMode = new SetupStateMode();
+            setupStateMode.modeIndex = Data.IndexHardMode;
+            setupStateMode.eStateMode = stateMode;
+            if (Data.IndexHardMode <= stateModeData.setStateModes.Count)
+            {
+                if (stateMode!= EStateMode.Lost)
+                {
+                    stateModeData.setStateModes[Data.IndexHardMode - 1].eStateMode = EStateMode.Completed;
+                }
+            }
+            else
+            {
+                stateModeData.setStateModes.Add(setupStateMode);
+            }
+        }
     }
 
     private void OnLose()
     {
-        GameManager.Instance.OnLoseGame();
+        if (isHardMode)
+        {
+            GameManager.Instance.LoseHardMode();
+            SetStateHardMode(EStateMode.Lost);
+        }
+        else
+        {
+            GameManager.Instance.OnLoseGame();
+        }
     }
 }
 [Serializable]
@@ -382,6 +428,12 @@ public class SetUpSeat
 {
     public Seat seat;
     public bool isCorrect;
+}
+[Serializable]
+public class SetUpReward
+{
+    public ETypeReward eTypeReward;
+    public int number;
 }
 public enum ETool
 {
