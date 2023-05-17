@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using CodeStage.AdvancedFPSCounter;
 using DG.Tweening;
 using Pancake.GameService;
@@ -15,11 +17,35 @@ public class GameManager : SingletonDontDestroy<GameManager>
         base.Awake();
         Application.targetFrameRate = 60;
     }
+    public void WinHardMode(List<SetUpReward> getSetup)
+    {
+        if (gameState == GameState.WaitingResult || gameState == GameState.LoseGame || gameState == GameState.WinGame) return;
+        gameState = GameState.WinGame;
+        Observer.WinLevel?.Invoke(levelController.currentLevel);
+        PopupController.Instance.HideAll();
+        var getPopupWinHardMode = PopupController.Instance.Get<PopupWinHardMode>() as PopupWinHardMode;
+        foreach (var g in getSetup)
+        {
+            if (!getPopupWinHardMode.setupRewards.Contains(g))
+            {
+                getPopupWinHardMode.setupRewards.Add(g);
+            }
+        }
+        Data.HardModeUnlock++;
+        PopupController.Instance.Show<PopupWinHardMode>();
+    }
+    public void LoseHardMode()
+    {
+        if (gameState == GameState.WaitingResult || gameState == GameState.LoseGame || gameState == GameState.WinGame) return;
+        gameState = GameState.LoseGame;
+        Observer.LoseLevel?.Invoke(levelController.currentLevel);
+        PopupController.Instance.HideAll();
+        PopupController.Instance.Show<PopupLoseHardMode>();
+    }
 
     void Start()
     {
         ReturnHome();
-
         Observer.StartLevel += UpdateScore;
     }
 
@@ -40,7 +66,7 @@ public class GameManager : SingletonDontDestroy<GameManager>
     public void PrepareLevel()
     {
         gameState = GameState.PrepareGame;
-        levelController.PrepareLevel();
+        levelController.PrepareLevel("Level", Data.CurrentLevel);
     }
 
     public void ReturnHome()
@@ -71,7 +97,6 @@ public class GameManager : SingletonDontDestroy<GameManager>
     {
         Observer.SkipLevel?.Invoke(levelController.currentLevel);
         Data.CurrentLevel++;
-
         PrepareLevel();
         StartGame();
     }
@@ -84,6 +109,12 @@ public class GameManager : SingletonDontDestroy<GameManager>
         PopupController.Instance.HideAll();
         PopupController.Instance.Show<PopupInGame>();
         levelController.currentLevel.gameObject.SetActive(true);
+    }
+    public void StartHardModeGame(int indexHardMode)
+    {
+        gameState = GameState.PrepareGame;
+        levelController.PrepareLevel("HardMode", indexHardMode);
+        StartGame();
     }
 
     public void OnWinGame(float delayPopupShowTime = 2.5f)
