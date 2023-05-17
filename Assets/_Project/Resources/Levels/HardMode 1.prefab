@@ -55,7 +55,14 @@ MonoBehaviour:
   passengers: []
   eTool: 0
   maxTurn: 20
+  isHardMode: 1
+  stateModeData: {fileID: 11400000, guid: 35529f1c68c008b4b85bc6f5f8bfc42e, type: 2}
   isHaveTools: 1
+  setupRewards:
+  - eTypeReward: 1
+    number: 1
+  - eTypeReward: 2
+    number: 1
   tools:
   - {fileID: 8353200959315602986}
   - {fileID: 5751018352687953854}
