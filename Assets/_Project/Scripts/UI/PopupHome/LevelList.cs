@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using DG.Tweening;
 using Pancake;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
@@ -11,7 +12,11 @@ using Debug = UnityEngine.Debug;
 public class LevelList : ScrollBoard
 {
     private int maxGroup = 3;
-    public override void SetIndexText()
+    private void Awake()
+    {
+        ShowContent();
+    }
+    protected override void SetIndexText()
     {
         getObj.GetComponent<CinemaUILevel>().SetLevelText(index);
     }
@@ -35,7 +40,6 @@ public class LevelList : ScrollBoard
         var setSizeGroup = (content.cellSize.y + content.spacing.y) * 3;
         var calculateLevel = Data.CurrentLevel % maxGroup == 0 ? Data.CurrentLevel / maxGroup - 1 : Data.CurrentLevel / maxGroup;
         var getRect = content.GetComponent<RectTransform>();
-        Debug.Log(Mathf.Ceil(getRect.rect.height / 2));
         content.rectTransform().anchoredPosition3D = new Vector3(0, Mathf.Ceil(getRect.rect.height / 2) - setSizeGroup * calculateLevel, 0);
     }
 }
