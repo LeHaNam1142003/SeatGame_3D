@@ -33,7 +33,6 @@ public abstract class ScrollBoard : MonoBehaviour
             }
             else
             {
-                Debug.Log(i);
                 var emptyObj = Instantiate(bottom, content.transform);
                 emptyObj.AddComponent<RectTransform>();
                 content.rectTransform().sizeDelta += new Vector2(content.cellSize.x, content.cellSize.y + content.spacing.y);
