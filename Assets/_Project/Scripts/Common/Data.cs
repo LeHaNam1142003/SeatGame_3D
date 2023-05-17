@@ -22,7 +22,6 @@ public static partial class Data
             Observer.DebugChanged?.Invoke();
         }
     }
-
     public static int CurrentLevel
     {
         get { return GetInt(Constant.IndexLevelCurrent, 1); }
@@ -43,6 +42,12 @@ public static partial class Data
         get => GetInt(Constant.SwapTool, 3);
         set => SetInt(Constant.SwapTool, value);
     }
+    public static int HardModeUnlock
+    {
+        get => GetInt(Constant.HardModeUnlock, 1);
+        set => SetInt(Constant.HardModeUnlock, value);
+    }
+    public static int IndexHardMode;
 
     public static int CurrencyTotal
     {
