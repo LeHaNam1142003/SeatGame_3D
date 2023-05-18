@@ -754,7 +754,6 @@ MonoBehaviour:
   isHaveTopContent: 1
   topContentUI: {fileID: 2466689453571132477, guid: 17d0b8fd9a0dc214cb924e510e27d962,
     type: 3}
-  getObj: {fileID: 0}
   index: 0
 --- !u!1 &2357932876705697321
 GameObject:
@@ -1206,7 +1205,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: -5522501779321461619}
         m_TargetAssemblyTypeName: PopupHome, Assembly-CSharp
-        m_MethodName: OnClickDailyReward
+        m_MethodName: OnClickSpin
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2084,7 +2083,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 2.4623, y: 514.0499}
+  m_AnchoredPosition: {x: 2.4623, y: 514.04987}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1839933732074459149
