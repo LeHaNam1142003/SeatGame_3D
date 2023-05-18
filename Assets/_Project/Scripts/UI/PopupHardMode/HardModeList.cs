@@ -8,7 +8,7 @@ public class HardModeList : ScrollBoard
     [SerializeField] private StateModeData stateModeData;
     public void SetStateMode(int levelAvailable)
     {
-        for (int i = 0; i < content.transform.childCount - 2; i++)
+        for (int i = 0; i < content.transform.childCount - 1; i++)
         {
             var setup = content.transform.GetChild(i).GetComponent<HardModeUI>();
             if (i < levelAvailable)
