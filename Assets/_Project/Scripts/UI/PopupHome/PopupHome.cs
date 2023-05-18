@@ -29,6 +29,13 @@ public class PopupHome : Popup
 
         PopupController.Instance.Show<PopupDebug>();
     }
+    public void OnClickSpin()
+    {
+        MethodBase function = MethodBase.GetCurrentMethod();
+        Observer.TrackClickButton?.Invoke(function.Name);
+
+        PopupController.Instance.Show<PopupSpin>();
+    }
 
     public void OnClickSetting()
     {
