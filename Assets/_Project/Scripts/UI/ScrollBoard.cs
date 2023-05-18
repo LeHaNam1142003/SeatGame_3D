@@ -17,7 +17,7 @@ public abstract class ScrollBoard : MonoBehaviour
     public void ShowContent()
     {
         bottom = new GameObject();
-        for (int i = 1; i <= elements + 2; i++)
+        for (int i = 1; i <= elements + 1; i++)
         {
             index = i;
             if (i <= elements)
