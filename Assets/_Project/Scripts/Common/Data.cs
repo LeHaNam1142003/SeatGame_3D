@@ -59,6 +59,11 @@ public static partial class Data
             Observer.CurrencyTotalChanged?.Invoke();
         }
     }
+    public static int SpinTicketAmount
+    {
+        get => GetInt(Constant.SpinTicketAmount, 1);
+        set => SetInt(Constant.SpinTicketAmount, value);
+    }
 
     public static int ProgressAmount
     {
