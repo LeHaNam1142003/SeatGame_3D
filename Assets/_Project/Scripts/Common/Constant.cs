@@ -41,5 +41,6 @@ public class Constant
     public const string FlyTool = "FlyTool";
     public const string SwapTool = "SwapTool";
     public const string HardModeUnlock = "LevelUnlock";
+    public const string SpinTicketAmount = "SpinTicketAmount";
 
 }
