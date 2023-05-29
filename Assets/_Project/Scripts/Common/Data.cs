@@ -157,6 +157,68 @@ public static partial class Data
         set => SetInt(Constant.TotalClaimDailyReward, value);
     }
     #endregion
+    #region DailyQuest
+    public static int PlayLevel
+    {
+        get => GetInt(Constant.PlayLevelMission, 0);
+        set => SetInt(Constant.PlayLevelMission, value);
+    }
+    public static int SpinWheel
+    {
+        get => GetInt(Constant.SpinWheelMission, 0);
+        set => SetInt(Constant.SpinWheelMission, value);
+    }
+    public static int WatchAds
+    {
+        get => GetInt(Constant.WatchAdsMission, 0);
+        set => SetInt(Constant.WatchAdsMission, value);
+    }
+    public static int CompletedHardMode
+    {
+        get => GetInt(Constant.CompletedHardModeMisson, 0);
+        set => SetInt(Constant.CompletedHardModeMisson, value);
+    }
+    public static int Useswapbooster
+    {
+        get => GetInt(Constant.Use1timeswapboosterMission, 0);
+        set => SetInt(Constant.Use1timeswapboosterMission, value);
+    }
+    public static int StarMission
+    {
+        get => GetInt(Constant.StarMission, 0);
+        set => SetInt(Constant.StarMission, value);
+    }
+    public static int GiftCanReward
+    {
+        get => GetInt(Constant.GiftCanReward, 0);
+        set => SetInt(Constant.GiftCanReward, value);
+    }
+    public static int MissionRewarded
+    {
+        get => GetInt(Constant.MissionRewarded, 0);
+        set => SetInt(Constant.MissionRewarded, value);
+    }
+    public static int DailyQuestDay
+    {
+        get => GetInt(Constant.DailyQuestDay, 0);
+        set => SetInt(Constant.DailyQuestDay, value);
+    }
+    public static int DailyQuestYear
+    {
+        get => GetInt(Constant.DailyQuestYear, 0);
+        set => SetInt(Constant.DailyQuestYear, value);
+    }
+    public static int DailyQuestMonth
+    {
+        get => GetInt(Constant.DailyQuestMonth, 0);
+        set => SetInt(Constant.DailyQuestMonth, value);
+    }
+    public static int DailyMissionIndex
+    {
+        get => GetInt(Constant.DailyMissionIndex, 0);
+        set => SetInt(Constant.DailyMissionIndex, value);
+    }
+    #endregion
 
     #region PLAYFAB_DATA
     public static string PlayfabLoginId
