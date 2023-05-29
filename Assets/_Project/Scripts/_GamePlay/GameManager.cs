@@ -23,7 +23,8 @@ public class GameManager : SingletonDontDestroy<GameManager>
         gameState = GameState.WinGame;
         Observer.WinLevel?.Invoke(levelController.currentLevel);
         PopupController.Instance.HideAll();
-        var getPopupWinHardMode = PopupController.Instance.Get<PopupWinHardMode>() as PopupWinHardMode;
+        Data.CompletedHardMode += 1;
+        var getPopupWinHardMode = PopupController.Instance.Get<PopupCongratulation>() as PopupCongratulation;
         foreach (var g in getSetup)
         {
             if (!getPopupWinHardMode.setupRewards.Contains(g))
@@ -31,8 +32,9 @@ public class GameManager : SingletonDontDestroy<GameManager>
                 getPopupWinHardMode.setupRewards.Add(g);
             }
         }
+        getPopupWinHardMode.isBackHome = true;
         Data.HardModeUnlock++;
-        PopupController.Instance.Show<PopupWinHardMode>();
+        PopupController.Instance.Show<PopupCongratulation>();
     }
     public void LoseHardMode()
     {
@@ -122,6 +124,7 @@ public class GameManager : SingletonDontDestroy<GameManager>
         if (gameState == GameState.WaitingResult || gameState == GameState.LoseGame || gameState == GameState.WinGame) return;
         gameState = GameState.WinGame;
         Observer.WinLevel?.Invoke(levelController.currentLevel);
+        Data.PlayLevel += 1;
         if (levelController.currentLevel.isHaveTools && !Data.IsTesting)
         {
             Data.FlyToolCount += 1;
