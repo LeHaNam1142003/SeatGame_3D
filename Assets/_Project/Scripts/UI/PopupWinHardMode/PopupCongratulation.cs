@@ -6,12 +6,13 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PopupWinHardMode : Popup
+public class PopupCongratulation : Popup
 {
     [SerializeField] private List<Reward> rewards = new List<Reward>();
     [SerializeField] private HorizontalLayoutGroup itemClaim;
     [ReadOnly] public List<SetUpReward> setupRewards = new List<SetUpReward>();
     private GameObject _setIcon;
+    public bool isBackHome { get; set; }
     private GameObject a;
     private GameObject _numberText;
     protected override void BeforeShow()
@@ -61,9 +62,26 @@ public class PopupWinHardMode : Popup
                 case ETypeReward.Swap:
                     Data.FlyToolCount += setClaim.number;
                     break;
+                case ETypeReward.Money:
+                    Data.CurrencyTotal += setClaim.number;
+                    break;
             }
         }
-        GameManager.Instance.ReturnHome();
+        setupRewards.Clear();
+        Debug.Log(itemClaim.transform.childCount);
+        for (int i = 0; i < itemClaim.transform.childCount; i++)
+        {
+            Destroy(itemClaim.transform.GetChild(i).gameObject);
+        }
+        if (isBackHome)
+        {
+            GameManager.Instance.ReturnHome();
+            isBackHome = false;
+        }
+        else
+        {
+            Hide();
+        }
     }
 }
 [Serializable]
@@ -77,4 +95,5 @@ public enum ETypeReward
     Non,
     Tele,
     Swap,
+    Money,
 }
