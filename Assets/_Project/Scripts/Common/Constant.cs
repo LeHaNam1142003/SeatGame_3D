@@ -42,5 +42,17 @@ public class Constant
     public const string SwapTool = "SwapTool";
     public const string HardModeUnlock = "LevelUnlock";
     public const string SpinTicketAmount = "SpinTicketAmount";
-
+    public const string PlayLevelMission = "PlayLevelMission";
+    public const string SpinWheelMission = "SpinWheelMission";
+    public const string WatchAdsMission = "WatchAdsMission";
+    public const string CompletedHardModeMisson = "CompletedHardModeMisson";
+    public const string Use1timeswapboosterMission = "Use1timeswapboosterMission";
+    public const string StarMission = "StarMission";
+    public const string GiftCanReward = "GiftCanReward";
+    public const string MissionBoardCanrewarded = "MissionBoardCanrewarded";
+    public const string MissionRewarded = "MissionRewarded";
+    public const string DailyQuestDay = "DailyQuestDay";
+    public const string DailyQuestYear = "DailyQuestYear";
+    public const string DailyQuestMonth = "DailyQuestMonth";
+    public const string DailyMissionIndex = "DailyMissionIndex";
 }
