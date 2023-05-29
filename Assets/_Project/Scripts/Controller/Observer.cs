@@ -41,6 +41,8 @@ public static class Observer
     public static Action OnLost;
     public static Action DoSpin;
     public static Action<int> PlayHardMode;
+    public static Action UpdateStarReward;
+    public static Action NewDailyReWard;
     #endregion
 
     #region Gameplay
