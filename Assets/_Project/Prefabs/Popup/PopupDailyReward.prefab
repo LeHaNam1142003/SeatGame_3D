@@ -143,6 +143,7 @@ MonoBehaviour:
   fromScale: {x: 0.5, y: 0.5, z: 0.5}
   saveLocalScale: {x: 0, y: 0, z: 0}
   strength: 3
+  _moveType: 0
   fromPosition: {x: 0, y: 0, z: 0}
   directionType: 0
   offset: 0
