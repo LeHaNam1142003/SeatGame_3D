@@ -248,6 +248,7 @@ public class Level : MonoBehaviour
             if (!Data.IsTesting)
             {
                 Data.SwapToolCount -= 1;
+                Data.Useswapbooster += 1;
                 Observer.CountSwap?.Invoke();
             }
         }
