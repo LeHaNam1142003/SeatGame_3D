@@ -204,7 +204,6 @@ MonoBehaviour:
     type: 3}
   isHaveTopContent: 0
   topContentUI: {fileID: 0}
-  index: 0
   stateModeData: {fileID: 11400000, guid: 35529f1c68c008b4b85bc6f5f8bfc42e, type: 2}
 --- !u!1 &626953971530254935
 GameObject:
