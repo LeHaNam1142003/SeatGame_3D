@@ -13,7 +13,7 @@ public abstract class ScrollBoard : MonoBehaviour
     [ShowIf("isHaveTopContent")] [SerializeField] private GameObject topContentUI;
     private GameObject bottom;
     protected GameObject getObj;
-    [ReadOnly] public int index;
+    protected int index;
     public void ShowContent()
     {
         bottom = new GameObject();
