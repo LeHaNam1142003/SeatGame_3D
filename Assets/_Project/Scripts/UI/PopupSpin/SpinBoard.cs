@@ -36,6 +36,7 @@ public class SpinBoard : MonoBehaviour
     }
     void DoSpin()
     {
+        Data.SpinWheel += 1;
         SetRamdom();
         DoSpinAnim(doSpinAnim, true);
         transform.DORotate(new Vector3(0, 0, -1080 - (_endAngle * (_endSpin + (_endSpin - 1)))), 5, RotateMode.FastBeyond360).OnUpdate((() =>
@@ -45,7 +46,6 @@ public class SpinBoard : MonoBehaviour
         {
             Observer.DoSpin += DoSpin;
             DoSpinAnim(doneSpinAnim, true);
-            // transform.eulerAngles = Vector3.zero;
         }));
     }
     void SetRamdom()
