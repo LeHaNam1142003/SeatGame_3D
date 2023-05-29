@@ -45,6 +45,13 @@ public class PopupHome : Popup
 
         PopupController.Instance.Show<PopupSetting>();
     }
+    public void OnclickDailyQuest()
+    {
+        MethodBase function = MethodBase.GetCurrentMethod();
+        Observer.TrackClickButton?.Invoke(function.Name);
+
+        PopupController.Instance.Show<PopupDailyQuest>();
+    }
 
     public void OnClickDailyReward()
     {
