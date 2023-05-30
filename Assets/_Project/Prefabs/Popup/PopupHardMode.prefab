@@ -202,8 +202,11 @@ MonoBehaviour:
   content: {fileID: 7675861855723428549}
   contentUI: {fileID: 2221131274748736343, guid: 8a822686d4729904c9905d5b6476177e,
     type: 3}
-  isHaveTopContent: 0
+  isHaveTopContent: 1
+  emptyObj: {fileID: 1676177247718617984, guid: c498bf26c028d38419d0c980515358f7,
+    type: 3}
   topContentUI: {fileID: 0}
+  contentUIs: []
   stateModeData: {fileID: 11400000, guid: 35529f1c68c008b4b85bc6f5f8bfc42e, type: 2}
 --- !u!1 &626953971530254935
 GameObject:
@@ -987,6 +990,10 @@ MonoBehaviour:
   useHideAnimation: 0
   hideAnimationType: 0
   hardModeList: {fileID: 2787736843622928309}
+  buttonHardModeOn: {fileID: 1916865819755458237}
+  buttonHardModeOff: {fileID: 5563573603131418091}
+  buttonSuperHardModeOn: {fileID: 4835224510435356721}
+  buttonSuperHardModeOff: {fileID: 4847007589540824701}
 --- !u!1 &2822813644461744098
 GameObject:
   m_ObjectHideFlags: 0
@@ -1532,7 +1539,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2877744148165547864}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7470537944641446857}
+        m_TargetAssemblyTypeName: PopupHardMode, Assembly-CSharp
+        m_MethodName: OnclickSuperHardMode
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   clickType: 0
   allowMultipleClick: 1
   timeDisableButton: 0.2
@@ -1801,7 +1820,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5146657223449257063}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7470537944641446857}
+        m_TargetAssemblyTypeName: PopupHardMode, Assembly-CSharp
+        m_MethodName: OnClickHardMode
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   clickType: 0
   allowMultipleClick: 1
   timeDisableButton: 0.2
