@@ -47,6 +47,11 @@ public static partial class Data
         get => GetInt(Constant.HardModeUnlock, 1);
         set => SetInt(Constant.HardModeUnlock, value);
     }
+    public static int SuperHardModeUnlock
+    {
+        get => GetInt(Constant.SuperHardModeUnlock, 0);
+        set => SetInt(Constant.SuperHardModeUnlock, value);
+    }
     public static int IndexHardMode;
 
     public static int CurrencyTotal
