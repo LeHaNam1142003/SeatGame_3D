@@ -548,9 +548,6 @@ MonoBehaviour:
   - eShowReward: 2
     iconReward:
     - {fileID: 21300000, guid: 5afbf46757bd44c49aea1cea367efec4, type: 3}
-  - eShowReward: 3
-    iconReward:
-    - {fileID: 21300000, guid: 5afbf46757bd44c49aea1cea367efec4, type: 3}
     - {fileID: 21300000, guid: d76221d04c8fa1c43af92acdcb516503, type: 3}
   iconContent: {fileID: 6573169928936515979}
   statusText: {fileID: 6034744705083225896}
@@ -559,6 +556,8 @@ MonoBehaviour:
   unlockReward: {fileID: 4576233171952134853}
   cup: {fileID: 7720214620649049194}
   playBtn: {fileID: 5242767538648030990}
+  iconRewards: {fileID: 1797376372182702499, guid: 78cebe6e6c0ac6244b4fe25a13101e1b,
+    type: 3}
 --- !u!1 &4319134338593054400
 GameObject:
   m_ObjectHideFlags: 0
