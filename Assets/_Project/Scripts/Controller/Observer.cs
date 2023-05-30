@@ -39,10 +39,11 @@ public static class Observer
     public static Action CountFly;
     public static Action OnWin;
     public static Action OnLost;
-    public static Action DoSpin;
+    public static Action<bool> DoSpin;
     public static Action<int> PlayHardMode;
     public static Action UpdateStarReward;
     public static Action NewDailyReWard;
+    public static Action UpdateText;
     #endregion
 
     #region Gameplay
