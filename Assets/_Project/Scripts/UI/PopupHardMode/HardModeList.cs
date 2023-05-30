@@ -8,9 +8,9 @@ public class HardModeList : ScrollBoard
     [SerializeField] private StateModeData stateModeData;
     public void SetStateMode(int levelAvailable)
     {
-        for (int i = 0; i < content.transform.childCount - 1; i++)
+        for (int i = 0; i < elements; i++)
         {
-            var setup = content.transform.GetChild(i).GetComponent<HardModeUI>();
+            var setup = contentUIs[i].GetComponent<HardModeUI>();
             if (i < levelAvailable)
             {
                 if (stateModeData.setStateModes.Count != 0)
@@ -34,6 +34,14 @@ public class HardModeList : ScrollBoard
             {
                 setup.ShowState(EStateMode.Lock);
             }
+        }
+    }
+    public void Clear()
+    {
+        if (content.transform.childCount == 0) return;
+        for (int i = 0; i < content.transform.childCount; i++)
+        {
+            Destroy(content.transform.GetChild(i).gameObject);
         }
     }
     protected override void SetIndexText()
