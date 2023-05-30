@@ -68,7 +68,6 @@ public class PopupCongratulation : Popup
             }
         }
         setupRewards.Clear();
-        Debug.Log(itemClaim.transform.childCount);
         for (int i = 0; i < itemClaim.transform.childCount; i++)
         {
             Destroy(itemClaim.transform.GetChild(i).gameObject);
