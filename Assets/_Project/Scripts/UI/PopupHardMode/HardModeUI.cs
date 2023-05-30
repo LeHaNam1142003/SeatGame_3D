@@ -19,7 +19,7 @@ public class HardModeUI : MonoBehaviour
     [SerializeField] private Image unlockReward;
     [SerializeField] private Image cup;
     [SerializeField] private UIButton playBtn;
-    private GameObject _emptyObj;
+    [SerializeField] private Image iconRewards;
     public void SetIndexHardMode(int index)
     {
         _getIndex = index;
@@ -102,12 +102,9 @@ public class HardModeUI : MonoBehaviour
             {
                 for (int i = 0; i < getReward.iconReward.Count; i++)
                 {
-                    _emptyObj = new GameObject();
-                    _emptyObj.AddComponent<Image>();
-                    var newImage = _emptyObj.GetComponent<Image>();
                     if (iconContent.gameObject.activeInHierarchy)
                     {
-                        var ins = Instantiate(newImage,iconContent.transform);
+                        var ins = Instantiate(iconRewards,iconContent.transform);
                         ins.sprite = getReward.iconReward[i];
                         iconContent.childAlignment = TextAnchor.MiddleCenter;
                     }
