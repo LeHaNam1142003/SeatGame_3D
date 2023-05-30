@@ -828,9 +828,10 @@ MonoBehaviour:
   contentUI: {fileID: 2466689453571132477, guid: 17d0b8fd9a0dc214cb924e510e27d962,
     type: 3}
   isHaveTopContent: 1
+  emptyObj: {fileID: 1676177247718617984, guid: c498bf26c028d38419d0c980515358f7,
+    type: 3}
   topContentUI: {fileID: 2466689453571132477, guid: 17d0b8fd9a0dc214cb924e510e27d962,
     type: 3}
-  index: 0
 --- !u!1 &2357932876705697321
 GameObject:
   m_ObjectHideFlags: 0
@@ -2159,7 +2160,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 2.4623, y: 541.5252}
+  m_AnchoredPosition: {x: 2.4623, y: 541.5259}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1839933732074459149
@@ -2570,7 +2571,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 2061431536088084478}
   m_Direction: 3
   m_Value: 1
-  m_Size: 0.9999919
+  m_Size: 0.9999495
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
