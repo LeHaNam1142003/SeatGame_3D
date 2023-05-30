@@ -35,7 +35,6 @@ public class PopupHome : Popup
         Observer.TrackClickButton?.Invoke(function.Name);
 
         PopupController.Instance.Show<PopupSpin>();
-        PopupController.Instance.Hide<PopupUI>();
     }
 
     public void OnClickSetting()
