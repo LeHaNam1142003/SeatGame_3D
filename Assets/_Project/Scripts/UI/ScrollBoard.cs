@@ -10,13 +10,13 @@ public abstract class ScrollBoard : MonoBehaviour
     public GridLayoutGroup content;
     [SerializeField] private GameObject contentUI;
     [SerializeField] private bool isHaveTopContent;
+    [SerializeField] private GameObject emptyObj;
     [ShowIf("isHaveTopContent")] [SerializeField] private GameObject topContentUI;
-    private GameObject bottom;
+    [ReadOnly] public List<GameObject> contentUIs;
     protected GameObject getObj;
     protected int index;
     public void ShowContent()
     {
-        bottom = new GameObject();
         for (int i = 1; i <= elements + 1; i++)
         {
             index = i;
@@ -33,7 +33,7 @@ public abstract class ScrollBoard : MonoBehaviour
             }
             else
             {
-                var emptyObj = Instantiate(bottom, content.transform);
+                var emptyObj = Instantiate(this.emptyObj, content.transform);
                 emptyObj.AddComponent<RectTransform>();
                 content.rectTransform().sizeDelta += new Vector2(content.cellSize.x, content.cellSize.y + content.spacing.y);
             }
@@ -42,6 +42,7 @@ public abstract class ScrollBoard : MonoBehaviour
     void InstainUIContent(GameObject getUIContent)
     {
         getObj = Instantiate(getUIContent, content.transform);
+        contentUIs.Add(getObj);
         content.rectTransform().sizeDelta += new Vector2(content.cellSize.x, content.cellSize.y + content.spacing.y);
         SetIndexText();
     }
