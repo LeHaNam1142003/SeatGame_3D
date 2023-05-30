@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using Spine.Unity;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = System.Random;
 
 public class SpinBoard : MonoBehaviour
@@ -24,6 +26,13 @@ public class SpinBoard : MonoBehaviour
     {
         Observer.DoSpin += DoSpin;
         DoSpinAnim(idleSpinAnim, true);
+        for (int i = 0; i < itemSpins.Count; i++)
+        {
+            var a = transform.GetChild(i).GetComponent<Image>();
+            a.sprite = itemSpins[i].icon;
+            var b = a.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+            b.text = itemSpins[i].number.ToString();
+        }
     }
     void DoSpinAnim(AnimationReferenceAsset anim, bool isLoop)
     {
@@ -34,7 +43,7 @@ public class SpinBoard : MonoBehaviour
         Observer.DoSpin -= DoSpin;
         transform.eulerAngles = Vector3.zero;
     }
-    void DoSpin()
+    void DoSpin(bool isSpinWithTicket)
     {
         Data.SpinWheel += 1;
         SetRamdom();
@@ -45,6 +54,21 @@ public class SpinBoard : MonoBehaviour
         })).OnComplete((() =>
         {
             Observer.DoSpin += DoSpin;
+            SetUpReward s = new SetUpReward();
+            s.number = itemSpins[_endSpin - 1].number;
+            s.eTypeReward = itemSpins[_endSpin - 1].eTypeReward;
+            var getPopupWinHardMode = PopupController.Instance.Get<PopupCongratulation>() as PopupCongratulation;
+            if (!getPopupWinHardMode.setupRewards.Contains(s))
+            {
+                getPopupWinHardMode.setupRewards.Add(s);
+            }
+            PopupController.Instance.Show<PopupCongratulation>();
+            if (isSpinWithTicket)
+            {
+                if (Data.SpinTicketAmount <= 0) return;
+                Data.SpinTicketAmount -= 1;
+                Observer.UpdateText?.Invoke();
+            }
             DoSpinAnim(doneSpinAnim, true);
         }));
     }
@@ -68,4 +92,5 @@ public class ItemSpin
     public float maxRatio;
     public Sprite icon;
     public ETypeReward eTypeReward;
+    public int number;
 }
