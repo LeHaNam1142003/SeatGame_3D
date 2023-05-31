@@ -299,6 +299,10 @@ public class Level : MonoBehaviour
                         var set = hit.collider.gameObject.GetComponent<Ground>();
                         if (_isCanTouchGround)
                         {
+                            foreach (var seat in setupSeats)
+                            {
+                                seat.seat.StopSelectAnim();
+                            }
                             if (eTool != ETool.Fly)
                             {
                                 set.ShowRobotDetect(set);
@@ -316,6 +320,17 @@ public class Level : MonoBehaviour
                         {
                             var getPass = hit.collider.gameObject.GetComponent<Passenger>();
                             getPass.SetSelected();
+                            foreach (var seat in setupSeats)
+                            {
+                                if (seat.seat.setIndexRow == getPass.rowDestination && seat.seat.setIndexColumn == getPass.columnDestination)
+                                {
+                                    seat.seat.DoSelectAnim();
+                                }
+                                else
+                                {
+                                    seat.seat.StopSelectAnim();
+                                }
+                            }
                             ClearPath();
                         }
                     }
@@ -381,8 +396,16 @@ public class Level : MonoBehaviour
     {
         if (isHardMode)
         {
-            GameManager.Instance.WinHardMode(setupRewards);
-            SetStateHardMode(EStateMode.Completed);
+            if (Data.IndexHardMode<=stateModeData.setStateModes.Count)
+            {
+                GameManager.Instance.WinReplay();
+                SetStateHardMode(EStateMode.Completed);
+            }
+            else
+            {
+                GameManager.Instance.WinHardMode(setupRewards);
+                SetStateHardMode(EStateMode.Completed);
+            }
         }
         else
         {
@@ -399,7 +422,7 @@ public class Level : MonoBehaviour
             setupStateMode.eStateMode = stateMode;
             if (Data.IndexHardMode <= stateModeData.setStateModes.Count)
             {
-                if (stateMode!= EStateMode.Lost)
+                if (stateMode != EStateMode.Lost)
                 {
                     stateModeData.setStateModes[Data.IndexHardMode - 1].eStateMode = EStateMode.Completed;
                 }
