@@ -2,14 +2,19 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Policy;
+using Animancer;
 using Lean.Touch;
 using Pancake;
 using UnityEngine;
 
 public class Seat : MonoBehaviour
 {
-    [SerializeField] private int setIndexRow;
-    [SerializeField] private EColumn setIndexColumn;
+    public int setIndexRow;
+    public EColumn setIndexColumn;
+    [SerializeField] private AnimancerComponent animancerComponent;
+    [SerializeField] private AnimationClip selectAnim;
+    [SerializeField] private AnimationClip idleAnim;
+    [SerializeField] private ParticleSystem selectEffect;
     private SeatInfor _seatInfor;
     public BoxCollider seatBox;
     [ReadOnly] public SetUpSeat _setUpSeat;
@@ -26,6 +31,22 @@ public class Seat : MonoBehaviour
         }
         _seatInfor = new SeatInfor(setIndexRow, setIndexColumn);
         seatBox.enabled = false;
+    }
+    public void DoSelectAnim()
+    {
+        selectEffect.gameObject.SetActive(true);
+        selectEffect.Play();
+        DoAnim(selectAnim);
+    }
+    public void StopSelectAnim()
+    {
+        selectEffect.gameObject.SetActive(false);
+        selectEffect.Stop();
+        DoAnim(idleAnim);
+    }
+    void DoAnim(AnimationClip animationClip)
+    {
+        animancerComponent.Play(animationClip);
     }
     private void OnTriggerEnter(Collider other)
     {
