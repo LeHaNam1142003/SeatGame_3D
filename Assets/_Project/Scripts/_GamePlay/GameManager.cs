@@ -36,6 +36,14 @@ public class GameManager : SingletonDontDestroy<GameManager>
         Data.HardModeUnlock++;
         PopupController.Instance.Show<PopupCongratulation>();
     }
+    public void WinReplay()
+    {
+        if (gameState == GameState.WaitingResult || gameState == GameState.LoseGame || gameState == GameState.WinGame) return;
+        gameState = GameState.WinGame;
+        Observer.WinLevel?.Invoke(levelController.currentLevel);
+        PopupController.Instance.HideAll();
+        PopupController.Instance.Show<PopupWinReplay>();
+    }
     public void LoseHardMode()
     {
         if (gameState == GameState.WaitingResult || gameState == GameState.LoseGame || gameState == GameState.WinGame) return;
