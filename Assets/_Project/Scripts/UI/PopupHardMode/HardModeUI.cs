@@ -10,6 +10,7 @@ using UnityEngine.UI;
 public class HardModeUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI indexText;
+    [SerializeField] private TextMeshProUGUI playText;
     private int _getIndex;
     [SerializeField] List<GetReward> getRewards;
     [SerializeField] private HorizontalLayoutGroup iconContent;
@@ -51,6 +52,7 @@ public class HardModeUI : MonoBehaviour
     }
     void SetLock(bool isLock)
     {
+        playText.text = "Play";
         lockImage.gameObject.SetActive(isLock);
         unlockImage.gameObject.SetActive(false);
         playBtn.gameObject.SetActive(!isLock);
@@ -63,8 +65,9 @@ public class HardModeUI : MonoBehaviour
     }
     void SetComplete(bool isComplete)
     {
+        playText.text = "RePlay";
         lockImage.gameObject.SetActive(false);
-        playBtn.gameObject.SetActive(!isComplete);
+        playBtn.gameObject.SetActive(true);
         unlockReward.gameObject.SetActive(false);
         unlockImage.gameObject.SetActive(true);
         iconContent.gameObject.SetActive(false);
@@ -104,7 +107,7 @@ public class HardModeUI : MonoBehaviour
                 {
                     if (iconContent.gameObject.activeInHierarchy)
                     {
-                        var ins = Instantiate(iconRewards,iconContent.transform);
+                        var ins = Instantiate(iconRewards, iconContent.transform);
                         ins.sprite = getReward.iconReward[i];
                         iconContent.childAlignment = TextAnchor.MiddleCenter;
                     }
