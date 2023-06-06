@@ -72,5 +72,9 @@ public class PopupHardMode : Popup
         hardModeList.ShowContent();
         hardModeList.SetStateMode(CountUnLock);
     }
+    public void ShowTrackingMission()
+    {
+        PopupController.Instance.Show<PopupTrackingMission>();
+    }
 
 }
