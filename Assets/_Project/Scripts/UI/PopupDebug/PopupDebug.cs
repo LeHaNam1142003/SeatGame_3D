@@ -20,7 +20,7 @@ public class PopupDebug : Popup
         {
             Data.CurrentLevel = int.Parse(setLevel.text);
             GameManager.Instance.PrepareLevel();
-            GameManager.Instance.StartGame();
+            GameManager.Instance.StartGame(false);
         }
         if (!string.IsNullOrEmpty(setCoin.text))
         {
