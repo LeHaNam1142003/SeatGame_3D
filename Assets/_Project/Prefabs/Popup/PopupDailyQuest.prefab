@@ -376,51 +376,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f016a12bbf092e4ba73fd838ab5cbd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  missionEachDayData: {fileID: 11400000, guid: a395f089383dff143930117632715908, type: 2}
   missionBoard: {fileID: 3090855252681097858, guid: a7a12a20dbbdee048957d80a2a92fe85,
     type: 3}
-  missionEachDays:
-  - missions:
-    - missionTitle: Completed 1 Level
-      starReward: 5
-      requestAmount: 1
-      eMissionQuest: 0
-    - missionTitle: Spin Wheel of Luck 2 times
-      starReward: 5
-      requestAmount: 2
-      eMissionQuest: 1
-    - missionTitle: Watch Ads 1 time
-      starReward: 10
-      requestAmount: 1
-      eMissionQuest: 2
-    - missionTitle: Completed 1 Hard Level
-      starReward: 10
-      requestAmount: 1
-      eMissionQuest: 3
-    - missionTitle: Use 1 time swapbooster
-      starReward: 20
-      requestAmount: 1
-      eMissionQuest: 4
-  - missions:
-    - missionTitle: Completed 5 Level
-      starReward: 5
-      requestAmount: 5
-      eMissionQuest: 0
-    - missionTitle: Spin Wheel of Luck 3 times
-      starReward: 5
-      requestAmount: 3
-      eMissionQuest: 1
-    - missionTitle: Watch Ads 2 time
-      starReward: 10
-      requestAmount: 2
-      eMissionQuest: 2
-    - missionTitle: Completed 1 Hard Level
-      starReward: 10
-      requestAmount: 1
-      eMissionQuest: 3
-    - missionTitle: Use 2 time swapbooster
-      starReward: 20
-      requestAmount: 2
-      eMissionQuest: 4
 --- !u!1 &2120545805048274083
 GameObject:
   m_ObjectHideFlags: 0
