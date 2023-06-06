@@ -18,7 +18,7 @@ public class PopupHome : Popup
     {
         MethodBase function = MethodBase.GetCurrentMethod();
         Observer.TrackClickButton?.Invoke(function.Name);
-
+        
         GameManager.Instance.StartGame();
     }
 
@@ -33,6 +33,7 @@ public class PopupHome : Popup
     {
         MethodBase function = MethodBase.GetCurrentMethod();
         Observer.TrackClickButton?.Invoke(function.Name);
+        Observer.LoadTrackingMission?.Invoke(EMissionQuest.SpinWheel);
 
         PopupController.Instance.Show<PopupSpin>();
     }
@@ -79,6 +80,7 @@ public class PopupHome : Popup
     {
         MethodBase function = MethodBase.GetCurrentMethod();
         Observer.TrackClickButton?.Invoke(function.Name);
+        Observer.LoadTrackingMission?.Invoke(EMissionQuest.CompletedHardMode);
 
         PopupController.Instance.Show<PopupHardMode>();
     }
