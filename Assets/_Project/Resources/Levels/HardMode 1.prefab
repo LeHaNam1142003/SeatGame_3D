@@ -61,8 +61,6 @@ MonoBehaviour:
   setupRewards:
   - eTypeReward: 1
     number: 1
-  - eTypeReward: 2
-    number: 1
   tools:
   - {fileID: 8353200959315602986}
   - {fileID: 5751018352687953854}
