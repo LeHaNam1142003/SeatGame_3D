@@ -31,6 +31,7 @@ public class HardModeUI : MonoBehaviour
     {
         Observer.PlayHardMode?.Invoke(_getIndex);
         Data.IndexHardMode = _getIndex;
+        Data.CurrentHardMode = _getIndex;
     }
     public void ShowState(EStateMode eStateMode)
     {
