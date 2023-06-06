@@ -331,6 +331,7 @@ public class Level : MonoBehaviour
                     {
                         if (_isCanTouchPlayer)
                         {
+                            Handheld.Vibrate();
                             var getPass = hit.collider.gameObject.GetComponent<Passenger>();
                             foreach (var seat in setupSeats)
                             {
@@ -416,7 +417,7 @@ public class Level : MonoBehaviour
     {
         if (isHardMode)
         {
-            if (Data.IndexHardMode <= stateModeData.setStateModes.Count)
+            if (Data.IndexHardMode < Data.HardModeUnlock)
             {
                 GameManager.Instance.WinReplay();
                 SetStateHardMode(EStateMode.Completed);
