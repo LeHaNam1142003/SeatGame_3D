@@ -179,6 +179,14 @@ public class Level : MonoBehaviour
     }
     void OnEnable()
     {
+        if (isHardMode)
+        {
+            Observer.LoadTrackingMission?.Invoke(EMissionQuest.CompletedHardMode);
+        }
+        else
+        {
+            Observer.LoadTrackingMission?.Invoke(EMissionQuest.PlayLevel);
+        }
         Lean.Touch.LeanTouch.OnFingerDown += HandleFingerDown;
         Lean.Touch.LeanTouch.OnFingerUp += HandleFingerUp;
         Lean.Touch.LeanTouch.OnFingerUpdate += HandleFingerUpdate;
@@ -192,6 +200,7 @@ public class Level : MonoBehaviour
     }
     public void SwapTool()
     {
+        StopHightSeat();
         _swaps.Clear();
         foreach (var setpassengers in passengers)
         {
@@ -203,6 +212,7 @@ public class Level : MonoBehaviour
     }
     public void FlyTool()
     {
+        StopHightSeat();
         foreach (var setpassengers in passengers)
         {
             setpassengers.hint.SetActive(true);
@@ -242,6 +252,7 @@ public class Level : MonoBehaviour
         {
             Observer.OnSwapping?.Invoke();
             PopupController.Instance.Hide<PopupSwapTool>();
+            StopHightSeat();
             _swaps[0].DoSwapPosi(_swaps[1].transform.localPosition, _swaps[1].currentDestination);
             _swaps[1].DoSwapPosi(_swaps[0].transform.localPosition, _swaps[0].currentDestination);
             _swaps.Clear();
@@ -255,6 +266,7 @@ public class Level : MonoBehaviour
     }
     public void EndDoSwapTool()
     {
+        StopHightSeat();
         eTool = ETool.Non;
         _isUseTool = false;
         foreach (var setpassengers in passengers)
@@ -267,6 +279,7 @@ public class Level : MonoBehaviour
     }
     public void EndDoFlyTool()
     {
+        StopHightSeat();
         eTool = ETool.Non;
         _isUseTool = false;
         foreach (var setpassengers in passengers)
@@ -319,7 +332,6 @@ public class Level : MonoBehaviour
                         if (_isCanTouchPlayer)
                         {
                             var getPass = hit.collider.gameObject.GetComponent<Passenger>();
-                            getPass.SetSelected();
                             foreach (var seat in setupSeats)
                             {
                                 if (seat.seat.setIndexRow == getPass.rowDestination && seat.seat.setIndexColumn == getPass.columnDestination)
@@ -331,11 +343,19 @@ public class Level : MonoBehaviour
                                     seat.seat.StopSelectAnim();
                                 }
                             }
+                            getPass.SetSelected();
                             ClearPath();
                         }
                     }
                 }
             }
+        }
+    }
+    void StopHightSeat()
+    {
+        foreach (var seat in setupSeats)
+        {
+            seat.seat.StopSelectAnim();
         }
     }
     void ClearPath()
@@ -396,7 +416,7 @@ public class Level : MonoBehaviour
     {
         if (isHardMode)
         {
-            if (Data.IndexHardMode<=stateModeData.setStateModes.Count)
+            if (Data.IndexHardMode <= stateModeData.setStateModes.Count)
             {
                 GameManager.Instance.WinReplay();
                 SetStateHardMode(EStateMode.Completed);
