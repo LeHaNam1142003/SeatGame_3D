@@ -19,6 +19,6 @@ public class PopupLose : Popup
         MethodBase function = MethodBase.GetCurrentMethod();
         Observer.TrackClickButton?.Invoke(function.Name);
         
-        GameManager.Instance.ReplayGame();
+        GameManager.Instance.ReplayGame(false);
     }
 }
