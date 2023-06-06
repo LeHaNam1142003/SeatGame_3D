@@ -18,7 +18,7 @@ public class MissionBoard : MonoBehaviour
     [ReadOnly] public EMissionQuest eMissionQuest;
     public int process { get; set; }
     public int startReward { private get; set; }
-    public int indexChild { private get; set; }
+    public int indexChild { get; set; }
     public void Init(int getStartReward, string getMisstionContent, int getProcess, EMissionQuest getEMissionQuest, int getIndexChild)
     {
         indexChild = getIndexChild;
@@ -45,7 +45,7 @@ public class MissionBoard : MonoBehaviour
             case EMissionQuest.CompletedHardMode:
                 SetProcess(Data.CompletedHardMode);
                 break;
-            case EMissionQuest.Use1timeswapbooster:
+            case EMissionQuest.Useswapbooster:
                 SetProcess(Data.Useswapbooster);
                 break;
         }
@@ -54,13 +54,12 @@ public class MissionBoard : MonoBehaviour
     {
         if (currentProcess < process)
         {
-            claimBtnOff.gameObject.SetActive(true);
-            claimBtnOn.gameObject.SetActive(false);
+            CanClaim(false);
         }
         else
         {
-            claimBtnOff.gameObject.SetActive(false);
-            claimBtnOn.gameObject.SetActive(true);
+            CanClaim(true);
+            currentProcess = process;
         }
         processFill.fillAmount = (float)currentProcess / process;
         textProcess.text = $"{currentProcess + "/" + process}";
@@ -71,11 +70,16 @@ public class MissionBoard : MonoBehaviour
         claimBtnOff.gameObject.SetActive(false);
         claimBtnOn.gameObject.SetActive(false);
     }
+    void CanClaim(bool iscanClaim)
+    {
+        tickIcon.gameObject.SetActive(false);
+        claimBtnOff.gameObject.SetActive(!iscanClaim);
+        claimBtnOn.gameObject.SetActive(iscanClaim);
+    }
     public void Claim()
     {
-        tickIcon.gameObject.SetActive(true);
-        claimBtnOff.gameObject.SetActive(false);
-        claimBtnOn.gameObject.SetActive(false);
+        Observer.ShowNoticeIcon?.Invoke(false);
+        Rewarded();
         Data.StarMission += startReward;
         Observer.UpdateStarReward?.Invoke();
         Data.MissionRewarded = Data.MissionRewarded * 10 + indexChild;
@@ -87,5 +91,5 @@ public enum EMissionQuest
     SpinWheel,
     WatchAds,
     CompletedHardMode,
-    Use1timeswapbooster,
+    Useswapbooster,
 }
