@@ -9,7 +9,7 @@ public class PopupDailyQuest : Popup
         AdsManager.ShowRewardAds(() =>
         {
             Data.WatchAds += 1;
-            // Observer.OnNotifying?.Invoke();
+            Observer.UpdateProcressDaily?.Invoke();
         });
     }
 }
