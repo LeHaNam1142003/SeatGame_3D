@@ -15,11 +15,13 @@ public class MissionContent : MonoBehaviour
     private void OnEnable()
     {
         Observer.NewDailyReWard += Initialize;
+        Observer.UpdateProcressDaily += SetProcess;
         SetProcess();
     }
     private void OnDisable()
     {
         Observer.NewDailyReWard -= Initialize;
+        Observer.UpdateProcressDaily -= SetProcess;
     }
     void SetProcess()
     {
@@ -73,4 +75,3 @@ public class MissionContent : MonoBehaviour
         }
     }
 }
-
