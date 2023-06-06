@@ -53,6 +53,7 @@ public static partial class Data
         set => SetInt(Constant.SuperHardModeUnlock, value);
     }
     public static int IndexHardMode;
+    public static int CurrentHardMode;
 
     public static int CurrencyTotal
     {
