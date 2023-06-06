@@ -19,7 +19,7 @@ public class PopupHome : Popup
         MethodBase function = MethodBase.GetCurrentMethod();
         Observer.TrackClickButton?.Invoke(function.Name);
         
-        GameManager.Instance.StartGame();
+        GameManager.Instance.StartGame(false);
     }
 
     public void OnClickDebug()
