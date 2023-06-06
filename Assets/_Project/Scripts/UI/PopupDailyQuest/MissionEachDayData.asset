@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7446029f4e9cd1640afbe8d645260b30, type: 3}
+  m_Name: MissionEachDayData
+  m_EditorClassIdentifier: 
+  missionEachDays:
+  - missions:
+    - missionTitle: Completed 1 Level
+      starReward: 5
+      requestAmount: 1
+      eMissionQuest: 0
+    - missionTitle: Spin Wheel of Luck 2 times
+      starReward: 5
+      requestAmount: 2
+      eMissionQuest: 1
+    - missionTitle: Watch Ads 1 time
+      starReward: 10
+      requestAmount: 1
+      eMissionQuest: 2
+    - missionTitle: Completed 1 Hard Level
+      starReward: 10
+      requestAmount: 1
+      eMissionQuest: 3
+    - missionTitle: Use 1 time swapbooster
+      starReward: 20
+      requestAmount: 1
+      eMissionQuest: 4
+  - missions:
+    - missionTitle: Completed 3 Level
+      starReward: 5
+      requestAmount: 3
+      eMissionQuest: 0
+    - missionTitle: Spin Wheel of Luck 3 times
+      starReward: 5
+      requestAmount: 3
+      eMissionQuest: 1
+    - missionTitle: Watch Ads 2 time
+      starReward: 20
+      requestAmount: 1
+      eMissionQuest: 2
+    - missionTitle: Completed 1 Hard Level
+      starReward: 10
+      requestAmount: 1
+      eMissionQuest: 3
+    - missionTitle: Use 1 time swapbooster
+      starReward: 10
+      requestAmount: 1
+      eMissionQuest: 4
