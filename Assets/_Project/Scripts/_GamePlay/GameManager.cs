@@ -62,7 +62,7 @@ public class GameManager : SingletonDontDestroy<GameManager>
     public void PlayCurrentLevel()
     {
         PrepareLevel();
-        StartGame();
+        StartGame(false);
     }
 
     public void UpdateScore(Level level)
@@ -88,43 +88,73 @@ public class GameManager : SingletonDontDestroy<GameManager>
         PopupController.Instance.Show<PopupHome>();
     }
 
-    public void ReplayGame()
+    public void ReplayGame(bool isHardMode)
     {
-        Observer.ReplayLevel?.Invoke(levelController.currentLevel);
-        PrepareLevel();
-        StartGame();
+        if (isHardMode)
+        {
+            StartHardModeGame(Data.CurrentHardMode);
+        }
+        else
+        {
+            Observer.ReplayLevel?.Invoke(levelController.currentLevel);
+            PrepareLevel();
+            StartGame(false);
+        }
     }
 
-    public void BackLevel()
+    public void BackLevel(bool isHardMode)
     {
-        Data.CurrentLevel--;
+        if (isHardMode)
+        {
+            if (Data.CurrentHardMode>1)
+            {
+                Data.CurrentHardMode--; 
+            }
+            StartHardModeGame(Data.CurrentHardMode);
+        }
+        else
+        {
+            Data.CurrentLevel--;
 
-        PrepareLevel();
-        StartGame();
+            PrepareLevel();
+            StartGame(false);
+        }
     }
 
-    public void NextLevel()
+    public void NextLevel(bool isHardMode)
     {
-        Observer.SkipLevel?.Invoke(levelController.currentLevel);
-        Data.CurrentLevel++;
-        PrepareLevel();
-        StartGame();
+        if (isHardMode)
+        {
+            Data.CurrentHardMode++;
+            StartHardModeGame(Data.CurrentHardMode);
+        }
+        else
+        {
+            Observer.SkipLevel?.Invoke(levelController.currentLevel);
+            Data.CurrentLevel++;
+            PrepareLevel();
+            StartGame(false);
+        }
     }
 
-    public void StartGame()
+    public void StartGame(bool isHardMode)
     {
         gameState = GameState.PlayingGame;
         Observer.StartLevel?.Invoke(levelController.currentLevel);
 
         PopupController.Instance.HideAll();
-        PopupController.Instance.Show<PopupInGame>();
+        if (PopupController.Instance.Get<PopupInGame>() is PopupInGame popupInGame)
+        {
+            popupInGame.isHardMode = isHardMode;
+            popupInGame.Show();
+        }
         levelController.currentLevel.gameObject.SetActive(true);
     }
     public void StartHardModeGame(int indexHardMode)
     {
         gameState = GameState.PrepareGame;
         levelController.PrepareLevel("HardMode", indexHardMode);
-        StartGame();
+        StartGame(true);
     }
 
     public void OnWinGame(float delayPopupShowTime = 2.5f)
