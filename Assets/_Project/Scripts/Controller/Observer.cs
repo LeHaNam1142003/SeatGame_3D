@@ -1,4 +1,5 @@
 using System;
+using Spine.Unity.Examples;
 using UnityEngine.UI;
 
 public static class Observer
@@ -44,6 +45,8 @@ public static class Observer
     public static Action UpdateStarReward;
     public static Action NewDailyReWard;
     public static Action UpdateText;
+    public static Action<EMissionQuest> LoadTrackingMission;
+    public static Action<bool> ShowNoticeIcon;
     #endregion
 
     #region Gameplay
