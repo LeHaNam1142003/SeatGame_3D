@@ -47,4 +47,8 @@ public class PopupSpin : Popup
     {
 
     }
+    public void ShowTrackingMission()
+    {
+        PopupController.Instance.Show<PopupTrackingMission>();
+    }
 }
