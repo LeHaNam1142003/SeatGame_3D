@@ -47,6 +47,7 @@ public static class Observer
     public static Action UpdateText;
     public static Action<EMissionQuest> LoadTrackingMission;
     public static Action<bool> ShowNoticeIcon;
+    public static Action UpdateProcressDaily;
     #endregion
 
     #region Gameplay
