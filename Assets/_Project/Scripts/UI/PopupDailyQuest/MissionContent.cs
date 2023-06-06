@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class MissionContent : MonoBehaviour
 {
+    [SerializeField] private MissionEachDayData missionEachDayData;
     [SerializeField] private MissionBoard missionBoard;
-    [SerializeField] private List<MissionEachDay> missionEachDays;
     private List<int> _missionRewarded = new List<int>();
     private void Awake()
     {
@@ -64,25 +64,13 @@ public class MissionContent : MonoBehaviour
                 Destroy(transform.GetChild(i).gameObject);
             }
         }
-        var setIndex = Data.DailyMissionIndex % missionEachDays.Count;
+        var setIndex = Data.DailyMissionIndex % missionEachDayData.missionEachDays.Count;
         Debug.Log(setIndex);
-        for (int i = 0; i < missionEachDays[setIndex].missions.Count; i++)
+        for (int i = 0; i < missionEachDayData.missionEachDays[setIndex].missions.Count; i++)
         {
             var missionObj = Instantiate(missionBoard, transform);
-            missionObj.Init(missionEachDays[setIndex].missions[i].starReward, missionEachDays[setIndex].missions[i].missionTitle, missionEachDays[setIndex].missions[i].requestAmount, missionEachDays[setIndex].missions[i].eMissionQuest, i + 1);
+            missionObj.Init(missionEachDayData.missionEachDays[setIndex].missions[i].starReward, missionEachDayData.missionEachDays[setIndex].missions[i].missionTitle, missionEachDayData.missionEachDays[setIndex].missions[i].requestAmount, missionEachDayData.missionEachDays[setIndex].missions[i].eMissionQuest, i + 1);
         }
     }
 }
-[Serializable]
-public class MissionEachDay
-{
-    public List<Mission> missions;
-}
-[Serializable]
-public class Mission
-{
-    public string missionTitle;
-    public int starReward;
-    public int requestAmount;
-    public EMissionQuest eMissionQuest;
-}
+
