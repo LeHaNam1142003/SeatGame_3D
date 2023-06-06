@@ -7,12 +7,15 @@ using Pancake;
 using TMPro;
 using Unity.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PopupInGame : Popup
 {
     public GameObject levelText;
     public TextMeshProUGUI levelTypeText;
     public TypeOfGame typeOfGame;
+    [SerializeField] private Button rePlayBtn;
+    public bool isHardMode { set; get; }
     private List<UIEffect> UIEffects => GetComponentsInChildren<UIEffect>().ToList();
 
     public void Start()
@@ -32,6 +35,7 @@ public class PopupInGame : Popup
         base.BeforeShow();
 
         if (!Data.IsTesting) AdsManager.ShowBanner();
+        rePlayBtn.gameObject.SetActive(!isHardMode);
         Setup();
     }
 
@@ -59,7 +63,7 @@ public class PopupInGame : Popup
     {
         if (Data.IsTesting)
         {
-            GameManager.Instance.ReplayGame();
+            GameManager.Instance.ReplayGame(isHardMode);
         }
         else
         {
@@ -68,21 +72,21 @@ public class PopupInGame : Popup
                 MethodBase function = MethodBase.GetCurrentMethod();
                 Observer.TrackClickButton?.Invoke(function.Name);
 
-                GameManager.Instance.ReplayGame();
+                GameManager.Instance.ReplayGame(isHardMode);
             });
         }
     }
 
     public void OnClickPrevious()
     {
-        GameManager.Instance.BackLevel();
+        GameManager.Instance.BackLevel(isHardMode);
     }
 
     public void OnClickSkip()
     {
         if (Data.IsTesting)
         {
-            GameManager.Instance.NextLevel();
+            GameManager.Instance.NextLevel(isHardMode);
         }
         else
         {
@@ -91,7 +95,7 @@ public class PopupInGame : Popup
                 MethodBase function = MethodBase.GetCurrentMethod();
                 Observer.TrackClickButton?.Invoke(function.Name);
 
-                GameManager.Instance.NextLevel();
+                GameManager.Instance.NextLevel(isHardMode);
             });
         }
     }
@@ -99,13 +103,13 @@ public class PopupInGame : Popup
     public void OnClickLevelA()
     {
         Data.UseLevelABTesting = 0;
-        GameManager.Instance.ReplayGame();
+        GameManager.Instance.ReplayGame(isHardMode);
     }
 
     public void OnClickLevelB()
     {
         Data.UseLevelABTesting = 1;
-        GameManager.Instance.ReplayGame();
+        GameManager.Instance.ReplayGame(isHardMode);
     }
 
     public void OnClickLose()
