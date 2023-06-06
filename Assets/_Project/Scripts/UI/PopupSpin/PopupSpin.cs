@@ -45,7 +45,11 @@ public class PopupSpin : Popup
     }
     public void DoSpinWithWatchAds()
     {
-
+        AdsManager.ShowRewardAds(() =>
+        {
+            Data.SpinTicketAmount += 1;
+            UpdateText();
+        });
     }
     public void ShowTrackingMission()
     {
