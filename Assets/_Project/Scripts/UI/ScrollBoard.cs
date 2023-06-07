@@ -39,6 +39,14 @@ public abstract class ScrollBoard : MonoBehaviour
             }
         }
     }
+    public void ClearContent()
+    {
+        for (int i = 0; i < content.transform.childCount; i++)
+        {
+            DestroyImmediate(content.transform.GetChild(i).gameObject);
+        }
+    }
+
     void InstainUIContent(GameObject getUIContent)
     {
         getObj = Instantiate(getUIContent, content.transform);
