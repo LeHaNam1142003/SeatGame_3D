@@ -11,16 +11,9 @@ public class PopupHardMode : Popup
     [SerializeField] private Image buttonSuperHardModeOn;
     [SerializeField] private Image buttonSuperHardModeOff;
     private bool _isSuperHardMode;
-    private void Awake()
-    {
-        Initialization();
-    }
-    void Initialization()
-    {
-        hardModeList.ShowContent();
-    }
     private void OnEnable()
     {
+        OnClickHardMode();
         if (_isSuperHardMode)
         {
             hardModeList.SetStateMode(Data.SuperHardModeUnlock);
@@ -34,6 +27,7 @@ public class PopupHardMode : Popup
     private void OnDisable()
     {
         Observer.PlayHardMode -= OnPLayHardMode;
+        hardModeList.ClearContent();
     }
     void OnPLayHardMode(int index)
     {
@@ -55,7 +49,7 @@ public class PopupHardMode : Popup
     public void OnClickHardMode()
     {
         setHardModeOn(true);
-        SetUp(25, Data.HardModeUnlock);
+        SetUp(ConfigController.Game.maxLevel, Data.HardModeUnlock);
     }
     void setHardModeOn(bool isHardMode)
     {
@@ -72,6 +66,6 @@ public class PopupHardMode : Popup
         hardModeList.ShowContent();
         hardModeList.SetStateMode(CountUnLock);
     }
-  
+
 
 }
