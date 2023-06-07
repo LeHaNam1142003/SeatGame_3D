@@ -12,16 +12,14 @@ using Debug = UnityEngine.Debug;
 public class LevelList : ScrollBoard
 {
     private int maxGroup = 3;
-    private void Awake()
-    {
-        ShowContent();
-    }
     protected override void SetIndexText()
     {
         getObj.GetComponent<CinemaUILevel>().SetLevelText(index);
     }
     private void OnEnable()
     {
+        elements = ConfigController.Game.maxLevel;
+        ShowContent();
         for (int i = 1; i <= elements; i++)
         {
             if (i == Data.CurrentLevel)
@@ -34,6 +32,10 @@ public class LevelList : ScrollBoard
             }
         }
         SetPosi();
+    }
+    private void OnDisable()
+    {
+        ClearContent();
     }
     void SetPosi()
     {
