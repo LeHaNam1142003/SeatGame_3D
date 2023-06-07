@@ -13,13 +13,14 @@ public class GiftBoxMission : MonoBehaviour
     [SerializeField] private TextMeshProUGUI resetTime;
     public void Awake()
     {
+        SetDailyTimeReset();
         Initialize();
     }
     private void OnEnable()
     {
         Observer.UpdateStarReward += SetProcess;
-        SetProcess();
         SetDailyTimeReset();
+        SetProcess();
     }
     private void OnDisable()
     {
@@ -91,16 +92,16 @@ public class GiftBoxMission : MonoBehaviour
     void ResetNewDailyQuest()
     {
         Data.DailyMissionIndex += 1;
-        SetPointTime();
-        Data.PlayLevel = default;
-        Data.SpinWheel = default;
-        Data.WatchAds = default;
-        Data.CompletedHardMode = default;
-        Data.Useswapbooster = default;
-        Data.StarMission = default;
-        Data.GiftCanReward = default;
-        Data.MissionRewarded = default;
+        Data.PlayLevel = 0;
+        Data.SpinWheel = 0;
+        Data.WatchAds = 0;
+        Data.CompletedHardMode = 0;
+        Data.Useswapbooster = 0;
+        Data.StarMission = 0;
+        Data.GiftCanReward = 0;
+        Data.MissionRewarded = 0;
         Observer.NewDailyReWard?.Invoke();
+        SetPointTime();
     }
 }
 [Serializable]
