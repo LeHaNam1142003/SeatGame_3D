@@ -7,7 +7,7 @@ public class Ground : MonoBehaviour
     public RobotDetect robotDetect;
     [SerializeField] private BoxCollider groundBox;
     [SerializeField] private GameObject seat;
-    [SerializeField] private Seat seatSurface;
+    public Seat seatSurface;
     public bool isHaveSeat;
     [SerializeField] private MeshRenderer groundModel;
 
