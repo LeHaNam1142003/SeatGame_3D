@@ -781,6 +781,7 @@ MonoBehaviour:
   path: {fileID: 0}
   pathsToDestination: []
   currentStateAnim: 0
+  isGuid: 0
   animancerComponent: {fileID: 3293883333302468133}
   skinnedMeshRenderer: {fileID: 2106836421164264978}
   angry: {fileID: 2100000, guid: 6d53e7ad33bcf2c40945841d45e37cc3, type: 2}
