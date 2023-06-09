@@ -75,6 +75,7 @@ public class MissionBoard : MonoBehaviour
         tickIcon.gameObject.SetActive(false);
         claimBtnOff.gameObject.SetActive(!iscanClaim);
         claimBtnOn.gameObject.SetActive(iscanClaim);
+        Observer.UpdateStarReward?.Invoke();
     }
     public void Claim()
     {
