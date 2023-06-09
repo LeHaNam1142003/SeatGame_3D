@@ -13,16 +13,19 @@ public class PopupHardMode : Popup
     private bool _isSuperHardMode;
     private void OnEnable()
     {
-        OnClickHardMode();
-        if (_isSuperHardMode)
+        if (ConfigController.Game!=null)
         {
-            hardModeList.SetStateMode(Data.SuperHardModeUnlock);
+            OnClickHardMode();
+            if (_isSuperHardMode)
+            {
+                hardModeList.SetStateMode(Data.SuperHardModeUnlock);
+            }
+            else
+            {
+                hardModeList.SetStateMode(Data.HardModeUnlock);
+            }
+            Observer.PlayHardMode += OnPLayHardMode;
         }
-        else
-        {
-            hardModeList.SetStateMode(Data.HardModeUnlock);
-        }
-        Observer.PlayHardMode += OnPLayHardMode;
     }
     private void OnDisable()
     {
