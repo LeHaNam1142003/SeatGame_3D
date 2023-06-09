@@ -757,6 +757,10 @@ MonoBehaviour:
     iconReward: {fileID: 21300000, guid: 621571feb5a2ba94eb41abe75d3025af, type: 3}
   itemClaim: {fileID: 1127733831412078369}
   setupRewards: []
+  itemReward: {fileID: 1797376372182702499, guid: 78cebe6e6c0ac6244b4fe25a13101e1b,
+    type: 3}
+  itemText: {fileID: 4285998979562317085, guid: cbc6be22a3aca6f41ba82d2f7c0f7a6d,
+    type: 3}
 --- !u!1001 &5135047579086468321
 PrefabInstance:
   m_ObjectHideFlags: 0
