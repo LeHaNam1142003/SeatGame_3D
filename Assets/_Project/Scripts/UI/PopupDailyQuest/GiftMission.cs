@@ -20,10 +20,7 @@ public class GiftMission : MonoBehaviour
     {
         Observer.UpdateStarReward += UpdateStar;
     }
-    private void OnDisable()
-    {
-        Observer.UpdateStarReward -= UpdateStar;
-    }
+    
     public void Init(Sprite sprite, string starText, int starToReward, SetUpReward getsetUpReward)
     {
         _isCanReward = false;
