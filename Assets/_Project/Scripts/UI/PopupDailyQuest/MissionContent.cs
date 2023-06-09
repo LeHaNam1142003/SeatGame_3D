@@ -67,7 +67,6 @@ public class MissionContent : MonoBehaviour
             }
         }
         var setIndex = Data.DailyMissionIndex % missionEachDayData.missionEachDays.Count;
-        Debug.Log(setIndex);
         for (int i = 0; i < missionEachDayData.missionEachDays[setIndex].missions.Count; i++)
         {
             var missionObj = Instantiate(missionBoard, transform);
