@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Security.Permissions;
 using Pancake;
+using Spine.Unity;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
@@ -26,6 +27,9 @@ public class Level : MonoBehaviour
     [ShowIf("isHaveTools")] [SerializeField] private List<Button> tools;
     [ShowIf("isHaveTools")] [SerializeField] private GameObject toolBar;
     [SerializeField] private TextMeshProUGUI turnText;
+    [SerializeField] private bool isGuid;
+    [ShowIf("isGuid")] [SerializeField] private SkeletonAnimation fingerSkeletonAnimation;
+    [ShowIf("isGuid")] [SerializeField] private AnimationReferenceAsset fingerAnim;
     private List<Passenger> _swaps = new List<Passenger>();
     private Passenger _flyPassenger;
     private bool _isCanTouchPlayer;
@@ -37,6 +41,7 @@ public class Level : MonoBehaviour
     private bool _isFingerDrag;
     private bool _isProcessing;
     private bool _isSetupStateHardMode;
+    private Seat _seatGuid;
 
     private Camera Camera => GetComponentInChildren<Camera>(true);
 
@@ -77,29 +82,46 @@ public class Level : MonoBehaviour
         {
             if (checkPassenger == passenger)
             {
-                if (!_isUseTool)
+                if (isGuid)
                 {
+                    foreach (var seat in setupSeats)
+                    {
+                        if (seat.seat.setIndexColumn == checkPassenger.columnDestination && seat.seat.setIndexRow == checkPassenger.rowDestination)
+                        {
+                            var p = seat.seat.transform.position;
+                            DoGuid(new Vector3(p.x, p.y + 1, p.z));
+                            _seatGuid = seat.seat;
+                        }
+                    }
                     checkPassenger.GetSelected(true);
                     _isCanTouchGround = true;
                 }
                 else
                 {
-                    if (!passenger.isMove)
+                    if (!_isUseTool)
                     {
-                        switch (eTool)
-                        {
-                            case ETool.Swap:
-                                DoSwapTool(passenger);
-                                break;
-                            case ETool.Fly:
-                                SetFlyTool(passenger);
-                                break;
-                        }
+                        checkPassenger.GetSelected(true);
+                        _isCanTouchGround = true;
                     }
                     else
                     {
-                        EndDoSwapTool();
-                        EndDoFlyTool();
+                        if (!passenger.isMove)
+                        {
+                            switch (eTool)
+                            {
+                                case ETool.Swap:
+                                    DoSwapTool(passenger);
+                                    break;
+                                case ETool.Fly:
+                                    SetFlyTool(passenger);
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            EndDoSwapTool();
+                            EndDoFlyTool();
+                        }
                     }
                 }
             }
@@ -173,12 +195,27 @@ public class Level : MonoBehaviour
                 }
                 isWin = true;
                 Observer.IntroWinGame?.Invoke();
+                if (fingerSkeletonAnimation != null)
+                {
+                    fingerSkeletonAnimation.gameObject.SetActive(false);
+                }
             }
         }
 
     }
     void OnEnable()
     {
+        if (isGuid)
+        {
+            foreach (var getPassenger in passengers)
+            {
+                if (getPassenger.isGuid)
+                {
+                    var p = getPassenger.transform.position;
+                    DoGuid(new Vector3(p.x, p.y + 1, p.z));
+                }
+            }
+        }
         if (isHardMode)
         {
             Observer.LoadTrackingMission?.Invoke(EMissionQuest.CompletedHardMode);
@@ -190,6 +227,12 @@ public class Level : MonoBehaviour
         Lean.Touch.LeanTouch.OnFingerDown += HandleFingerDown;
         Lean.Touch.LeanTouch.OnFingerUp += HandleFingerUp;
         Lean.Touch.LeanTouch.OnFingerUpdate += HandleFingerUpdate;
+    }
+    void DoGuid(Vector3 position)
+    {
+        fingerSkeletonAnimation.gameObject.SetActive(isGuid);
+        fingerSkeletonAnimation.AnimationState.SetAnimation(0, fingerAnim, true);
+        fingerSkeletonAnimation.transform.position = position;
     }
 
     void OnDisable()
@@ -318,8 +361,20 @@ public class Level : MonoBehaviour
                             }
                             if (eTool != ETool.Fly)
                             {
-                                set.ShowRobotDetect(set);
-                                _isCanTouchGround = false;
+                                if (isGuid)
+                                {
+                                    var s = set.seatSurface;
+                                    if (s == _seatGuid)
+                                    {
+                                        set.ShowRobotDetect(set);
+                                        _isCanTouchGround = false;
+                                    }
+                                }
+                                else
+                                {
+                                    set.ShowRobotDetect(set);
+                                    _isCanTouchGround = false;
+                                }
                             }
                             else
                             {
@@ -333,22 +388,38 @@ public class Level : MonoBehaviour
                         {
                             Handheld.Vibrate();
                             var getPass = hit.collider.gameObject.GetComponent<Passenger>();
-                            foreach (var seat in setupSeats)
+                            if (isGuid)
                             {
-                                if (seat.seat.setIndexRow == getPass.rowDestination && seat.seat.setIndexColumn == getPass.columnDestination)
+                                if (getPass.isGuid)
                                 {
-                                    seat.seat.DoSelectAnim();
-                                }
-                                else
-                                {
-                                    seat.seat.StopSelectAnim();
+                                    HighLightSeat(getPass);
+                                    getPass.SetSelected();
+                                    ClearPath();
                                 }
                             }
-                            getPass.SetSelected();
-                            ClearPath();
+                            else
+                            {
+                                HighLightSeat(getPass);
+                                getPass.SetSelected();
+                                ClearPath();
+                            }
                         }
                     }
                 }
+            }
+        }
+    }
+    void HighLightSeat(Passenger passenger)
+    {
+        foreach (var seat in setupSeats)
+        {
+            if (seat.seat.setIndexRow == passenger.rowDestination && seat.seat.setIndexColumn == passenger.columnDestination)
+            {
+                seat.seat.DoSelectAnim();
+            }
+            else
+            {
+                seat.seat.StopSelectAnim();
             }
         }
     }
@@ -457,6 +528,10 @@ public class Level : MonoBehaviour
 
     private void OnLose()
     {
+        if (fingerSkeletonAnimation != null)
+        {
+            fingerSkeletonAnimation.gameObject.SetActive(false);
+        }
         if (isHardMode)
         {
             GameManager.Instance.LoseHardMode();
