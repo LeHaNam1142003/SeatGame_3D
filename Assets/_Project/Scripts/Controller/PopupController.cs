@@ -16,7 +16,6 @@ public class PopupController : Singleton<PopupController>
     protected override void Awake()
     {
         base.Awake();
-
         DontDestroyOnLoad(gameObject);
         Initialize();
         Debug.Assert(Camera.main != null, "Camera.main != null");
