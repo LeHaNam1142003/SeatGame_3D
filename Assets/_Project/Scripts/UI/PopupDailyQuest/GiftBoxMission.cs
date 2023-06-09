@@ -22,10 +22,6 @@ public class GiftBoxMission : MonoBehaviour
         SetDailyTimeReset();
         SetProcess();
     }
-    private void OnDisable()
-    {
-        Observer.UpdateStarReward -= SetProcess;
-    }
     private void Update()
     {
         UpdateDailyTimeReset();
