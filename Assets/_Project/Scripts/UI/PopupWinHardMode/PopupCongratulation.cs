@@ -13,8 +13,8 @@ public class PopupCongratulation : Popup
     [ReadOnly] public List<SetUpReward> setupRewards = new List<SetUpReward>();
     private GameObject _setIcon;
     public bool isBackHome { get; set; }
-    private GameObject a;
-    private GameObject _numberText;
+    [SerializeField] private Image itemReward;
+    [SerializeField] private TextMeshProUGUI itemText;
     protected override void BeforeShow()
     {
         SetReward();
@@ -22,23 +22,17 @@ public class PopupCongratulation : Popup
     }
     void SetReward()
     {
-        _numberText = new GameObject();
-        _numberText.AddComponent<TextMeshProUGUI>();
-        var setNumbetText = _numberText.GetComponent<TextMeshProUGUI>();
-        _setIcon = new GameObject();
-        _setIcon.AddComponent<Image>();
-        var icon = _setIcon.GetComponent<Image>();
         foreach (var getReward in rewards)
         {
             foreach (var setupReward in setupRewards)
             {
                 if (getReward.eTypeReward == setupReward.eTypeReward)
                 {
-                    icon.sprite = getReward.iconReward;
-                    var showIcon = Instantiate(icon, itemClaim.transform);
+                    itemReward.sprite = getReward.iconReward;
+                    var showIcon = Instantiate(itemReward, itemClaim.transform);
                     itemClaim.childAlignment = TextAnchor.MiddleCenter;
-                    setNumbetText.text = $"X {setupReward.number}";
-                    var showNumber = Instantiate(setNumbetText, showIcon.transform);
+                    itemText.text = $"X {setupReward.number}";
+                    var showNumber = Instantiate(itemText, showIcon.transform);
                     showNumber.color = Color.cyan;
                     showNumber.alignment = TextAlignmentOptions.Center;
                     showNumber.alignment = TextAlignmentOptions.Midline;
