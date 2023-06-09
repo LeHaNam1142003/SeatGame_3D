@@ -11,27 +11,29 @@ using Debug = UnityEngine.Debug;
 
 public class LevelList : ScrollBoard
 {
-    private int maxGroup = 3;
     protected override void SetIndexText()
     {
         getObj.GetComponent<CinemaUILevel>().SetLevelText(index);
     }
     private void OnEnable()
     {
-        elements = ConfigController.Game.maxLevel;
-        ShowContent();
-        for (int i = 1; i <= elements; i++)
+        if (ConfigController.Game != null)
         {
-            if (i == Data.CurrentLevel)
+            elements = ConfigController.Game.maxLevel;
+            ShowContent();
+            for (int i = 1; i <= elements; i++)
             {
-                content.transform.GetChild(i - 1).GetComponent<CinemaUILevel>().SetHightLight(true);
+                if (i == Data.CurrentLevel)
+                {
+                    content.transform.GetChild(i - 1).GetComponent<CinemaUILevel>().SetHightLight(true);
+                }
+                else
+                {
+                    content.transform.GetChild(i - 1).GetComponent<CinemaUILevel>().SetHightLight(false);
+                }
             }
-            else
-            {
-                content.transform.GetChild(i - 1).GetComponent<CinemaUILevel>().SetHightLight(false);
-            }
+            SetPosi();
         }
-        SetPosi();
     }
     private void OnDisable()
     {
@@ -39,9 +41,8 @@ public class LevelList : ScrollBoard
     }
     void SetPosi()
     {
-        var setSizeGroup = (content.cellSize.y + content.spacing.y) * 3;
-        var calculateLevel = Data.CurrentLevel % maxGroup == 0 ? Data.CurrentLevel / maxGroup - 1 : Data.CurrentLevel / maxGroup;
-        var getRect = content.GetComponent<RectTransform>();
-        content.rectTransform().anchoredPosition3D = new Vector3(0, Mathf.Ceil(getRect.rect.height / 2) - setSizeGroup * calculateLevel, 0);
+        var s = content.rectTransform().sizeDelta;
+        var posiIndex = (Data.CurrentLevel - 1) * (content.cellSize.y + content.spacing.y);
+        content.rectTransform().anchoredPosition3D = new Vector3(0, (s.y+content.padding.bottom) / 2 - posiIndex);
     }
 }
