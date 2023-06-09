@@ -12,7 +12,11 @@ public class Passenger : MonoBehaviour
 {
     [Header("ReadOnlyAttribute")]
     [ReadOnly] public bool isMove;
-    [ReadOnly] public int indexTurn = 11042003;
+    public int indexTurn
+    {
+        get => _defaultTurn;
+        set => _defaultTurn = value;
+    }
     [ReadOnly] [SerializeField] private Transform road;
     [ReadOnly] public Ground currentDestination;
     [ReadOnly] [SerializeField] private Ground nextDestination;
@@ -40,9 +44,11 @@ public class Passenger : MonoBehaviour
     public EColumn columnDestination;
     [SerializeField] private CapsuleCollider normalCapsu;
     [SerializeField] private CapsuleCollider capsuCheck;
+    public bool isGuid;
     private EStateAnim _previousStateAnim;
     private RaycastHit _raycastHit;
     private int _pathindex;
+    private int _defaultTurn = 1;
     private bool _isAdd = true;
     private void Awake()
     {
