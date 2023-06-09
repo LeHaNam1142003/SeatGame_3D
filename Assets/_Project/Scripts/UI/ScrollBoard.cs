@@ -43,8 +43,9 @@ public abstract class ScrollBoard : MonoBehaviour
     {
         for (int i = 0; i < content.transform.childCount; i++)
         {
-            DestroyImmediate(content.transform.GetChild(i).gameObject);
+            Destroy(content.transform.GetChild(i).gameObject);
         }
+        content.rectTransform().sizeDelta = new Vector2(content.cellSize.x, 0);
     }
 
     void InstainUIContent(GameObject getUIContent)
