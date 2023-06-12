@@ -12,24 +12,32 @@ public class SoundController : SingletonDontDestroy<SoundController>
 
         Observer.MusicChanged += OnMusicChanged;
         Observer.SoundChanged += OnSoundChanged;
+        Observer.PlayGamePlayMusic += GamePlaySound;
 
-        Observer.WinLevel += WinLevel;
+        Observer.PlayWinSound += WinLevel;
         Observer.LoseLevel += LoseLevel;
         Observer.StartLevel += StartLevel;
         Observer.ClickButton += ClickButton;
         Observer.CoinMove += CoinMove;
+        Observer.PlayRunMusic += PlayerRun;
+        Observer.PlaySwapSound += SwapTool;
+        Observer.PlayFlySound += FlyTool;
+        Observer.PlaySpinSound += SpinWhee;
+        Observer.MissionSound += MissionComplete;
+        Observer.CongratSound += Congratulation;
+        Observer.OpenGiftSound += OpenGift;
     }
 
     private void OnMusicChanged()
     {
         backgroundAudio.mute = !Data.BgSoundState;
     }
-    
+
     private void OnSoundChanged()
     {
         fxAudio.mute = !Data.FxSoundState;
     }
-    
+
     public void Setup()
     {
         OnMusicChanged();
@@ -64,6 +72,10 @@ public class SoundController : SingletonDontDestroy<SoundController>
             Debug.LogWarning("Can't found sound data");
         }
     }
+    void GamePlaySound()
+    {
+        PlayBackground(SoundType.BackgroundHome);
+    }
 
     public void PauseBackground()
     {
@@ -72,15 +84,38 @@ public class SoundController : SingletonDontDestroy<SoundController>
             backgroundAudio.Pause();
         }
     }
+    public void StopFXSound()
+    {
+        fxAudio.Stop();
+    }
+    void OpenGift()
+    {
+        PlayFX(SoundType.OpenGift);
+    }
 
     #region ActionEvent
-
     private void StartLevel(Level level)
     {
         PlayFX(SoundType.StartLevel);
     }
+    private void PlayerRun()
+    {
+        PlayFX(SoundType.MainRunning);
+    }
+    private void SpinWhee()
+    {
+        PlayFX(SoundType.SpinWheel);
+    }
+    void MissionComplete()
+    {
+        PlayFX(SoundType.MissionComp);
+    }
+    void Congratulation()
+    {
+        PlayFX(SoundType.Congrat);
+    }
 
-    private void WinLevel(Level level)
+    private void WinLevel()
     {
         PlayFX(SoundType.WinLevel);
     }
@@ -94,11 +129,18 @@ public class SoundController : SingletonDontDestroy<SoundController>
     {
         PlayFX(SoundType.ClickButton);
     }
+    void SwapTool()
+    {
+        PlayFX(SoundType.SwapTool);
+    }
+    void FlyTool()
+    {
+        PlayFX(SoundType.FlyTool);
+    }
 
     private void CoinMove()
     {
         PlayFX(SoundType.CoinMove);
     }
-    
     #endregion
 }
