@@ -15,6 +15,7 @@ public static class Observer
     // Setting
     public static Action MusicChanged;
     public static Action SoundChanged;
+    public static Action PlayGamePlayMusic;
     public static Action VibrationChanged;
     // Ads
     public static Action RequestBanner;
@@ -38,6 +39,12 @@ public static class Observer
     public static Action EndSwapping;
     public static Action CountSwap;
     public static Action CountFly;
+    public static Action PlaySwapSound;
+    public static Action PlayFlySound;
+    public static Action PlaySpinSound;
+    public static Action MissionSound;
+    public static Action CongratSound;
+    public static Action OpenGiftSound;
     public static Action OnWin;
     public static Action OnLost;
     public static Action<bool> DoSpin;
@@ -57,5 +64,7 @@ public static class Observer
     public static Action<Level> SkipLevel;
     public static Action<Level> WinLevel;
     public static Action<Level> LoseLevel;
+    public static Action PlayRunMusic;
+    public static Action PlayWinSound;
     #endregion
 }
