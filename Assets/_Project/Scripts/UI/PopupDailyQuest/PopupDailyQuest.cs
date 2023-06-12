@@ -6,6 +6,7 @@ public class PopupDailyQuest : Popup
 {
     public void OnclickWatchAds()
     {
+        Observer.ClickButton?.Invoke();
         AdsManager.ShowRewardAds(() =>
         {
             Data.WatchAds += 1;
