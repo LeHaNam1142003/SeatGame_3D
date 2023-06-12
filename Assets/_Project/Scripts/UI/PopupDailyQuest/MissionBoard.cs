@@ -79,6 +79,7 @@ public class MissionBoard : MonoBehaviour
     }
     public void Claim()
     {
+        Observer.MissionSound?.Invoke();
         Observer.ShowNoticeIcon?.Invoke(false);
         Rewarded();
         Data.StarMission += startReward;
