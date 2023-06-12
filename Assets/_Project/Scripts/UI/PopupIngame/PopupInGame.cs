@@ -53,6 +53,7 @@ public class PopupInGame : Popup
 
     public void OnClickHome()
     {
+        Observer.ClickButton?.Invoke();
         MethodBase function = MethodBase.GetCurrentMethod();
         Observer.TrackClickButton?.Invoke(function.Name);
 
@@ -61,6 +62,7 @@ public class PopupInGame : Popup
 
     public void OnClickReplay()
     {
+        Observer.ClickButton?.Invoke();
         if (Data.IsTesting)
         {
             GameManager.Instance.ReplayGame(isHardMode);
@@ -79,11 +81,13 @@ public class PopupInGame : Popup
 
     public void OnClickPrevious()
     {
+        Observer.ClickButton?.Invoke();
         GameManager.Instance.BackLevel(isHardMode);
     }
 
     public void OnClickSkip()
     {
+        Observer.ClickButton?.Invoke();
         if (Data.IsTesting)
         {
             GameManager.Instance.NextLevel(isHardMode);
@@ -102,23 +106,27 @@ public class PopupInGame : Popup
 
     public void OnClickLevelA()
     {
+        Observer.ClickButton?.Invoke();
         Data.UseLevelABTesting = 0;
         GameManager.Instance.ReplayGame(isHardMode);
     }
 
     public void OnClickLevelB()
     {
+        Observer.ClickButton?.Invoke();
         Data.UseLevelABTesting = 1;
         GameManager.Instance.ReplayGame(isHardMode);
     }
 
     public void OnClickLose()
     {
+        Observer.ClickButton?.Invoke();
         GameManager.Instance.OnLoseGame(1f);
     }
 
     public void OnClickWin()
     {
+        Observer.ClickButton?.Invoke();
         GameManager.Instance.OnWinGame(1f);
     }
 
