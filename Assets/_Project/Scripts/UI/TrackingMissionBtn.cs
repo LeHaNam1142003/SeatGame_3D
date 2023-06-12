@@ -12,6 +12,7 @@ public class TrackingMissionBtn : MonoBehaviour
     }
     public void ShowTrackingMission()
     {
+        Observer.ClickButton?.Invoke();
         PopupController.Instance.Show<PopupTrackingMission>();
     }
     void ShowNoticeIcon(bool isShowNotice)
