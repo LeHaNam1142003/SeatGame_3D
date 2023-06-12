@@ -64,6 +64,9 @@ MonoBehaviour:
   - {fileID: 5751018352687953854}
   toolBar: {fileID: 2204928434297425025}
   turnText: {fileID: 558508654454768257}
+  isGuid: 0
+  fingerSkeletonAnimation: {fileID: 0}
+  fingerAnim: {fileID: 0}
 --- !u!1001 &12280855673480370
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6592,6 +6595,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1437307381533475701}
     m_Modifications:
+    - target: {fileID: 1806874280539282323, guid: b2a80651e202c11449af88bb9f5973dd,
+        type: 3}
+      propertyPath: isHaveSeat
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5380172717542185309, guid: b2a80651e202c11449af88bb9f5973dd,
         type: 3}
       propertyPath: m_IsActive
