@@ -7,7 +7,7 @@ public class PopupWin : Popup
 {
     [SerializeField] private BonusArrowHandler bonusArrowHandler;
     [SerializeField] private GameObject btnRewardAds;
-    [SerializeField] private GameObject btnTapToContinue; 
+    [SerializeField] private GameObject btnTapToContinue;
     [SerializeField] [ReadOnly] private int totalMoney;
 
     private Sequence sequence;
@@ -19,10 +19,11 @@ public class PopupWin : Popup
 
     protected override void BeforeShow()
     {
+        Observer.PlayWinSound?.Invoke();
         base.BeforeShow();
         PopupController.Instance.Show<PopupUI>();
         Setup();
-        
+
         sequence = DOTween.Sequence().AppendInterval(2f).AppendCallback(() => { btnTapToContinue.SetActive(true); });
     }
 
@@ -35,6 +36,7 @@ public class PopupWin : Popup
 
     protected override void BeforeHide()
     {
+        SoundController.Instance.StopFXSound();
         base.BeforeHide();
         PopupController.Instance.Hide<PopupUI>();
     }
@@ -57,7 +59,7 @@ public class PopupWin : Popup
                 bonusArrowHandler.MoveObject.ResumeMoving();
                 btnRewardAds.SetActive(true);
                 btnTapToContinue.SetActive(true);
-            },closeCallback: () =>
+            }, closeCallback: () =>
             {
                 bonusArrowHandler.MoveObject.ResumeMoving();
                 btnRewardAds.SetActive(true);
@@ -65,7 +67,7 @@ public class PopupWin : Popup
             });
         }
     }
-    
+
     public void GetRewardAds()
     {
         Data.CurrencyTotal += totalMoney * bonusArrowHandler.CurrentAreaItem.MultiBonus;
