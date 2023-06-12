@@ -42,6 +42,7 @@ public class Level : MonoBehaviour
     private bool _isProcessing;
     private bool _isSetupStateHardMode;
     private Seat _seatGuid;
+    private int _countForPLayMusic;
 
     private Camera Camera => GetComponentInChildren<Camera>(true);
 
@@ -142,6 +143,8 @@ public class Level : MonoBehaviour
     }
     public void CheckTurn(int getindex)
     {
+        SoundController.Instance.StopFXSound();
+        _countForPLayMusic = 0;
         if (getindex == 0 || getindex != 0 && currentTurn == 0)
         {
             foreach (var checkSeat in setupSeats)
@@ -163,6 +166,14 @@ public class Level : MonoBehaviour
                     break;
                 }
             }
+        }
+    }
+    public void CheckPlayMusic()
+    {
+        if (_countForPLayMusic == 0)
+        {
+            Observer.PlayRunMusic?.Invoke();
+            _countForPLayMusic++;
         }
     }
     public void OnProcessing() => _isProcessing = true;
@@ -277,6 +288,7 @@ public class Level : MonoBehaviour
         if (_flyPassenger != null)
         {
             PopupController.Instance.Hide<PopupFlyTool>();
+            Observer.PlayFlySound?.Invoke();
             _flyPassenger.DoFly(flyPosi, nextCurrentPosi);
             if (!Data.IsTesting)
             {
@@ -296,6 +308,7 @@ public class Level : MonoBehaviour
             Observer.OnSwapping?.Invoke();
             PopupController.Instance.Hide<PopupSwapTool>();
             StopHightSeat();
+            Observer.PlaySwapSound?.Invoke();
             _swaps[0].DoSwapPosi(_swaps[1].transform.localPosition, _swaps[1].currentDestination);
             _swaps[1].DoSwapPosi(_swaps[0].transform.localPosition, _swaps[0].currentDestination);
             _swaps.Clear();
@@ -386,6 +399,7 @@ public class Level : MonoBehaviour
                     {
                         if (_isCanTouchPlayer)
                         {
+                            Observer.ClickButton?.Invoke();
                             Handheld.Vibrate();
                             var getPass = hit.collider.gameObject.GetComponent<Passenger>();
                             if (isGuid)
