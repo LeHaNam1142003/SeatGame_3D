@@ -27,6 +27,7 @@ public class PopupSpin : Popup
     }
     public void DoSpinWithTicket()
     {
+        Observer.ClickButton?.Invoke();
         _isDoSpinWithTicket = true;
         if (Data.IsTesting)
         {
@@ -45,14 +46,11 @@ public class PopupSpin : Popup
     }
     public void DoSpinWithWatchAds()
     {
+        Observer.ClickButton?.Invoke();
         AdsManager.ShowRewardAds(() =>
         {
             Data.SpinTicketAmount += 1;
             UpdateText();
         });
-    }
-    public void ShowTrackingMission()
-    {
-        PopupController.Instance.Show<PopupTrackingMission>();
     }
 }
