@@ -42,6 +42,7 @@ public class PopupHardMode : Popup
     }
     public void OnclickSuperHardMode()
     {
+        Observer.ClickButton?.Invoke();
         setHardModeOn(false);
         if (Data.HardModeUnlock == 25 && Data.SuperHardModeUnlock == 0)
         {
@@ -51,6 +52,7 @@ public class PopupHardMode : Popup
     }
     public void OnClickHardMode()
     {
+        Observer.ClickButton?.Invoke();
         setHardModeOn(true);
         SetUp(ConfigController.Game.maxLevel, Data.HardModeUnlock);
     }
