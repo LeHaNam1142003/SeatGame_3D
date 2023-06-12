@@ -77,4 +77,12 @@ public enum SoundType
     ShowPopupWin,
     ShowPopupLose,
     CoinMove,
+    MainRunning,
+    SwapTool,
+    FlyTool,
+    SpinWheel,
+    MissionComp,
+    Congrat,
+    OpenGift,
+    
 }
