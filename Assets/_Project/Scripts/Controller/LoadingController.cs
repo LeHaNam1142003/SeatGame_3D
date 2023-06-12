@@ -14,7 +14,7 @@ public class LoadingController : MonoBehaviour
     public TextMeshProUGUI loadingText;
 
     [FormerlySerializedAs("TimeLoading")]
-    [Header("Attributes")] 
+    [Header("Attributes")]
     [Range(0.1f, 10f)] public float timeLoading = 5f;
 
     private bool _flagDoneProgress;
@@ -27,14 +27,19 @@ public class LoadingController : MonoBehaviour
 
         var preLoadingText = LocalizationController.Instance.GetPreTranslatedText("Loading...");
         progressBar.fillAmount = 0;
-        progressBar.DOFillAmount(5, timeLoading).OnUpdate(()=>loadingText.text = $"{preLoadingText} {(int) (progressBar.fillAmount * 100)}%").OnComplete(()=> _flagDoneProgress = true);
+        progressBar.DOFillAmount(5, timeLoading).OnUpdate(() =>
+        {
+            loadingText.text = $"{preLoadingText} {(int)(progressBar.fillAmount * 100)}%";
+            SoundController.Instance.PauseBackground();
+        }).OnComplete(() => _flagDoneProgress = true);
         WaitProcess();
     }
-    
+
     private async void WaitProcess()
     {
         await UniTask.WaitUntil(() => AdsController.Instance.IsInitialized && FirebaseController.Instance.isInitialized && _flagDoneProgress);
         ConfigController.Instance.Initialize();
         _operation.allowSceneActivation = true;
+        Observer.PlayGamePlayMusic?.Invoke();
     }
 }
