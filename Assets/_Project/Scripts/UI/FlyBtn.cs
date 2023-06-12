@@ -44,6 +44,7 @@ public class FlyBtn : MonoBehaviour
     }
     public void DoFly()
     {
+        Observer.ClickButton?.Invoke();
         if (!_isFlying && Data.FlyToolCount > 0)
         {
             Observer.OnSwapping?.Invoke();
