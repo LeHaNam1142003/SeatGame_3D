@@ -1,3 +1,4 @@
+using System;
 using System.Reflection;
 
 public class PopupHome : Popup
@@ -16,14 +17,16 @@ public class PopupHome : Popup
 
     public void OnClickStart()
     {
+        Observer.ClickButton?.Invoke();
         MethodBase function = MethodBase.GetCurrentMethod();
         Observer.TrackClickButton?.Invoke(function.Name);
-        
+
         GameManager.Instance.StartGame(false);
     }
 
     public void OnClickDebug()
     {
+        Observer.ClickButton?.Invoke();
         MethodBase function = MethodBase.GetCurrentMethod();
         Observer.TrackClickButton?.Invoke(function.Name);
 
@@ -31,6 +34,7 @@ public class PopupHome : Popup
     }
     public void OnClickSpin()
     {
+        Observer.ClickButton?.Invoke();
         MethodBase function = MethodBase.GetCurrentMethod();
         Observer.TrackClickButton?.Invoke(function.Name);
         Observer.LoadTrackingMission?.Invoke(EMissionQuest.SpinWheel);
@@ -42,11 +46,13 @@ public class PopupHome : Popup
     {
         MethodBase function = MethodBase.GetCurrentMethod();
         Observer.TrackClickButton?.Invoke(function.Name);
+        Observer.ClickButton?.Invoke();
 
         PopupController.Instance.Show<PopupSetting>();
     }
     public void OnclickDailyQuest()
     {
+        Observer.ClickButton?.Invoke();
         MethodBase function = MethodBase.GetCurrentMethod();
         Observer.TrackClickButton?.Invoke(function.Name);
 
@@ -71,6 +77,7 @@ public class PopupHome : Popup
 
     public void OnClickTest()
     {
+        Observer.ClickButton?.Invoke();
         MethodBase function = MethodBase.GetCurrentMethod();
         Observer.TrackClickButton?.Invoke(function.Name);
 
@@ -78,6 +85,7 @@ public class PopupHome : Popup
     }
     public void OnClickHardMode()
     {
+        Observer.ClickButton?.Invoke();
         MethodBase function = MethodBase.GetCurrentMethod();
         Observer.TrackClickButton?.Invoke(function.Name);
         Observer.LoadTrackingMission?.Invoke(EMissionQuest.CompletedHardMode);
