@@ -20,7 +20,7 @@ public class GiftMission : MonoBehaviour
     {
         Observer.UpdateStarReward += UpdateStar;
     }
-    
+
     public void Init(Sprite sprite, string starText, int starToReward, SetUpReward getsetUpReward)
     {
         _isCanReward = false;
@@ -52,6 +52,7 @@ public class GiftMission : MonoBehaviour
     {
         if (_isCanReward)
         {
+            Observer.OpenGiftSound?.Invoke();
             var getPopupWinHardMode = PopupController.Instance.Get<PopupCongratulation>() as PopupCongratulation;
             if (!getPopupWinHardMode.setupRewards.Contains(_setUpReward))
             {
