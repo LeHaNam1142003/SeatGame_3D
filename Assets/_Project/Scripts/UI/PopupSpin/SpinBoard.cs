@@ -48,7 +48,8 @@ public class SpinBoard : MonoBehaviour
         Data.SpinWheel += 1;
         SetRamdom();
         DoSpinAnim(doSpinAnim, true);
-        transform.DORotate(new Vector3(0, 0, -1080 - (_endAngle * (_endSpin + (_endSpin - 1)))), 5, RotateMode.FastBeyond360).OnUpdate((() =>
+        Observer.PlaySpinSound?.Invoke();
+        transform.DORotate(new Vector3(0, 0, -1080 - (_endAngle * (_endSpin + (_endSpin - 1)))), 3, RotateMode.FastBeyond360).OnUpdate((() =>
         {
             Observer.DoSpin -= DoSpin;
         })).OnComplete((() =>
