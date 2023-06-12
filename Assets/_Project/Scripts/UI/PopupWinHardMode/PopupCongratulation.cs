@@ -46,6 +46,7 @@ public class PopupCongratulation : Popup
     }
     public void Claim()
     {
+        Observer.CongratSound?.Invoke();
         foreach (var setClaim in setupRewards)
         {
             switch (setClaim.eTypeReward)
