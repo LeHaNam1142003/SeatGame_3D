@@ -170,6 +170,7 @@ public class Passenger : MonoBehaviour
                 {
                     if (pathsToDestination.Count != 0)
                     {
+                        Level.Instance.CheckPlayMusic();
                         hint.SetActive(false);
                         SetCapSuColliderCheck(false);
                         road = pathsToDestination[_pathindex];
