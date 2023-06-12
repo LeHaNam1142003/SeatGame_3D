@@ -94,6 +94,7 @@ public class GiftBoxMission : MonoBehaviour
         Data.CompletedHardMode = 0;
         Data.Useswapbooster = 0;
         Data.StarMission = 0;
+        Data.SpinTicketAmount += 1;
         Data.GiftCanReward = 0;
         Data.MissionRewarded = 0;
         Observer.NewDailyReWard?.Invoke();
