@@ -26,10 +26,13 @@ public class Passenger : MonoBehaviour
     [ReadOnly] [SerializeField] private EStateAnim currentStateAnim;
     [Header("Attributes")]
     [SerializeField] private AnimancerComponent animancerComponent;
-    [SerializeField] private SkinnedMeshRenderer skinnedMeshRenderer;
-    public Material angry;
-    public Material pleasure;
-    public Material normal;
+    [SerializeField] private SkinnedMeshRenderer skinnedMeshRendererHead;
+    [SerializeField] private SkinnedMeshRenderer skinnedMeshRendererBody;
+    [SerializeField] private SkinnedMeshRenderer skinnedMeshRendererBot;
+    public Material correctBody;
+    public Material correctBot;
+    public Material normalBody;
+    public Material normalBot;
     [SerializeField] private LayerMask passengerLayerMask;
     public GameObject hint;
     [SerializeField] private GameObject passengerModel;
@@ -38,6 +41,9 @@ public class Passenger : MonoBehaviour
     [SerializeField] private AnimationClip idleAnim;
     [SerializeField] private AnimationClip walkAnim;
     [SerializeField] private AnimationClip winAnim;
+    [SerializeField] private AnimationClip seatAnim;
+    [SerializeField] private AnimationClip correctSeatAnim;
+    [SerializeField] private AnimationClip wrongSeatAnim;
     [SerializeField] private Image correctSeatEmotion;
     [SerializeField] private Image wrongSeatEmotion;
     public int rowDestination;
@@ -68,7 +74,7 @@ public class Passenger : MonoBehaviour
     {
         hint.SetActive(false);
         _previousStateAnim = EStateAnim.Non;
-        SetEmotion(normal);
+        SetEmotion(Emotion.Normal);
         SetIdleAnim();
     }
     public void SetCapSuColliderCheck(bool condition)
@@ -80,32 +86,37 @@ public class Passenger : MonoBehaviour
     {
         SetCapSuColliderCheck(true);
         Level.Instance.passengers.Add(this);
-        hintText.text = columnDestination + ":" + rowDestination;
+        hintText.text = $"{columnDestination}    {rowDestination}";
     }
     public void SetSelected()
     {
         Level.Instance.SetTheSelectedPassenger(this);
     }
-    public void SetEmotion(Material getMaterial)
+    public void SetEmotion(Emotion getEmotion)
     {
-        Material[] mats = skinnedMeshRenderer.materials;
-        mats[1] = getMaterial;
-        skinnedMeshRenderer.materials = mats;
-        if (getMaterial == normal)
+        switch (getEmotion)
         {
-            return;
-        }
-        else
-        {
-            if (getMaterial == angry)
-            {
-                wrongSeatEmotion.gameObject.SetActive(true);
-            }
-            else if (getMaterial == pleasure)
-            {
+            case Emotion.Normal:
+                SetupEmotion(normalBot, normalBody);
+                break;
+            case Emotion.Correct:
+                SetupEmotion(correctBot, correctBody);
                 correctSeatEmotion.gameObject.SetActive(true);
-            }
+                SetCorrectAnim();
+                break;
+            case Emotion.Wrong:
+                SetupEmotion(normalBot, normalBody);
+                wrongSeatEmotion.gameObject.SetActive(true);
+                SetWrongAnim();
+                break;
         }
+
+    }
+    void SetupEmotion(Material mat1, Material mat2)
+    {
+        skinnedMeshRendererHead.material = mat1;
+        skinnedMeshRendererBot.material = mat1;
+        skinnedMeshRendererBody.material = mat2;
     }
     void Win()
     {
@@ -119,21 +130,30 @@ public class Passenger : MonoBehaviour
         yield return new WaitForSeconds(1f);
         Observer.ShipMove?.Invoke();
     }
-    void SetIdleAnim() => SetStateAnim(EStateAnim.Idle, idleAnim);
-    void SetRunAnim() => SetStateAnim(EStateAnim.Run, walkAnim);
-    void SetWinAnim() => SetStateAnim(EStateAnim.Win, winAnim);
+    void SetIdleAnim() => SetStateAnim(EStateAnim.Idle, idleAnim, null);
+    void SetRunAnim() => SetStateAnim(EStateAnim.Run, walkAnim, SetIdleAnim);
+    void SetWinAnim() => SetStateAnim(EStateAnim.Win, winAnim, SetIdleAnim);
+    void SetCorrectAnim() => SetStateAnim(EStateAnim.Correct, correctSeatAnim, SetSeatAnim);
+    void SetWrongAnim() => SetStateAnim(EStateAnim.Wrong, wrongSeatAnim, SetSeatAnim);
+    void SetSeatAnim() => SetStateAnim(EStateAnim.Seat, seatAnim, null);
     void ClickonGround()
     {
         hint.SetActive(false);
     }
-    void SetStateAnim(EStateAnim getEStateAnim, AnimationClip getAnimationclip)
+    void SetStateAnim(EStateAnim getEStateAnim, AnimationClip getAnimationclip, Action doneAnimEvent)
     {
         currentStateAnim = getEStateAnim;
         if (currentStateAnim != _previousStateAnim)
         {
-            animancerComponent.Play(getAnimationclip);
+            StartCoroutine(Invoke(getAnimationclip, doneAnimEvent));
             _previousStateAnim = currentStateAnim;
         }
+    }
+    IEnumerator Invoke(AnimationClip clip, Action doneAnimEvent)
+    {
+        var anim = animancerComponent.Play(clip);
+        yield return anim;
+        doneAnimEvent?.Invoke();
     }
 
     public void GetSelected(bool isGetSelected)
@@ -203,7 +223,7 @@ public class Passenger : MonoBehaviour
             {
                 pathsToDestination.Add(path);
                 nextDestination = pathsToDestination[pathsToDestination.Count - 1].parent.GetComponent<Ground>();
-                SetEmotion(normal);
+                SetEmotion(Emotion.Normal);
                 SetNewDestination(nextDestination);
                 isMove = true;
                 _isAdd = false;
@@ -262,7 +282,7 @@ public class Passenger : MonoBehaviour
         {
             isMove = true;
             Level.Instance.OnProcessing();
-            SetEmotion(normal);
+            SetEmotion(Emotion.Normal);
             transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
             SetNewDestination(nextCurrentPosi);
             SetEndDestination(nextCurrentPosi);
@@ -334,4 +354,13 @@ public enum EStateAnim
     Idle,
     Run,
     Win,
+    Correct,
+    Wrong,
+    Seat,
+}
+public enum Emotion
+{
+    Correct,
+    Normal,
+    Wrong,
 }
