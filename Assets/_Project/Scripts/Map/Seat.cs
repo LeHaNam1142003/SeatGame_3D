@@ -57,13 +57,13 @@ public class Seat : MonoBehaviour
             {
                 Level.Instance.ManageSeat(this, true);
                 Level.Instance.CheckTurn(checkPlayer.indexTurn);
-                checkPlayer.SetEmotion(checkPlayer.pleasure);
+                checkPlayer.SetEmotion(Emotion.Correct);
             }
             else
             {
                 Level.Instance.ManageSeat(this, false);
                 Level.Instance.CheckTurn(checkPlayer.indexTurn);
-                checkPlayer.SetEmotion(checkPlayer.angry);
+                checkPlayer.SetEmotion(Emotion.Wrong);
             }
         }
     }
