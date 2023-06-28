@@ -6,7 +6,9 @@ public class PopupHome : Popup
     protected override void BeforeShow()
     {
         base.BeforeShow();
-        PopupController.Instance.Show<PopupUI>();
+        var getPopupUI = PopupController.Instance.Get<PopupUI>() as PopupUI;
+        getPopupUI.isShowTicket = false;
+        getPopupUI.Show();
     }
 
     protected override void BeforeHide()
@@ -38,7 +40,9 @@ public class PopupHome : Popup
         MethodBase function = MethodBase.GetCurrentMethod();
         Observer.TrackClickButton?.Invoke(function.Name);
         Observer.LoadTrackingMission?.Invoke(EMissionQuest.SpinWheel);
-
+        var getPopupUI = PopupController.Instance.Get<PopupUI>() as PopupUI;
+        getPopupUI.isShowTicket = true;
+        getPopupUI.Show();
         PopupController.Instance.Show<PopupSpin>();
     }
 
