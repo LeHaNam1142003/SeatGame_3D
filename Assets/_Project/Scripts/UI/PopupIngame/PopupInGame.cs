@@ -127,7 +127,7 @@ public class PopupInGame : Popup
     public void OnClickWin()
     {
         Observer.ClickButton?.Invoke();
-        GameManager.Instance.OnWinGame(1f);
+        GameManager.Instance.OnWinGame(null, 1f);
     }
 
     private void HideUI(Level level = null)
