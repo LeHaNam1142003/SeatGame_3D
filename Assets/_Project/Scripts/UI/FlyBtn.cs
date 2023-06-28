@@ -45,7 +45,7 @@ public class FlyBtn : MonoBehaviour
     public void DoFly()
     {
         Observer.ClickButton?.Invoke();
-        if (!_isFlying && Data.FlyToolCount > 0)
+        if (!_isFlying && Data.FlyToolCount > 0 && !Level.Instance.isGuid)
         {
             Observer.OnSwapping?.Invoke();
             PopupController.Instance.Show<PopupFlyTool>();
