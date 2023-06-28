@@ -46,7 +46,7 @@ public class SwitchBtn : MonoBehaviour
     public void SwitchPosi()
     {
         Observer.ClickButton?.Invoke();
-        if (!_isSwapping && Data.SwapToolCount > 0)
+        if (!_isSwapping && Data.SwapToolCount > 0 && !Level.Instance.isGuid)
         {
             Observer.OnSwapping?.Invoke();
             PopupController.Instance.Show<PopupSwapTool>();
