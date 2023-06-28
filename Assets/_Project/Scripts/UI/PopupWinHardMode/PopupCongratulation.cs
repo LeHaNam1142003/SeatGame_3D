@@ -60,6 +60,9 @@ public class PopupCongratulation : Popup
                 case ETypeReward.Money:
                     Data.CurrencyTotal += setClaim.number;
                     break;
+                case ETypeReward.Spin:
+                    Data.SpinTicketAmount += setClaim.number;
+                    break;
             }
         }
         setupRewards.Clear();
@@ -90,4 +93,5 @@ public enum ETypeReward
     Tele,
     Swap,
     Money,
+    Spin,
 }
