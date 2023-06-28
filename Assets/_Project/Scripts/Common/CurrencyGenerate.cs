@@ -8,8 +8,11 @@ public class CurrencyGenerate : MonoBehaviour
 {
     public GameObject overlay;
     public GameObject coinPrefab;
+    public GameObject ticketPrefab;
     public GameObject from;
-    public GameObject to;
+    public GameObject toMoney;
+    public GameObject toTicket;
+    private GameObject _to;
     public int numberCoin;
     public int delay;
     public float durationNear;
@@ -28,7 +31,7 @@ public class CurrencyGenerate : MonoBehaviour
 
     public void SetToGameObject(GameObject to)
     {
-        this.to = to;
+        this._to = to;
     }
 
     private void Start()
@@ -36,19 +39,28 @@ public class CurrencyGenerate : MonoBehaviour
         overlay.SetActive(false);
     }
 
-    public async void GenerateCoin(Action moveOneCoinDone, Action moveAllCoinDone, GameObject from = null, GameObject to = null, int numberCoin = -1)
+    public async void GenerateCoin(Action moveOneCoinDone, bool isMoney, Action moveAllCoinDone, GameObject from = null, GameObject to = null, int numberCoin = -1)
     {
         this._moveOneCoinDone = moveOneCoinDone;
         this._moveAllCoinDone = moveAllCoinDone;
         this.from = from == null ? this.from : from;
-        this.to = to == null ? this.to : to;
         this.numberCoin = numberCoin < 0 ? this.numberCoin : numberCoin;
         _numberCoinMoveDone = 0;
         overlay.SetActive(true);
         for (int i = 0; i < this.numberCoin; i++)
         {
             await Task.Delay(Random.Range(0, delay));
-            GameObject coin = Instantiate(coinPrefab, transform);
+            GameObject coin;
+            if (isMoney)
+            {
+                coin = Instantiate(coinPrefab, transform);
+                SetToGameObject(toMoney);
+            }
+            else
+            {
+                coin = Instantiate(ticketPrefab, transform);
+                SetToGameObject(toTicket);
+            }
             coin.transform.localScale = Vector3.one * scale;
             coin.transform.position = this.from.transform.position;
             MoveCoin(coin);
@@ -81,14 +93,14 @@ public class CurrencyGenerate : MonoBehaviour
 
     private DG.Tweening.Core.TweenerCore<Vector3, Vector3, DG.Tweening.Plugins.Options.VectorOptions> MoveToNear(GameObject coin)
     {
-        return MoveTo(coin.transform.position + (Vector3)Random.insideUnitCircle*3, coin, durationNear, easeNear);
+        return MoveTo(coin.transform.position + (Vector3)Random.insideUnitCircle * 3, coin, durationNear, easeNear);
     }
 
     private DG.Tweening.Core.TweenerCore<Vector3, Vector3, DG.Tweening.Plugins.Options.VectorOptions> MoveToTarget(GameObject coin)
     {
-        return MoveTo(to.transform.position, coin, durationTarget, easeTarget);
+        return MoveTo(_to.transform.position, coin, durationTarget, easeTarget);
     }
-    
+
     public void SetNumberCoin(int coin)
     {
         numberCoin = coin;
