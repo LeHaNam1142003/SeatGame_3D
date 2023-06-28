@@ -6,25 +6,7 @@ using UnityEngine;
 
 public class PopupSpin : Popup
 {
-    [SerializeField] private TextMeshProUGUI spinAmountText;
     private bool _isDoSpinWithTicket;
-    protected override void BeforeShow()
-    {
-        UpdateText();
-        base.BeforeShow();
-    }
-    private void OnEnable()
-    {
-        Observer.UpdateText += UpdateText;
-    }
-    private void OnDisable()
-    {
-        Observer.UpdateText -= UpdateText;
-    }
-    void UpdateText()
-    {
-        spinAmountText.text = Data.SpinTicketAmount.ToString();
-    }
     public void DoSpinWithTicket()
     {
         Observer.ClickButton?.Invoke();
@@ -41,7 +23,10 @@ public class PopupSpin : Popup
     }
     protected override void AfterHidden()
     {
-        PopupController.Instance.Show<PopupUI>();
+        PopupController.Instance.Hide<PopupUI>();
+        var getPopupUI = PopupController.Instance.Get<PopupUI>() as PopupUI;
+        getPopupUI.isShowTicket = false;
+        getPopupUI.Show();
         base.AfterHidden();
     }
     public void DoSpinWithWatchAds()
@@ -50,7 +35,6 @@ public class PopupSpin : Popup
         AdsManager.ShowRewardAds(() =>
         {
             Data.SpinTicketAmount += 1;
-            UpdateText();
         });
     }
 }
