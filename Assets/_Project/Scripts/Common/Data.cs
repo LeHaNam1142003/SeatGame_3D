@@ -34,17 +34,17 @@ public static partial class Data
     }
     public static int FlyToolCount
     {
-        get => GetInt(Constant.FlyTool, 3);
+        get => GetInt(Constant.FlyTool, 0);
         set => SetInt(Constant.FlyTool, value);
     }
     public static int SwapToolCount
     {
-        get => GetInt(Constant.SwapTool, 3);
+        get => GetInt(Constant.SwapTool, 0);
         set => SetInt(Constant.SwapTool, value);
     }
     public static int HardModeUnlock
     {
-        get => GetInt(Constant.HardModeUnlock, 1);
+        get => GetInt(Constant.HardModeUnlock, 0);
         set => SetInt(Constant.HardModeUnlock, value);
     }
     public static int SuperHardModeUnlock
@@ -60,15 +60,20 @@ public static partial class Data
         get => GetInt(Constant.CurrencyTotal, 0);
         set
         {
-            Observer.SaveCurrencyTotal?.Invoke();
+            Observer.SaveCurrencyTotal?.Invoke(true);
             SetInt(Constant.CurrencyTotal, value);
-            Observer.CurrencyTotalChanged?.Invoke();
+            Observer.CurrencyTotalChanged?.Invoke(true);
         }
     }
     public static int SpinTicketAmount
     {
-        get => GetInt(Constant.SpinTicketAmount, 1);
-        set => SetInt(Constant.SpinTicketAmount, value);
+        get => GetInt(Constant.SpinTicketAmount, 0);
+        set
+        {
+            Observer.SaveCurrencyTotal?.Invoke(false);
+            SetInt(Constant.SpinTicketAmount, value);
+            Observer.CurrencyTotalChanged?.Invoke(false);
+        }
     }
 
     public static int ProgressAmount
