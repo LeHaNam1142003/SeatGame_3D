@@ -29,10 +29,12 @@ public class Passenger : MonoBehaviour
     [SerializeField] private SkinnedMeshRenderer skinnedMeshRendererHead;
     [SerializeField] private SkinnedMeshRenderer skinnedMeshRendererBody;
     [SerializeField] private SkinnedMeshRenderer skinnedMeshRendererBot;
-    public Material correctBody;
-    public Material correctBot;
-    public Material normalBody;
-    public Material normalBot;
+    [SerializeField] Material correctHead;
+    [SerializeField] Material correctTop;
+    [SerializeField] Material correctBot;
+    [SerializeField] Material normalHead;
+    [SerializeField] Material normalTop;
+    [SerializeField] Material normalBot;
     [SerializeField] private LayerMask passengerLayerMask;
     public GameObject hint;
     [SerializeField] private GameObject passengerModel;
@@ -97,26 +99,26 @@ public class Passenger : MonoBehaviour
         switch (getEmotion)
         {
             case Emotion.Normal:
-                SetupEmotion(normalBot, normalBody);
+                SetupEmotion(normalHead, normalBot, normalTop);
                 break;
             case Emotion.Correct:
-                SetupEmotion(correctBot, correctBody);
+                SetupEmotion(correctHead, correctBot, correctTop);
                 correctSeatEmotion.gameObject.SetActive(true);
                 SetCorrectAnim();
                 break;
             case Emotion.Wrong:
-                SetupEmotion(normalBot, normalBody);
+                SetupEmotion(normalHead, normalBot, normalTop);
                 wrongSeatEmotion.gameObject.SetActive(true);
                 SetWrongAnim();
                 break;
         }
 
     }
-    void SetupEmotion(Material mat1, Material mat2)
+    void SetupEmotion(Material mat1, Material mat2, Material mat3)
     {
         skinnedMeshRendererHead.material = mat1;
         skinnedMeshRendererBot.material = mat1;
-        skinnedMeshRendererBody.material = mat2;
+        skinnedMeshRendererBody.material = mat3;
     }
     void Win()
     {
