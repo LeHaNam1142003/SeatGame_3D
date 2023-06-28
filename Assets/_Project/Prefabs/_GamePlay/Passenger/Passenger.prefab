@@ -671,10 +671,12 @@ MonoBehaviour:
   skinnedMeshRendererHead: {fileID: 2793879713030177471}
   skinnedMeshRendererBody: {fileID: 5371396110741265346}
   skinnedMeshRendererBot: {fileID: 4491068992834604290}
-  correctBody: {fileID: 2100000, guid: d99327533fb32b847be59a4b38a3f470, type: 2}
-  correctBot: {fileID: 2100000, guid: 897cf8af5fc26ea43a3a698ec5826ec6, type: 2}
-  normalBody: {fileID: 2100000, guid: 5003b71f9d642a34e9c334c1a255769f, type: 2}
-  normalBot: {fileID: 2100000, guid: 470c5ca785b5f54468a05722ae333cc0, type: 2}
+  correctHead: {fileID: 2100000, guid: 386993b898a4ece41a38c4f5b0f2af6a, type: 2}
+  correctTop: {fileID: 2100000, guid: 6a5ec869b6e37dc42b4eca83db9238b4, type: 2}
+  correctBot: {fileID: 2100000, guid: e37d8dab9acce7b4a99af63699663438, type: 2}
+  normalHead: {fileID: 2100000, guid: 9ae003cb0a19bc54c824ea1e5d465dee, type: 2}
+  normalTop: {fileID: 2100000, guid: d0e6d1725336cf74e86e91016c55ddf4, type: 2}
+  normalBot: {fileID: 2100000, guid: 8ac4c377175eb10469fa55671d45fee8, type: 2}
   passengerLayerMask:
     serializedVersion: 2
     m_Bits: 896
