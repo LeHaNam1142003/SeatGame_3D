@@ -16,18 +16,17 @@ public class Level : MonoBehaviour
     [ReadOnly] public int currentTurn;
     [ReadOnly] public List<SetUpSeat> setupSeats = new List<SetUpSeat>();
     [ReadOnly] public bool isWin;
-    [ReadOnly] public int bonusMoney;
     [ReadOnly] public List<Passenger> passengers = new List<Passenger>();
     [ReadOnly] public ETool eTool;
     [SerializeField] private int maxTurn;
     [SerializeField] private bool isHardMode;
     [ShowIf("isHardMode")] [SerializeField] private StateModeData stateModeData;
     public bool isHaveTools;
-    [ShowIf("isHardMode")] [SerializeField] List<SetUpReward> setupRewards;
+    [SerializeField] List<SetUpReward> setupRewards;
     [ShowIf("isHaveTools")] [SerializeField] private List<Button> tools;
     [ShowIf("isHaveTools")] [SerializeField] private GameObject toolBar;
     [SerializeField] private TextMeshProUGUI turnText;
-    [SerializeField] private bool isGuid;
+    public bool isGuid;
     [ShowIf("isGuid")] [SerializeField] private SkeletonAnimation fingerSkeletonAnimation;
     [ShowIf("isGuid")] [SerializeField] private AnimationReferenceAsset fingerAnim;
     private List<Passenger> _swaps = new List<Passenger>();
@@ -90,7 +89,7 @@ public class Level : MonoBehaviour
                         if (seat.seat.setIndexColumn == checkPassenger.columnDestination && seat.seat.setIndexRow == checkPassenger.rowDestination)
                         {
                             var p = seat.seat.transform.position;
-                            DoGuid(new Vector3(p.x, p.y + 1, p.z));
+                            DoGuid(new Vector3(p.x, p.y + 2, p.z - 0.5f));
                             _seatGuid = seat.seat;
                         }
                     }
@@ -205,7 +204,7 @@ public class Level : MonoBehaviour
                     toolBar.SetActive(false);
                 }
                 isWin = true;
-                Observer.IntroWinGame?.Invoke();
+                OnWin();
                 if (fingerSkeletonAnimation != null)
                 {
                     fingerSkeletonAnimation.gameObject.SetActive(false);
@@ -223,7 +222,7 @@ public class Level : MonoBehaviour
                 if (getPassenger.isGuid)
                 {
                     var p = getPassenger.transform.position;
-                    DoGuid(new Vector3(p.x, p.y + 1, p.z));
+                    DoGuid(new Vector3(p.x, p.y + 2, p.z - 0.5f));
                 }
             }
         }
@@ -515,7 +514,7 @@ public class Level : MonoBehaviour
         }
         else
         {
-            GameManager.Instance.OnWinGame();
+            GameManager.Instance.OnWinGame(setupRewards);
         }
     }
     void SetStateHardMode(EStateMode stateMode)
