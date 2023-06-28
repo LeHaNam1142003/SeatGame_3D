@@ -106,9 +106,9 @@ public class GameManager : SingletonDontDestroy<GameManager>
     {
         if (isHardMode)
         {
-            if (Data.CurrentHardMode>1)
+            if (Data.CurrentHardMode > 1)
             {
-                Data.CurrentHardMode--; 
+                Data.CurrentHardMode--;
             }
             StartHardModeGame(Data.CurrentHardMode);
         }
@@ -157,24 +157,26 @@ public class GameManager : SingletonDontDestroy<GameManager>
         StartGame(true);
     }
 
-    public void OnWinGame(float delayPopupShowTime = 2.5f)
+    public void OnWinGame(List<SetUpReward> getSetup, float delayPopupShowTime = 2.5f)
     {
         if (gameState == GameState.WaitingResult || gameState == GameState.LoseGame || gameState == GameState.WinGame) return;
         gameState = GameState.WinGame;
         Observer.WinLevel?.Invoke(levelController.currentLevel);
         Data.PlayLevel += 1;
-        if (levelController.currentLevel.isHaveTools && !Data.IsTesting)
-        {
-            Data.FlyToolCount += 1;
-            Data.SwapToolCount += 1;
-        }
         Data.CurrentLevel++;
         DOTween.Sequence().AppendInterval(delayPopupShowTime).AppendCallback(() =>
         {
             PopupController.Instance.HideAll();
             if (PopupController.Instance.Get<PopupWin>() is PopupWin popupWin)
             {
-                popupWin.SetupMoneyWin(levelController.currentLevel.bonusMoney);
+                popupWin.Show();
+                foreach (var g in getSetup)
+                {
+                    if (!popupWin.setupRewards.Contains(g))
+                    {
+                        popupWin.setupRewards.Add(g);
+                    }
+                }
                 popupWin.Show();
             }
         });
