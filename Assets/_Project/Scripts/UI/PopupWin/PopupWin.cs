@@ -1,7 +1,10 @@
+using System.Collections.Generic;
 using DG.Tweening;
 using Pancake;
 using Pancake.Monetization;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PopupWin : Popup
 {
@@ -9,19 +12,19 @@ public class PopupWin : Popup
     [SerializeField] private GameObject btnRewardAds;
     [SerializeField] private GameObject btnTapToContinue;
     [SerializeField] [ReadOnly] private int totalMoney;
+    [SerializeField] private List<Reward> rewards = new List<Reward>();
+    [ReadOnly] public List<SetUpReward> setupRewards = new List<SetUpReward>();
+    [SerializeField] private Image rewardImage;
+    [SerializeField] private TextMeshProUGUI rewardText;
 
     private Sequence sequence;
-    public int MoneyWin => ConfigController.Game.winLevelMoney;
-    public void SetupMoneyWin(int bonusMoney)
-    {
-        totalMoney = MoneyWin + bonusMoney;
-    }
-
     protected override void BeforeShow()
     {
         Observer.PlayWinSound?.Invoke();
         base.BeforeShow();
-        PopupController.Instance.Show<PopupUI>();
+        var getPopupUI = PopupController.Instance.Get<PopupUI>() as PopupUI;
+        getPopupUI.isShowTicket = true;
+        getPopupUI.Show();
         Setup();
 
         sequence = DOTween.Sequence().AppendInterval(2f).AppendCallback(() => { btnTapToContinue.SetActive(true); });
@@ -32,6 +35,24 @@ public class PopupWin : Popup
         btnRewardAds.SetActive(true);
         btnTapToContinue.SetActive(false);
         bonusArrowHandler.MoveObject.ResumeMoving();
+        if (setupRewards.Count==0) return;
+        foreach (var getReward in rewards)
+        {
+            foreach (var setupReward in setupRewards)
+            {
+                if (getReward.eTypeReward == setupReward.eTypeReward)
+                {
+                    rewardImage.sprite = getReward.iconReward;
+                    rewardImage.SetNativeSize();
+                    rewardText.text = $"+ {setupReward.number}";
+                    if (getReward.eTypeReward == ETypeReward.Money)
+                    {
+                        totalMoney = setupReward.number;
+                    }
+                }
+            }
+        }
+
     }
 
     protected override void BeforeHide()
@@ -81,10 +102,26 @@ public class PopupWin : Popup
 
     public void OnClickContinue()
     {
-        Data.CurrencyTotal += totalMoney;
+        Claim();
         btnRewardAds.SetActive(false);
         btnTapToContinue.SetActive(false);
 
         DOTween.Sequence().AppendInterval(2f).AppendCallback(() => { GameManager.Instance.PlayCurrentLevel(); });
+    }
+    void Claim()
+    {
+        foreach (var setClaim in setupRewards)
+        {
+            switch (setClaim.eTypeReward)
+            {
+                case ETypeReward.Money:
+                    Data.CurrencyTotal += setClaim.number;
+                    break;
+                case ETypeReward.Spin:
+                    Data.SpinTicketAmount += setClaim.number;
+                    break;
+            }
+        }
+        setupRewards.Clear();
     }
 }
