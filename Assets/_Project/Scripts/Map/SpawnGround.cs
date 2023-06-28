@@ -51,22 +51,16 @@ public class SpawnGround : MonoBehaviour
 
             }
         }
-        for (int i = 0; i <= rows + 1; i++)
+        for (int i = 0; i < rows ; i++)
         {
             var spawnLeftRowUI = SpawnObj(rowUI);
-            var spawnRightRowUI = SpawnObj(rowUI);
-            spawnLeftRowUI.transform.position = new Vector3(-(getSizeGround.x / 2 + getSizeRowUI.x / 2), getSizeRowUI.y / 2, getSizeRowUI.z * i - 1);
-            spawnRightRowUI.transform.position = new Vector3((getSizeGround.x * columns - getSizeGround.x / 2 + getSizeRowUI.x / 2), getSizeRowUI.y / 2, getSizeRowUI.z * i - 1);
-            spawnRightRowUI.transform.eulerAngles = new Vector3(0, 180, 0);
+            spawnLeftRowUI.transform.position = new Vector3(-(getSizeGround.x / 2 + getSizeRowUI.x / 2), getSizeRowUI.y / 2, getSizeRowUI.z * i);
 
         }
-        for (int i = 0; i <= columns + 1; i++)
+        for (int i = 0; i < columns ; i++)
         {
             var spawnLeftColumnUI = SpawnObj(columnUI);
-            var spawnRightColumnUI = SpawnObj(columnUI);
             spawnLeftColumnUI.transform.position = new Vector3(getSizeColumnUI.x * i - 1, getSizeColumnUI.y / 2, -(getSizeGround.z / 2 + getSizeColumnUI.z / 2));
-            spawnRightColumnUI.transform.position = new Vector3(getSizeColumnUI.x * i - 1, getSizeColumnUI.y / 2, (getSizeGround.z * rows - getSizeGround.z / 2 + getSizeColumnUI.z / 2));
-            spawnRightColumnUI.transform.eulerAngles = new Vector3(0, 180, 0);
         }
     }
     GameObject SpawnObj(GameObject getObj)
