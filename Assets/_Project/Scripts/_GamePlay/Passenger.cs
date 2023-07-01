@@ -7,6 +7,7 @@ using Pancake;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = System.Random;
 
 public class Passenger : MonoBehaviour
 {
@@ -35,10 +36,12 @@ public class Passenger : MonoBehaviour
     [SerializeField] Material normalHead;
     [SerializeField] Material normalTop;
     [SerializeField] Material normalBot;
+    [SerializeField] private Material mainSelected;
+    [SerializeField] private Material mainSelectedCorrect;
     [SerializeField] private LayerMask passengerLayerMask;
-    public GameObject hint;
     [SerializeField] private GameObject passengerModel;
-    [SerializeField] private TextMeshProUGUI hintText;
+    [SerializeField] private TextMeshProUGUI hintRow;
+    [SerializeField] private TextMeshProUGUI hintColumn;
     [SerializeField, Range(0, 100)] private float passengerSpeed;
     [SerializeField] private AnimationClip idleAnim;
     [SerializeField] private AnimationClip walkAnim;
@@ -46,17 +49,25 @@ public class Passenger : MonoBehaviour
     [SerializeField] private AnimationClip seatAnim;
     [SerializeField] private AnimationClip correctSeatAnim;
     [SerializeField] private AnimationClip wrongSeatAnim;
+    [SerializeField] private AnimationClip confusedAnim;
+    [SerializeField] private AnimationClip blockAnim;
+    [SerializeField] private AnimationClip takePopcorn;
+    [SerializeField] private AnimationClip blockSeatAnim;
     [SerializeField] private Image correctSeatEmotion;
     [SerializeField] private Image wrongSeatEmotion;
+    [SerializeField] private Emotion passengerEmotion;
     public int rowDestination;
     public EColumn columnDestination;
     [SerializeField] private CapsuleCollider normalCapsu;
     [SerializeField] private CapsuleCollider capsuCheck;
     public bool isGuid;
-    private EStateAnim _previousStateAnim;
+    public EStateAnim _previousStateAnim;
     private RaycastHit _raycastHit;
     private int _pathindex;
+    private bool _isIdle;
     private int _defaultTurn = 1;
+    private bool _isDoAnim;
+    private bool _isCanCallAction;
     private bool _isAdd = true;
     private void Awake()
     {
@@ -64,20 +75,19 @@ public class Passenger : MonoBehaviour
     }
     private void OnEnable()
     {
-        Observer.ClickonGround += ClickonGround;
         Observer.DoneLevel += Win;
     }
     private void OnDisable()
     {
-        Observer.ClickonGround -= ClickonGround;
         Observer.DoneLevel -= Win;
     }
     private void Start()
     {
-        hint.SetActive(false);
+        hintRow.text = rowDestination.ToString();
+        hintColumn.text = columnDestination.ToString();
         _previousStateAnim = EStateAnim.Non;
         SetEmotion(Emotion.Normal);
-        SetIdleAnim();
+        IdleAnim();
     }
     public void SetCapSuColliderCheck(bool condition)
     {
@@ -88,7 +98,7 @@ public class Passenger : MonoBehaviour
     {
         SetCapSuColliderCheck(true);
         Level.Instance.passengers.Add(this);
-        hintText.text = $"{columnDestination}    {rowDestination}";
+        _isIdle = true;
     }
     public void SetSelected()
     {
@@ -99,30 +109,40 @@ public class Passenger : MonoBehaviour
         switch (getEmotion)
         {
             case Emotion.Normal:
-                SetupEmotion(normalHead, normalBot, normalTop);
+                SetupEmotion(normalHead, normalBot, normalTop, getEmotion);
                 break;
             case Emotion.Correct:
-                SetupEmotion(correctHead, correctBot, correctTop);
+                SetupEmotion(correctHead, correctBot, correctTop, getEmotion);
                 correctSeatEmotion.gameObject.SetActive(true);
                 SetCorrectAnim();
                 break;
             case Emotion.Wrong:
-                SetupEmotion(normalHead, normalBot, normalTop);
+                SetupEmotion(normalHead, normalBot, normalTop, getEmotion);
                 wrongSeatEmotion.gameObject.SetActive(true);
                 SetWrongAnim();
                 break;
+            case Emotion.Block:
+                _isIdle = false;
+                if (passengerEmotion == Emotion.Normal)
+                {
+                    SetBlockAnim();
+                }
+                else
+                {
+                    SetBlockSeatAnim();
+                }
+                break;
         }
-
     }
-    void SetupEmotion(Material mat1, Material mat2, Material mat3)
+    void SetupEmotion(Material mat1, Material mat2, Material mat3, Emotion emotion)
     {
+        passengerEmotion = emotion;
         skinnedMeshRendererHead.material = mat1;
-        skinnedMeshRendererBot.material = mat1;
+        skinnedMeshRendererBot.material = mat2;
         skinnedMeshRendererBody.material = mat3;
     }
     void Win()
     {
-        hint.SetActive(false);
         passengerModel.transform.rotation = Quaternion.Euler(0, -90, 0);
         SetWinAnim();
         StartCoroutine(WaitForWin());
@@ -132,29 +152,67 @@ public class Passenger : MonoBehaviour
         yield return new WaitForSeconds(1f);
         Observer.ShipMove?.Invoke();
     }
-    void SetIdleAnim() => SetStateAnim(EStateAnim.Idle, idleAnim, null);
-    void SetRunAnim() => SetStateAnim(EStateAnim.Run, walkAnim, SetIdleAnim);
-    void SetWinAnim() => SetStateAnim(EStateAnim.Win, winAnim, SetIdleAnim);
-    void SetCorrectAnim() => SetStateAnim(EStateAnim.Correct, correctSeatAnim, SetSeatAnim);
-    void SetWrongAnim() => SetStateAnim(EStateAnim.Wrong, wrongSeatAnim, SetSeatAnim);
-    void SetSeatAnim() => SetStateAnim(EStateAnim.Seat, seatAnim, null);
-    void ClickonGround()
+
+    void IdleAnim()
     {
-        hint.SetActive(false);
+        if (_isIdle)
+        {
+            switch (passengerEmotion)
+            {
+                case Emotion.Normal:
+                    SetRandomAnim(SetIdleAnim, SetConfusedAnim);
+                    break;
+                case Emotion.Correct:
+                    SetRandomAnim(SetCorrectAnim, SetTakePopcornAnim);
+                    break;
+                case Emotion.Wrong:
+                    SetRandomAnim(SetWrongAnim, SetSeatAnim);
+                    break;
+            }
+        }
+    }
+    void SetRandomAnim(Action anim1, Action anim2)
+    {
+        int r = Pancake.Random.Range(1, 3);
+        switch (r)
+        {
+            case 1:
+                anim1?.Invoke();
+                break;
+            case 2:
+                anim2?.Invoke();
+                break;
+        }
+    }
+    void SetRunAnim() => SetStateAnim(EStateAnim.Run, walkAnim, null);
+    void SetWinAnim() => SetStateAnim(EStateAnim.Win, winAnim, IdleAnim);
+    void SetCorrectAnim() => SetStateAnim(EStateAnim.Correct, correctSeatAnim, IdleAnim);
+    void SetWrongAnim() => SetStateAnim(EStateAnim.Wrong, wrongSeatAnim, IdleAnim);
+    void SetSeatAnim() => SetStateAnim(EStateAnim.Seat, seatAnim, IdleAnim);
+    void SetConfusedAnim() => SetStateAnim(EStateAnim.Confused, confusedAnim, IdleAnim);
+    void SetIdleAnim() => SetStateAnim(EStateAnim.Idle, idleAnim, IdleAnim);
+    void SetBlockAnim() => SetStateAnim(EStateAnim.Block, blockAnim, ResetIdle);
+    void SetBlockSeatAnim() => SetStateAnim(EStateAnim.BlockSeat, blockSeatAnim, ResetIdle);
+    void SetTakePopcornAnim() => SetStateAnim(EStateAnim.TakePopcorn, takePopcorn, IdleAnim);
+    void ResetIdle()
+    {
+        _isIdle = true;
+        SetSeatAnim();
     }
     void SetStateAnim(EStateAnim getEStateAnim, AnimationClip getAnimationclip, Action doneAnimEvent)
     {
         currentStateAnim = getEStateAnim;
         if (currentStateAnim != _previousStateAnim)
         {
-            StartCoroutine(Invoke(getAnimationclip, doneAnimEvent));
             _previousStateAnim = currentStateAnim;
+            StartCoroutine(Invoke(getAnimationclip, doneAnimEvent));
         }
     }
     IEnumerator Invoke(AnimationClip clip, Action doneAnimEvent)
     {
         var anim = animancerComponent.Play(clip);
         yield return anim;
+        _previousStateAnim = EStateAnim.Non;
         doneAnimEvent?.Invoke();
     }
 
@@ -165,11 +223,37 @@ public class Passenger : MonoBehaviour
             isSelected = isGetSelected;
             if (isGetSelected)
             {
-                hint.SetActive(true);
+                HightLightSelect(true);
+                Observer.StartPoint?.Invoke(currentDestination, this);
             }
             else
             {
-                hint.SetActive(false);
+                HightLightSelect(false);
+            }
+        }
+    }
+    public void HightLightSelect(bool isSelected)
+    {
+        if (isSelected)
+        {
+            if (passengerEmotion == Emotion.Normal || passengerEmotion == Emotion.Wrong)
+            {
+                skinnedMeshRendererHead.material = mainSelected;
+            }
+            else
+            {
+                skinnedMeshRendererHead.material = mainSelectedCorrect;
+            }
+        }
+        else
+        {
+            if (passengerEmotion == Emotion.Normal || passengerEmotion == Emotion.Wrong)
+            {
+                skinnedMeshRendererHead.material = normalHead;
+            }
+            else
+            {
+                skinnedMeshRendererHead.material = correctHead;
             }
         }
     }
@@ -193,12 +277,12 @@ public class Passenger : MonoBehaviour
                     if (pathsToDestination.Count != 0)
                     {
                         Level.Instance.CheckPlayMusic();
-                        hint.SetActive(false);
                         SetCapSuColliderCheck(false);
                         road = pathsToDestination[_pathindex];
                         var dir = road.position - transform.position;
                         transform.Translate(dir.normalized * passengerSpeed * Time.deltaTime);
                         SetRunAnim();
+                        _isIdle = false;
                         Quaternion lookRotaion = Quaternion.LookRotation(dir, Vector3.up);
                         passengerModel.transform.rotation = Quaternion.Euler(0, lookRotaion.eulerAngles.y, 0);
                         if (Vector3.Distance(transform.position, road.position) <= 0.05f)
@@ -225,6 +309,7 @@ public class Passenger : MonoBehaviour
             {
                 pathsToDestination.Add(path);
                 nextDestination = pathsToDestination[pathsToDestination.Count - 1].parent.GetComponent<Ground>();
+                nextDestination.isTaken = true;
                 SetEmotion(Emotion.Normal);
                 SetNewDestination(nextDestination);
                 isMove = true;
@@ -236,10 +321,11 @@ public class Passenger : MonoBehaviour
     }
     void SetNextPath()
     {
-        transform.position = road.transform.position;
+        transform.position = new Vector3(road.transform.position.x, transform.position.y, road.transform.position.z);
         if (_pathindex >= pathsToDestination.Count - 1)
         {
-            SetIdleAnim();
+            _isIdle = true;
+            IdleAnim();
             isMove = false;
             pathsToDestination.Clear();
             SetEndDestination(nextDestination);
@@ -272,7 +358,9 @@ public class Passenger : MonoBehaviour
         }
         Level.Instance.groundSelecteds.Add(newdestination);
         currentDestination.gameObject.GetComponent<Ground>().SetDestination(true);
+        currentDestination.gameObject.GetComponent<Ground>().isTaken = false;
         newdestination.gameObject.GetComponent<Ground>().SetDestination(false);
+        newdestination.gameObject.GetComponent<Ground>().isTaken = true;
     }
     public void DoSwapPosi(Vector3 nextPosi, Ground nextCurrentPosi)
     {
@@ -291,7 +379,6 @@ public class Passenger : MonoBehaviour
         })).OnComplete((() =>
         {
             isMove = false;
-            hint.SetActive(false);
             Level.Instance.EndProcessing();
             action?.Invoke();
         }));
@@ -339,6 +426,7 @@ public class Passenger : MonoBehaviour
                 var set = other.gameObject.GetComponent<Ground>();
                 set.SetDestination(false);
                 currentDestination = set;
+                set.isTaken = true;
             }
         }
     }
@@ -353,16 +441,22 @@ public class Passenger : MonoBehaviour
 public enum EStateAnim
 {
     Non,
+    None,
     Idle,
     Run,
     Win,
     Correct,
     Wrong,
     Seat,
+    Confused,
+    Block,
+    BlockSeat,
+    TakePopcorn,
 }
 public enum Emotion
 {
     Correct,
     Normal,
     Wrong,
+    Block,
 }
