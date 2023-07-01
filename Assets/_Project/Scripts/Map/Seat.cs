@@ -52,6 +52,8 @@ public class Seat : MonoBehaviour
     {
         if (other.gameObject.CompareTag(NameTag.Passenger))
         {
+            var a = this.GetComponentInParent<Ground>();
+            a.isTaken = true;
             var checkPlayer = other.GetComponent<Passenger>();
             if (checkPlayer.rowDestination == _seatInfor.intdexRow && checkPlayer.columnDestination == _seatInfor.indexColumn)
             {
