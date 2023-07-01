@@ -28,6 +28,9 @@ public static class Observer
     public static Action CoinMove;
     public static Action ClickButton;
     public static Action<string> TrackClickButton;
+    public static Action ShowTrackingButton;
+    public static Action<Ground,Passenger> StartPoint;
+    public static Action<Ground> CalculatePath;
     public static Action PurchaseFail;
     public static Action PurchaseSucceed;
     public static Action ClaimReward;
