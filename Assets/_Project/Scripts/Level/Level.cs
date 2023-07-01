@@ -22,6 +22,8 @@ public class Level : MonoBehaviour
     [SerializeField] private bool isHardMode;
     [ShowIf("isHardMode")] [SerializeField] private StateModeData stateModeData;
     public bool isHaveTools;
+    [SerializeField] private bool isHaveBanner;
+    [ShowIf(("isHaveBanner"))] [SerializeField] private TypeBanner banner;
     [SerializeField] List<SetUpReward> setupRewards;
     [ShowIf("isHaveTools")] [SerializeField] private List<Button> tools;
     [ShowIf("isHaveTools")] [SerializeField] private GameObject toolBar;
@@ -226,6 +228,18 @@ public class Level : MonoBehaviour
                 }
             }
         }
+        if (isHaveBanner)
+        {
+            switch (banner)
+            {
+                case TypeBanner.first:
+                    PopupController.Instance.Show<PopupBanner1>();
+                    break;
+                case TypeBanner.second:
+                    PopupController.Instance.Show<PopupBanner2>();
+                    break;
+            }
+        }
         if (isHardMode)
         {
             Observer.LoadTrackingMission?.Invoke(EMissionQuest.CompletedHardMode);
@@ -253,29 +267,24 @@ public class Level : MonoBehaviour
     }
     public void SwapTool()
     {
+        StopHighLight();
         StopHightSeat();
         _swaps.Clear();
-        foreach (var setpassengers in passengers)
-        {
-            setpassengers.hint.SetActive(true);
-        }
         _isCanTouchGround = false;
         _isUseTool = true;
         eTool = ETool.Swap;
     }
     public void FlyTool()
     {
+        StopHighLight();
         StopHightSeat();
-        foreach (var setpassengers in passengers)
-        {
-            setpassengers.hint.SetActive(true);
-        }
         _isCanTouchGround = false;
         _isUseTool = true;
         eTool = ETool.Fly;
     }
     void SetFlyTool(Passenger passenger)
     {
+        passenger.HightLightSelect(true);
         _flyPassenger = passenger;
         _isCanTouchPlayer = false;
         _isCanTouchGround = true;
@@ -301,6 +310,7 @@ public class Level : MonoBehaviour
         if (!_swaps.Contains(passenger))
         {
             _swaps.Add(passenger);
+            passenger.HightLightSelect(true);
         }
         if (_swaps.Count == 2)
         {
@@ -321,26 +331,27 @@ public class Level : MonoBehaviour
     }
     public void EndDoSwapTool()
     {
+        StopHighLight();
         StopHightSeat();
         eTool = ETool.Non;
         _isUseTool = false;
-        foreach (var setpassengers in passengers)
-        {
-            setpassengers.hint.SetActive(false);
-        }
         _swaps.Clear();
         Observer.EndSwapping?.Invoke();
         PopupController.Instance.Hide<PopupSwapTool>();
     }
+    void StopHighLight()
+    {
+        foreach (var passenger in passengers)
+        {
+            passenger.HightLightSelect(false);
+        }
+    }
     public void EndDoFlyTool()
     {
+        StopHighLight();
         StopHightSeat();
         eTool = ETool.Non;
         _isUseTool = false;
-        foreach (var setpassengers in passengers)
-        {
-            setpassengers.hint.SetActive(false);
-        }
         _flyPassenger = null;
         _isCanTouchPlayer = true;
         Observer.EndSwapping?.Invoke();
@@ -378,12 +389,15 @@ public class Level : MonoBehaviour
                                     var s = set.seatSurface;
                                     if (s == _seatGuid)
                                     {
+                                        Observer.CalculatePath?.Invoke(set);
                                         set.ShowRobotDetect(set);
                                         _isCanTouchGround = false;
+
                                     }
                                 }
                                 else
                                 {
+                                    Observer.CalculatePath?.Invoke(set);
                                     set.ShowRobotDetect(set);
                                     _isCanTouchGround = false;
                                 }
@@ -573,4 +587,9 @@ public enum ETool
     Non,
     Swap,
     Fly,
+}
+public enum TypeBanner
+{
+    first,
+    second,
 }
