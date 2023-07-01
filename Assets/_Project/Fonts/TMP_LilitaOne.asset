@@ -59,9 +59,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
   m_Name: TMP_LilitaOne
   m_EditorClassIdentifier: 
-  hashCode: 1275464279
+  hashCode: -670381497
   material: {fileID: 3604630249188092411}
-  materialHashCode: -224660969
+  materialHashCode: 1683548167
   m_Version: 1.1.0
   m_SourceFontFileGUID: 16d671f9e1acc04408e3ff99b88d3a0f
   m_SourceFontFile_EditorRef: {fileID: 12800000, guid: 16d671f9e1acc04408e3ff99b88d3a0f,
