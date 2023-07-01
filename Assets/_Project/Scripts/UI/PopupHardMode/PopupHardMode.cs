@@ -71,6 +71,11 @@ public class PopupHardMode : Popup
         hardModeList.ShowContent();
         hardModeList.SetStateMode(CountUnLock);
     }
+    protected override void BeforeHide()
+    {
+        Observer.ShowTrackingButton?.Invoke();
+        base.BeforeHide();
+    }
 
 
 }
