@@ -27,6 +27,7 @@ public class PopupSpin : Popup
         var getPopupUI = PopupController.Instance.Get<PopupUI>() as PopupUI;
         getPopupUI.isShowTicket = false;
         getPopupUI.Show();
+        Observer.ShowTrackingButton?.Invoke();
         base.AfterHidden();
     }
     public void DoSpinWithWatchAds()
