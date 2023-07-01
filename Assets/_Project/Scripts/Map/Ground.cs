@@ -6,19 +6,19 @@ public class Ground : MonoBehaviour
 {
     public RobotDetect robotDetect;
     [SerializeField] private BoxCollider groundBox;
+    public int x;
+    public int y;
+    public int mark;
     [SerializeField] private GameObject seat;
     public Seat seatSurface;
     public bool isHaveSeat;
     [SerializeField] private MeshRenderer groundModel;
+    public bool isTaken;
 
     private void Awake()
     {
         SetSeat();
         HideRobotDetect();
-    }
-    public void SetMatGround(Material getMat)
-    {
-        groundModel.material = getMat;
     }
     void SetSeat()
     {
