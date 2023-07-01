@@ -1,15 +1,28 @@
 using System;
 using System.Reflection;
+using UnityEngine;
 
 public class PopupHome : Popup
 {
+    [SerializeField] private GameObject trackingButton;
     protected override void BeforeShow()
     {
         base.BeforeShow();
+        ShowTracking();
         var getPopupUI = PopupController.Instance.Get<PopupUI>() as PopupUI;
         getPopupUI.isShowTicket = false;
         getPopupUI.Show();
+        Observer.LoadTrackingMission?.Invoke(EMissionQuest.PlayLevel);
     }
+    private void OnEnable()
+    {
+        Observer.ShowTrackingButton += ShowTracking;
+    }
+    private void OnDisable()
+    {
+        Observer.ShowTrackingButton -= ShowTracking;
+    }
+    void ShowTracking() => trackingButton.gameObject.SetActive(true);
 
     protected override void BeforeHide()
     {
@@ -36,6 +49,7 @@ public class PopupHome : Popup
     }
     public void OnClickSpin()
     {
+        trackingButton.gameObject.SetActive(false);
         Observer.ClickButton?.Invoke();
         MethodBase function = MethodBase.GetCurrentMethod();
         Observer.TrackClickButton?.Invoke(function.Name);
@@ -56,6 +70,7 @@ public class PopupHome : Popup
     }
     public void OnclickDailyQuest()
     {
+        trackingButton.gameObject.SetActive(false);
         Observer.ClickButton?.Invoke();
         MethodBase function = MethodBase.GetCurrentMethod();
         Observer.TrackClickButton?.Invoke(function.Name);
@@ -89,6 +104,7 @@ public class PopupHome : Popup
     }
     public void OnClickHardMode()
     {
+        trackingButton.gameObject.SetActive(false);
         Observer.ClickButton?.Invoke();
         MethodBase function = MethodBase.GetCurrentMethod();
         Observer.TrackClickButton?.Invoke(function.Name);
