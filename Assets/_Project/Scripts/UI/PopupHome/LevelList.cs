@@ -23,6 +23,14 @@ public class LevelList : ScrollBoard
             ShowContent();
             for (int i = 1; i <= elements; i++)
             {
+                if (i % 5 == 0)
+                {
+                    content.transform.GetChild(i - 1).GetComponent<CinemaUILevel>().SetNormal(false);
+                }
+                else
+                {
+                    content.transform.GetChild(i - 1).GetComponent<CinemaUILevel>().SetNormal(true);
+                }
                 if (i == Data.CurrentLevel)
                 {
                     content.transform.GetChild(i - 1).GetComponent<CinemaUILevel>().SetHightLight(true);
@@ -43,6 +51,6 @@ public class LevelList : ScrollBoard
     {
         var s = content.rectTransform().sizeDelta;
         var posiIndex = (Data.CurrentLevel - 1) * (content.cellSize.y + content.spacing.y);
-        content.rectTransform().anchoredPosition3D = new Vector3(0, (s.y+content.padding.bottom) / 2 - posiIndex);
+        content.rectTransform().anchoredPosition3D = new Vector3(0, (s.y + content.padding.bottom) / 2 - posiIndex);
     }
 }
