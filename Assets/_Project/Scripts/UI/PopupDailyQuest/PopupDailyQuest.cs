@@ -13,4 +13,9 @@ public class PopupDailyQuest : Popup
             Observer.UpdateProcressDaily?.Invoke();
         });
     }
+    protected override void BeforeHide()
+    {
+        Observer.ShowTrackingButton?.Invoke();
+        base.BeforeHide();
+    }
 }
