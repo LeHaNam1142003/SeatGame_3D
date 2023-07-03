@@ -28,6 +28,7 @@ public class GiftBoxMission : MonoBehaviour
     }
     void SetProcess()
     {
+        Debug.Log("loading");
         processFill.fillAmount = (float)Data.StarMission / setUpGifts[setUpGifts.Count - 1].needStarToReward;
         if (Data.GiftCanReward == 0) return;
         for (int i = 1; i <= Data.GiftCanReward; i++)
