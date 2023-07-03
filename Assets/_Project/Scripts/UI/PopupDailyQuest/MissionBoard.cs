@@ -69,13 +69,14 @@ public class MissionBoard : MonoBehaviour
         tickIcon.gameObject.SetActive(true);
         claimBtnOff.gameObject.SetActive(false);
         claimBtnOn.gameObject.SetActive(false);
+        processFill.fillAmount = (float)process / process;
+        textProcess.text = $"{process + "/" + process}";
     }
     void CanClaim(bool iscanClaim)
     {
         tickIcon.gameObject.SetActive(false);
         claimBtnOff.gameObject.SetActive(!iscanClaim);
         claimBtnOn.gameObject.SetActive(iscanClaim);
-        Observer.UpdateStarReward?.Invoke();
     }
     public void Claim()
     {
