@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using Animancer;
 using DG.Tweening;
 using Pancake;
 using Pancake.Monetization;
@@ -16,7 +18,7 @@ public class PopupWin : Popup
     [ReadOnly] public List<SetUpReward> setupRewards = new List<SetUpReward>();
     [SerializeField] private Image rewardImage;
     [SerializeField] private TextMeshProUGUI rewardText;
-
+    [SerializeField] private List<CharacterWin> characterWins = new List<CharacterWin>();
     private Sequence sequence;
     protected override void BeforeShow()
     {
@@ -29,13 +31,19 @@ public class PopupWin : Popup
 
         sequence = DOTween.Sequence().AppendInterval(2f).AppendCallback(() => { btnTapToContinue.SetActive(true); });
     }
-
+    private void OnEnable()
+    {
+        foreach (var charWin in characterWins)
+        {
+            charWin.charAnimacer.Play(charWin.charAnimation);
+        }
+    }
     public void Setup()
     {
         btnRewardAds.SetActive(true);
         btnTapToContinue.SetActive(false);
         bonusArrowHandler.MoveObject.ResumeMoving();
-        if (setupRewards.Count==0) return;
+        if (setupRewards.Count == 0) return;
         foreach (var getReward in rewards)
         {
             foreach (var setupReward in setupRewards)
@@ -124,4 +132,10 @@ public class PopupWin : Popup
         }
         setupRewards.Clear();
     }
+}
+[Serializable]
+public class CharacterWin
+{
+    public AnimancerComponent charAnimacer;
+    public AnimationClip charAnimation;
 }
